@@ -1,8 +1,7 @@
 <template>
   <div class="grey lighten-1">
     <search-tab />
-    <actions-block />
-    <!-- brokers section -->
+    <actions-block /> 
     <section>
       <heading-tab
         class="grey lighten-1"
@@ -10,8 +9,8 @@
         :route="`/Explore/Brokers`"
       />
       <div class="d-flex no-gutters" style="overflow-x: scroll;">
-        <v-col class="col-5" v-for="(writer, i) in getAllWriters" :key="i">
-          <user-card :user="writer" :broker="true"/>
+        <v-col class="col-5" v-for="(broker, i) in getAllBrokers" :key="i">
+          <user-card :user="broker" :broker="true"/>
         </v-col>
       </div>
     </section>
@@ -26,15 +25,14 @@
           <user-card :user="writer" :writer="true"/>
         </v-col>
       </div>
-      <!-- {{getAllTasksAvailableForBidding}} -->
     </section>
-    <section>
+    <section v-if="getAllTasksAvailableForBidding[0]">
       <heading-tab
         class="grey lighten-1"
         :heading="`available tasks`"
         :route="`/Explore/Task`"
       />
-      <task-strip v-for="(task, i) in getAllTasksAvailableForBidding.slice(71, 89)" :key="i" :task="task"/>
+      <task-strip v-for="(task, i) in getAllTasksAvailableForBidding" :key="i" :task="task"/>
     </section>
     <footer-strip />
   </div>
@@ -51,7 +49,7 @@ export default {
   name: 'Home',
   components: { SearchTab, HeadingTab, ActionsBlock, FooterStrip, TaskStrip, UserCard},
   computed: {
-    ...mapGetters(['getAllTasksAvailableForBidding', 'getAllWriters']),
+    ...mapGetters(['getAllTasksAvailableForBidding', 'getAllWriters', 'getAllBrokers']),
     env(){
       return process.env.VUE_APP_API
     },
@@ -60,17 +58,18 @@ export default {
     return {
       fetched_tasks: false,
       fetched_writers: false,
+      fetched_brokers: false,
       counter: 8
     }
   },
   methods:{
-    ...mapActions(['fetchAllAvailableForBidding', 'fetchAllWriters']),
+    ...mapActions(['fetchAllAvailableForBidding', 'fetchAllWriters', 'fetchAllBrokers']),
     async boot(){
       try{
         await this.fetchAllAvailableForBidding().then(() => {this.fetched_tasks = true})
+        await this.fetchAllBrokers(null).then(() => {this.fetched_brokers = true})
         await this.fetchAllWriters(null).then(() => {this.fetched_writers = true})
       } catch(e){
-        console.log(e)
       }
     }
   },

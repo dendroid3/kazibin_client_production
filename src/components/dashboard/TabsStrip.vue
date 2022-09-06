@@ -1,48 +1,58 @@
 <template>
-  <v-row class="no-gutters">
+  <v-row class="no-gutters mt-2">
     <content-tab
       :title="`posted`"
-      :count="(getAllTasksPostedByMe.tasks[0]) ? getAllTasksPostedByMe.tasks.length : 0"
+      :url="`Tasks/Posted`"
+      :count="getDashboadDetails.posted.posted_all"
       :loading="!posted_fetched"
     />
     <content-tab
-      :title="`pending`"
-      :count="0"
+      :title="`underway`"
+      :url="`Tasks/Posted/Underway`"
+      :count="getDashboadDetails.posted.posted_underway"
       :loading="!posted_fetched"
     />
-    <content-tab
-      :title="`paid`"
-      :count="0"
-      :loading="!posted_fetched"
-    />
+  
     <content-tab
       :title="`taken`"
-      :count="(getAllTasksDoneByMe.tasks[0]) ? getAllTasksDoneByMe.tasks.length : 0"
+      :url="`Tasks/Taken`"
+      :count="getDashboadDetails.taken.taken_all"
       :loading="!taken_fetched"
     />
     <content-tab
       :title="`offers`"
-      :count="0"
+      :url="`Offers`"
+      :count="getDashboadDetails.offers.offers_all"
       :loading="!offers_fetched"
     />
     <content-tab
       :title="`bids`"
-      :count="0"
+      :url="`Bids`"
+      :count="getDashboadDetails.bids.bids_all"
       :loading="!bids_fetched"
+      :isGreen="getDashboadDetails.bids.bids_is_green"
     />
     <content-tab
-      :title="`liaisons`"
-      :count="0"
+      :title="`network`"
+      :url="`Network`"
+      :count="getDashboadDetails.network_count"
       :loading="!liaisons_fetched"
     />
     <content-tab
+      :title="`requests`"
+      :url="`Requests`"
+      :count="getDashboadDetails.requests_count"
+      :loading="!requests_fetched"
+    />
+    <content-tab
       :title="`invoices`"
-      :count="0"
+      :url="`Invoices`"
+      :count="getDashboadDetails.invoices.invoices_count"
       :loading="!invoices_fetched"
     />
     <content-tab
-      :title="`chats`"
-      :count="0"
+      :title="`activity`"
+      :count="getLogMessages ? getLogMessages.length : 0"
       :loading="!chats_fetched"
     />
   </v-row>
@@ -59,13 +69,17 @@ export default {
     'bids_fetched',
     'liaisons_fetched', 
     'invoices_fetched', 
-    'chats_fetched'
+    'chats_fetched',
+    'requests_fetched'
   ],
   components:{
     ContentTab
   },
   computed:{
-    ...mapGetters(['getAllTasksPostedByMe', 'getAllTasksDoneByMe'])
+    ...mapGetters([
+      'getAllTasksPostedByMe', 'getAllTasksDoneByMe', 'getMyWriters', 'getMyBrokers',
+      'getMyBids', 'getMyOffers', 'getDashboadDetails', 'getLogMessages'
+    ])
   }
 }
 </script>

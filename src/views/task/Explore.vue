@@ -1,9 +1,9 @@
-<template lang="html">
-  <div>
+<template>
+  <div class="main-wrapper">
     <div>
       <div class="d-flex grey lighten-1">
         <span class="heading primary-color-text">
-          {{`available tasks`}}
+          {{`available tasks page `}}
         </span>
         <v-spacer />
         <p class="white rounded primary-color-text px-1">
@@ -12,6 +12,13 @@
         <v-icon @click="toogleFilter" class="white rounded">
           mdi-filter
         </v-icon>
+      </div>
+    </div>
+    <div>
+      <div class="d-flex grey lighten-1">
+        <span class="heading primary-color-text" v-if="this.task">
+          {{filter_options + " Page " + getAllTasksAvailableForBiddingPaginationDetails.current_page}}
+        </span>
       </div>
     </div>
     <div v-if="filter_open" class="grey lighten-1 filter pa-4">
@@ -65,16 +72,60 @@
         </v-btn>
       </div>
     </div>
-    <task-strip v-for="(task, i) in getAllTasksAvailableForBidding" :key="i" :task="task" />
-    <div class="d-flex py-2 justify-center">
-      <v-btn 
-      small 
-      class="rounded success submit-button">
-        <v-icon large>
-          mdi-plus
-        </v-icon>
-      </v-btn>
-    </div>
+
+    <section v-if="!getAllTasksAvailableForBidding[0] && pagination_links_set">
+      <v-row class="no-gutters pt-4 mt-4">
+        <v-col class="col-8 offset-2 pa-4">
+          <v-img class="" :src="require(`../../assets/pageNotFound.svg`)" contain />
+        </v-col>
+        <v-col class="col-8 offset-2 px-4 d-flex justify-center text-center tomato-text bold">
+          {{"Ooops! No Tasks currently available!"}}
+        </v-col>
+        <v-col class="col-8 offset-2 px-4 d-flex justify-center primary-color-text text-center mt-4">
+          {{"We forward all available tasks real time to our telegram channel. Join it to be notified as soon as there is an available task"}}
+        </v-col>
+        <v-col class="col-8 offset-2 px-4 d-flex justify-center ">
+          <v-btn class="mx-1 white--text" @click="goTelegram" style="background-color: tomato;">Join Channel</v-btn>
+          <v-btn class="mx-1 white--text" @click="go('/Dashboard')" style="background-color: tomato;">Dashboard</v-btn>
+        </v-col>
+      </v-row>
+    </section>
+    
+    <task-strip v-for="(task, i) in getAllTasksAvailableForBidding" :key="i" :task="task" v-if="pagination_links_set"/>
+
+    <v-row class="d-flex justify-center mt-4 n-gutters" v-if="pagination_links_set && getAllTasksAvailableForBidding[0]">
+      <v-col class="col-1 white--text mt-4 primary-color text-center" v-for="(link, i) in pagination_links" 
+      :key="i" 
+      :class="{
+        'red': link.active,
+        'grey': ((getAllTasksAvailableForBiddingPaginationDetails.current_page === getAllTasksAvailableForBiddingPaginationDetails.last_page) && link.next) ||
+                (getAllTasksAvailableForBiddingPaginationDetails.current_page === 1) && link.previous
+        }" 
+        @click="goToPage(link.url)">
+        <span>
+          <span v-if="link.previous">
+          {{"<<"}}
+          </span>
+          <span v-if="!link.previous && !link.next">
+            {{link.label}}
+          </span>
+          <span v-if="(link.next)">
+            {{">>"}}
+          </span>
+        </span>
+      </v-col>
+    </v-row>
+    
+    <v-row class="no-gutters" v-if="!pagination_links_set">
+      <v-col class="col-4 offset-4">
+        <v-progress-linear
+          indeterminate
+          rounded
+          color="blue darken-2"
+          height="5"
+        ></v-progress-linear>
+      </v-col>
+    </v-row> 
   </div>
 </template>
 <script>
@@ -86,32 +137,88 @@ export default {
   name: 'Explore',
   components:{TaskStrip, HeadingTab},
   computed:{
-    ...mapGetters(['getAllTasksAvailableForBidding', 'getAvailabilityDetails']),
-    units(){
-      const units = []
-      this.getAvailabilityDetails.units.forEach(unit => {
-        units.push(unit.unit)
+    ...mapGetters(['getAllTasksAvailableForBidding', 'getAvailabilityDetails', 'getAllTasksAvailableForBiddingPaginationDetails']),
+  pagination_links(){
+      let links = []
+      this.getAllTasksAvailableForBiddingPaginationDetails.links.forEach(link => {
+        link.previous = link.label == "&laquo; Previous"
+        link.next = link.label == "Next &raquo;"
+        links.push(link)
       });
-      return units;
-    },
-    types(){
-      const types = []
-      this.getAvailabilityDetails.types.forEach(type => {
-        types.push(type.type)
-      });
-      return types;
-    },
+      return links
+  },
+  units(){
+    const units = []
+    this.getAvailabilityDetails.units.forEach(unit => {
+      units.push(unit.unit)
+    });
+    return units;
+  },
+  types(){
+    const types = []
+    this.getAvailabilityDetails.types.forEach(type => {
+      types.push(type.type)
+    });
+    return types;
+  },
+  filter_options(){
+    let options = ''
+    if(this.task.unit){
+        options = options + this.task.unit
+      }
+    if(this.task.type){
+      options = options + ' ' + this.task.type
+    }
+    if(!this.task.unit && !this.task.type){
+      options = options + "All "
+    }
+    options = options + " Tasks"
+
+    return options
+  }
   },
   data(){
     return{
       filter_open: false,
       task_types: ['essay', 'report', 'review', 'article', 'blog', 'resumes', 'captioning', 'programming'],
       task: {},
-      applying: false
+      applying: false,
+      pagination_links_set: false
     }
   },
   methods: {
-    ...mapActions(['fetchAllAvailableForBidding', 'fetchAvailabilityDetails']),
+    ...mapActions(['fetchAllAvailableForBidding', 'fetchAvailabilityDetails', 'fetchAllAvailableForBidding', 'fetchAllAvailableForBiddingPaginated']),
+    goTelegram(){
+      let url = "https://t.me/writersplatform"
+      window.open(url, '_blank').focus()
+    },
+
+    go(code){
+      this.$router.push(code)
+    },
+
+    goToPage(page_link){
+      // this.pagination_links_set = false
+      // const data = {
+      //   link: page_link
+      // }
+      this.pagination_links_set = false
+      if(this.task){
+        const data = this.task
+        data.link = page_link
+        this.fetchAllAvailableForBiddingPaginated(data).then((res) => (
+          this.pagination_links_set = true
+        ))
+      } else {
+        const data = {
+          link: page_link
+        }
+        this.fetchAllAvailableForBiddingPaginated(data).then((res) => (
+          this.pagination_links_set = true
+        ))
+      }
+      // console.log(data)
+    },
     toogleFilter(){
       this.filter_open = !this.filter_open
     },
@@ -131,10 +238,9 @@ export default {
         question = question + (this.task.max_full_pay ? ' < ' : '') + this.task.max_full_pay + (this.task.max_full_pay ? ' KES ' : '')
       }
       if(confirm(question) == true){
-        
         this.applying = true
-        // alert(this.task.max_full_pay)
-        this.fetchAllAvailableForBidding(this.task).then((res) => {
+        this.fetchAllAvailableForBiddingPaginated(this.task)
+        .then((res) => {
         if(res){
           this.filter_open = false
           this.applying = false
@@ -144,7 +250,11 @@ export default {
     }
   },
   mounted(){
-    this.fetchAvailabilityDetails()
+    this.fetchAvailabilityDetails();
+    const data = {}
+    this.fetchAllAvailableForBiddingPaginated(data).then((res) => (
+      this.pagination_links_set = true
+    ))
   }
 }
 </script>
@@ -152,5 +262,10 @@ export default {
 /* .filter{
   min-height: 70vh;
 } */
+
+.main-wrapper{
+  padding-bottom: 5rem;
+  overflow-x: hidden;
+}
   
 </style>

@@ -1,83 +1,170 @@
 <template>
-  <v-app >
-    <v-app-bar class="primary-color"
+  <v-app class="app grey lighten-3" style="height:100vh; overflow-y: hidden;">
+    <v-toolbar class="primary-color"
+      v-if="show_nav_bar"
       :color="`rgb(15,14,56)`"
       flat
-      sticky
       dense
-      app
+      height="50"
+      style="z-index: 1; position: fixed; left: 0; right: 0;"
     >
 
-      <div class="d-flex rounded " @click="goHome"> 
+      <div class="d-flex rounded align-center white pointer pr-2" @click="goHome"> 
         <v-img class="icon" :src="require(`./assets/icon.svg`)" contain />
+        <span class="text-hdsds bold whitje--text">
+          kazibin
+        </span>
       </div>
-
       <v-spacer></v-spacer>
 
       <div v-if="!getUser.email">
         <router-link to="/register" class="text mr-4" style="text-decoration: none; color: white;"> register </router-link>
         <router-link to="/login" class="text" style="text-decoration: none; color: white;"> login </router-link>
       </div>
-      
-      <div v-if="getUser.email">
-        <router-link to="/dashboard" 
-        class="text" 
-        style="text-decoration: none; color: white;" >
-           {{getUser.email}}
-        </router-link>
-      
-        <!-- <span class="text white--text" v-if="Home == '/dashboard'" @click="logoutUser"> logout </span> -->
-      
-        <!-- <v-icon class="green--text pop" small v-if="isDashboardNotification">
-          mdi-plus
-        </v-icon> -->
-      </div>
+          
 
-    </v-app-bar>
-    <loader-widget v-if="isLoading"/>
-    <!-- <alert-box /> -->
-    <v-main class="main ">
-      <router-view />
+      <v-icon small class="white--text ml-2 rounded pa-1" @click="home_drawer = !home_drawer"
+      v-if="($vuetify.breakpoint.sm || $vuetify.breakpoint.xs) && getUser.email">
+        mdi-menu
+      </v-icon>
+      <span class="white--text pointer" @click="go(`dashboard`)"
+      v-if="$vuetify.breakpoint.md || $vuetify.breakpoint.xl || $vuetify.breakpoint.lg">
+        {{getUser.email}}
+      </span>
+    </v-toolbar>
+    <!-- <loader-widget v-if="isLoading"/> -->
+
+    <v-navigation-drawer
+      v-if="getUser.email"
+      class="grey lighten-2"
+      v-model="home_drawer"
+      temporary
+      clipped 
+      right
+      fixed
+      width = '60%'
+      >
+        <div class="d-flex justify-end">
+          <div class="white pa-2 rounded" @click="home_drawer = false" style="position: fixed; top: 0; right: 0; z-index:900;">
+            <v-icon class="red--text">
+              mdi-close
+            </v-icon>
+          </div>
+        </div>
+        <nav-drawer />
+      </v-navigation-drawer>
+      <alert-box />
+    <v-main class="main">
+      <v-container fluid class="pa-0">
+        <v-row class="no-gutters"  style="padding-top: 50px;" v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs">
+          <v-col class="col-md-2 col-lg-1" v-if=" $vuetify.breakpoint.lg || $vuetify.breakpoint.md">
+            <farleft-sidebar />
+          </v-col>
+          <v-col class="col-md-4 grey lighten-3 px-4" v-if=" $vuetify.breakpoint.lg">
+            <midleft-sidebar />
+          </v-col>
+          <v-col style="overflow-y: scroll; height: 100vh;">
+            <router-view />
+          </v-col>
+        </v-row>
+        <v-row v-else  style="padding-top: 70px; min-height: calc(100vh - 50px);" class="no-gutters">
+          <v-img class="icon" :src="require(`./assets/under_contruction.svg`)" style="height: 60vh;" contain />
+          <v-col class="col-12 d-flex justify-center">
+            <h1>
+              {{"Desktop View Under Construction. "}}
+            </h1>
+          </v-col>
+          <v-col class="col-12 d-flex justify-center">
+            <h4>
+              {{"Kindly switch to mobile to continue enjoying the platform."}}
+            </h4>
+          </v-col>
+        </v-row>
+      </v-container>
     </v-main>
   </v-app>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import LoaderWidget from './components/widgets/LoaderWidget.vue'
 import AlertBox from './components/widgets/AlertBox.vue'
+import NavDrawer from './components/widgets/NavDrawer.vue'
+import FarleftSidebar from './views/desktop/FarleftSidebar.vue';
+import MidleftSidebar from './views/desktop/MidleftSidebar.vue';
 export default {
   name: 'App',
 
-  components:{LoaderWidget, AlertBox},
+  components:{LoaderWidget, AlertBox, NavDrawer, FarleftSidebar, MidleftSidebar},
 
   computed: {
     ...mapGetters(['isLoading', 'getUser']),
     isGuest(){
       return true
+    },
+  },
+
+  data(){
+    return{
+      available: false,
+      home_drawer: false,
+      show_nav_bar: true
     }
   },
 
   methods:{
+    ...mapActions(['bootAllSockets']),
     goHome(){
-      this.$router.push('/')
+      if(this.getUser.id){
+        this.$router.push('/')
+      } else {
+        window.location.href="https://kazibin.adilirealestate.com"
+      }
+    },
+
+    go(code){
+      this.$router.push('/' + code)
     }
   },
-
+  updated(){
+    this.show_nav_bar = !(this.$router.history.current.name == "Register")
+  },
   mounted(){
+      this.bootAllSockets()
+      Echo.channel('public_logger')
+      .listen('Loginfor', (e) => {
+        console.log('public log')
+        console.log(e)
+      })
   }
 //a7d98b2e21a38e553e564fced22647bf
 };
 </script>
 <style lang="css">
+ .underline{
+    text-decoration: underline;
+  }
+  a{
+    text-decoration: none;
+  }
 
+  .bold-tiny{
+    font-weight: 900;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
   html{
     font-family: dosis;
+    height: 50vh;
     overflow: auto;
   }
   #app{
     padding: 0;
     margin: 0;
+    height: 50vh;
     font-family: dosis;
+  }
+  .app{
+    height: 50vh;
   }
   .icon{
     height: 2rem; 
@@ -101,7 +188,83 @@ export default {
     font-weight: 800;
     font-size: 1.2rem;
   }
+.redlist{
+    background-color: rgb(231, 231, 231); 
+    border-left: solid 5px red;
+  }
+  .redtext{
+    color: red;
+  }
+  .purpletext{
+    color: purple;
+  }
+  .greentext{
+    color: green;
+  }
+  .purplelist{
+    background-color: rgb(231, 231, 231); 
+    border-left: solid 5px rgb(161, 1, 161);
+  }
+  .greenlist{
+    background-color: rgb(231, 231, 231); 
+    border-left: solid 5px green;
+  }
+  .main-wrapper{
+    padding-bottom: 5rem;
+    min-height: calc(100vh - 50px);
+  }
+  .padder{
+    margin: 1rem 2rem;
+    padding: 1rem 0;
+    animation: tada; /* referring directly to the animation's @keyframe declaration */
+    animation-duration: 2s;
+    animation-delay: 2s;
+    animation-iteration-count: 3;
+  }
+  .padded{
+    background-color: rgb(228, 227, 227);
+    padding: 1rem 1rem;
+    font-size: 0.8rem;
+    border-radius: 3%;
+  }
+  .file-left{
+    border: 1px black solid;
+    text-align: left;
+    margin-right: 3rem;
+    border-radius:10px;
+    color: black;
+    padding:  0.5rem 0.5rem;
+  }
+  
+  .bottom{
+    height: 10rem;
+  }
+  .file-right{
+    text-align: right;
+    margin-left: 3rem;
+    position: relative;  
+    right: 0;
+    border-radius:10px;
+    border: 1px black solid;
+    padding: 0.5rem 0.5rem;
+  }
+  .yellowlist{
+    background-color: rgb(231, 231, 231); 
+    border-left: solid 5px yellow;
+  }
+  .blacklist{
+    background-color: rgb(231, 231, 231); 
+    border-left: solid 5px black;
+  }
+  .orangelist{
+    background-color: rgb(231, 231, 231); 
+    border-left: solid 5px orangered;
+  }
 
+  .orange--text{
+    color: orangered
+  }
+  
   .full-page{
     position: fixed; 
     top:0; height:100vh;
@@ -126,7 +289,10 @@ export default {
   .primary-color-text{
     color: rgb(15,14,56);
   }
-  
+
+  .tomato-text{
+    color: tomato;
+  }
 
   .pop{
     /* background-color: red; */
@@ -167,7 +333,87 @@ export default {
   }
 
   .submit-button{
-    width:70vw;
+    width:70%;
+  }
+
+  .pointer{
+    cursor: pointer;
+  }
+  .backg{
+    color: rgb(15,14,56);
+    font-size: 2rem;
+  }
+  
+  .bottom-toolbar{
+    width: 100%;
+  }
+  .main-wrapper{
+  overflow-x: hidden;
+  padding-bottom: 5rem;
+  }  
+  
+  .orangeredtext{
+    color: orangered;
   }
   /* backg2 */
+  .animated_to_right{
+    animation-name: animated_to_right_animation;
+    animation-duration: 1s;
+    background: green;
+    animation-direction:linear;
+    animation-iteration-count: 1;
+    height:0.8rem; 
+    width:0.75rem; 
+    margin-top: -0.2rem;
+  }
+  @keyframes animated_to_right_animation {
+    0%{background: red;}
+    50%{
+      height:1rem; 
+      width:0.75rem; 
+      margin-top: -0.25rem;
+    }
+    100% {transform: translate(1rem, 0); background: green;}
+  }
+  .animated_to_left{
+    animation-name: animated_to_left_animation;
+    animation-duration: 1s;
+    background: red;
+    animation-direction:linear;
+    height:0.8rem; width:0.75rem; margin-top: -0.2rem;
+    animation-iteration-count:1;
+  }
+  @keyframes animated_to_left_animation {
+    0%   {background: green;}
+    
+    50%{
+      height:1rem; 
+      width:0.75rem; 
+      margin-top: -0.25rem;
+    }
+    100% {transform: translate(-1rem, 0); background: red;}
+  }
+  /* width */
+/* ::-webkit-scrollbar {
+  width: 5px;
+  background: red;
+
+} */
+
+/* Track */
+/* ::-webkit-scrollbar-track {
+  background: transparent;
+} */
+
+/* Handle */
+/* ::-webkit-scrollbar-thumb {
+  background: #888;
+  display: none;
+} */
+
+/* Handle on hover */
+/* ::-webkit-scrollbar-thumb:hover {
+  background: rgb(15,14,56);
+  display: block;
+} */
 </style>

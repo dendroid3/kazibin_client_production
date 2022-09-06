@@ -1,8 +1,9 @@
 <template lang="html">
-  <div>
-    <user-card />
-    <transactions-belt class="px-3"/>
+  <div class="main-wrapper grey lighten-3">
+    <user-card v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs" :user="getUser"/>
+    <!-- <transactions-belt class="px-3"/> -->
     <tabs-strip 
+    v-if=" $vuetify.breakpoint.md || $vuetify.breakpoint.sm || $vuetify.breakpoint.xs"
     :posted_fetched="posted_fetched" 
     :taken_fetched="taken_fetched" 
     :offers_fetched="offers_fetched" 
@@ -10,23 +11,160 @@
     :liaisons_fetched="liaisons_fetched" 
     :invoices_fetched="invoices_fetched" 
     :chats_fetched="chats_fetched" 
+    :requests_fetched="requests_fetched"
     />
-    <title-strip :title="`tasks posted`" :add_url="`/Task/Add`"/>
-    <!-- {{getAllTasksPostedByMe}} -->
-    <section class="limiting_wrapper">
-      <tasks-strip v-for="(task, i) in getAllTasksPostedByMe.tasks" :key="i" :task="task" />
+    <section v-if="
+        getAllTasksPostedByMe && 
+        getAllTasksDoneByMe &&
+        getMyOffers &&
+        getMyBids && 
+        getMyBrokers &&
+        getMyWriters &&
+        getDebitedInvoices &&
+        getCreditedInvoices &&
+        getRequestsToAndFromBrokers &&
+        getRequestsToAndFromWWriters &&
+        getLogMessages
+        ">
+
+      <section v-if="getAllTasksPostedByMe">
+        <title-strip :title="`tasks posted`" :page="`Tasks/Posted`" :add_url="`/Task/Add`" v-if="getAllTasksPostedByMe[0]"/>
+        <div class="limiting_wrapper" v-if="getAllTasksPostedByMe[0]">
+          <tasks-strip v-for="task in getAllTasksPostedByMe" :key="task.id" :task="task" />
+        </div>
+      </section>
+
+      <section  class="limiting_wrapper" v-if="getAllTasksDoneByMe">
+        <title-strip :title="`tasks done`" :page="`Tasks/Taken`" :add_url="`/Tasks/Done`" v-if="getAllTasksDoneByMe[0]"/>
+        <div class="limiting_wrapper" v-if="getAllTasksDoneByMe[0]">
+          <tasks-strip v-for="(task, i) in getAllTasksDoneByMe" :key="i" :task="task" />
+        </div>
+      </section>
+
+      <section v-if="getMyOffers" >
+        <title-strip :title="`tasks offered`" :page="`Offers`" :add_url="`/Brokers/Explore`" v-if="getMyOffers[0]"/>
+        <div class="limiting_wrapper" v-if="getMyOffers[0]">
+          <offers-strip v-for="(offer, i) in getMyOffers" :key="i" :offer="offer" />
+        </div>
+      </section>
+    
+      <section v-if="getMyBids">
+        <title-strip :title="`bids made`" :page="`Bids`" :add_url="`/Bids`"  v-if="getMyBids[0]"/>
+        <div class="limiting_wrapper"  v-if="getMyBids[0]">
+          <bids-strip v-for="(bid, i) in getMyBids" :key="i" :bid="bid" />
+        </div>
+      </section>
+
+      <section v-if="getMyBrokers">
+        <title-strip :title="`brokers`" :add_url="`/Explore/Brokers`" :page="`/Network`"  v-if="getMyBrokers[0]"/>
+        <div class="limiting_wrapper" v-if="getMyBrokers[0]">
+          <network-strip :network_option="'brokers'" />
+        </div>
+      </section>
+
+      <section v-if="getMyWriters">
+        <title-strip :title="`writers`" :add_url="`/Explore/Writers`" :page="`/Network`" v-if="getMyWriters[0]"/>
+        <div class="limiting_wrapper" v-if="getMyWriters[0]">
+          <network-strip :network_option="'writers'" />
+        </div>
+      </section>
+
+      <section v-if="getDebitedInvoices">
+        <title-strip :title="`invoices debited`" :add_url="`/Invoice/Create`" :page="`/Invoices`" v-if="getDebitedInvoices[0]"/>
+        <div class="limiting_wrapper" v-if="getDebitedInvoices[0]">
+          <invoice-strip v-for="invoice in getDebitedInvoices" :key="invoice.id" :invoice="invoice"/>
+        </div>
+      </section>
+
+      <section v-if="getCreditedInvoices">
+        <title-strip :title="`invoices credited`" :add_url="`/Invoice/Create`" :page="`/Invoices`"  v-if="getCreditedInvoices[0]"/>
+        <div class="limiting_wrapper"  v-if="getCreditedInvoices[0]">
+          <invoice-strip v-for="invoice in getCreditedInvoices" :key="invoice.id" :invoice="invoice"/>
+        </div>
+      </section>
+      
+      <section v-if="getRequestsToAndFromBrokers || getRequestsToAndFromWWriters">
+        <title-strip :title="`requests`" :add_url="`/Requests`" :page="`/Requests`"  v-if="getRequestsToAndFromBrokers[0] || getRequestsToAndFromWWriters[0]"/> 
+        <div class="limiting_wrapper"  v-if="getRequestsToAndFromBrokers[0] || getRequestsToAndFromWWriters[0]">
+          <requests-card />
+        </div>
+      </section>
+
+      <section v-if="getLogMessages &&  ($vuetify.breakpoint.md || $vuetify.breakpoint.sm || $vuetify.breakpoint.xs)">
+        <title-strip :title="`timeline`" :page="`/Logs`" v-if="getLogMessages[0]" />
+        <div class="limiting_wrapper">
+          <logs-strip :Logs="getLogMessages"  v-if="getLogMessages[0]" />
+        </div>
+      </section>
     </section>
-    <title-strip :title="`tasks done`" :add_url="`/Task/Explore`"/>
-    <title-strip :title="`tasks offered`" :add_url="`/Brokers/Explore`"/>
-    <title-strip :title="`bids made`" :add_url="`/Task/Explore`"/>
-    <title-strip :title="`brokers`" :add_url="`/Brokers/Explore`"/>
-    <title-strip :title="`writers`" :add_url="`/Writers/Explore`"/>
-    <title-strip :title="`invoices debited`" :add_url="`/Invoice/Debit`"/>
-    <title-strip :title="`invoices credited`" :add_url="`/Invoice/Credit`"/>
-    <title-strip :title="`requests`" :add_url="`/Requests`"/>
-    <title-strip :title="`timeline`" :add_url="`/Logs`"/>
 
-
+    <section>
+        <section class="padder" v-if="
+        !getAllTasksPostedByMe || 
+        !getAllTasksDoneByMe ||
+        !getMyOffers ||
+        !getMyBids || 
+        !getMyBrokers ||
+        !getMyWriters ||
+        !getDebitedInvoices ||
+        !getCreditedInvoices ||
+        !getRequestsToAndFromBrokers ||
+        !getRequestsToAndFromWWriters ||
+        !getLogMessages
+        ">
+          <v-row class="no-gutters">
+            <v-col class="col-4 offset-4">
+              <v-progress-linear
+                indeterminate
+                rounded
+                color="blue darken-2"
+                height="5"
+              ></v-progress-linear>
+            </v-col>
+          </v-row>
+          <v-row class="no-gutters">
+            <v-col class="col-12 blue--text d-flex justify-center darken-2">
+              getting your dashboard set up
+            </v-col>
+          </v-row>
+      </section>
+      <v-row class="padder" v-if="
+        !getAllTasksPostedByMe && 
+        !getAllTasksDoneByMe &&
+        !getMyOffers &&
+        !getMyBids && 
+        !getMyBrokers &&
+        !getMyWriters &&
+        !getDebitedInvoices &&
+        !getCreditedInvoices &&
+        !getRequestsToAndFromBrokers &&
+        !getRequestsToAndFromWWriters &&
+        !getLogMessages
+      ">
+        <div class="padded mb-4">
+          <v-row class="no-gutters d-flex align-center">
+          <v-col class="col-12">
+          <emptyHere />
+          </v-col>
+          <v-col class="col-12">
+            You have not done any activity yet. Your activities will appear here once you do. You can post a task
+            <span @click="go('Task/Add')" class="blue--text bold-tiny">here</span> and specify the option you decide. You may offer it to the public for writers to bid on it,
+            or you can offer it to all or some of the writers on your network. You can find writers to be working with consistently
+            <span @click="go('')" class="blue--text bold-tiny"> here.</span>
+            You may alternatively get brokers to be giving you tasks
+            <span @click="go('')" class="blue--text bold-tiny"> here.</span>
+            Also, you may bid on available tasks 
+            <span @click="go('')" class="blue--text bold-tiny"> here.</span>
+            We forward tasks available for bidding in realtime on our telegram group, join it  
+            <a class="blue--text bold-tiny" href="https://t.me/writersplatform"> here </a>
+            To get acquinted with the platform go
+            <a class="blue--text bold-tiny" href="https://t.me/writersplatform"> here </a>
+            to view some tutorials
+          </v-col>
+          </v-row>
+        </div>
+      </v-row>
+    </section>
   </div>
 </template>
 <script>
@@ -35,10 +173,19 @@ import TransactionsBelt from '../components/dashboard/TransactionsBelt.vue'
 import TitleStrip from '../components/dashboard/TitleStrip.vue'
 import TabsStrip from '../components/dashboard/TabsStrip.vue'
 import TasksStrip from '../components/dashboard/TasksStrip.vue'
+import OffersStrip from '../components/dashboard/OffersStrip.vue'
+import LogsStrip from '../components/dashboard/LogsStrip.vue'
+import NetworkStrip from '../components/dashboard/NetworkStrip.vue'
+import RequestsCard from './dashboard/Requests/RequestsCard.vue'
+import BidsStrip from '../components/dashboard/BidsStrip.vue'
+import InvoiceStrip from '../components/dashboard/InvoiceStrip.vue'
+import emptyHere from '../components/svg/emptyHere.vue'
+
 import { mapActions, mapGetters } from 'vuex'
+
 export default {
   name: 'Dashboard',
-  components: {UserCard, TransactionsBelt, TitleStrip, TabsStrip, TasksStrip},
+  components: { UserCard, TransactionsBelt, TitleStrip, TabsStrip, TasksStrip, LogsStrip, RequestsCard, NetworkStrip, OffersStrip, BidsStrip, InvoiceStrip, emptyHere },
   data(){
     return {
       posted_fetched: false,
@@ -47,32 +194,76 @@ export default {
       bids_fetched: false,
       liaisons_fetched: false, 
       invoices_fetched: false, 
-      chats_fetched: false
+      chats_fetched: false,
+      network_fetched: false,
+      requests_fetched: false
     } 
   },
   computed:{
-    ...mapGetters(['getAllTasksPostedByMe'])
+    ...mapGetters(['getAllTasksPostedByMe', 'getLogMessages', 'getMyBrokers', 'getMyWriters', 'getMyOffers', 'getMyBids', 
+    'getAllTasksDoneByMe', 'getRequestsToAndFromWWriters', 'getRequestsToAndFromBrokers', 'getDashboadDetails', 'getUser',
+    'getDebitedInvoices', 'getCreditedInvoices'])
   },
   methods:{
-    ...mapActions(['fetchAllPostedByMe','fetchAllDoneByMe', 'fetchRequestsFromBrokers']),
+    ...mapActions(['fetchAllPostedByMe','fetchAllDoneByMe', 'fetchAllRequests', 'fetchLogMessages', 'fetchMyWriters',
+     'fetchMyBrokers', 'fetchTaskOffers', 'fetchMyBids', 'fetchDashboardDetails', 'getInvoices']),
+    go(code){
+      this.$router.push('/' + code)
+    },
     async boot(){
       try{
+        await this.fetchDashboardDetails()
         await this.fetchAllPostedByMe().then(() => {this.posted_fetched = true})
         await this.fetchAllDoneByMe().then(() => {this.taken_fetched = true})
-        await this.fetchRequestsFromBrokers().then((res) => console.log(res))
+        await this.fetchTaskOffers().then(() => {this.offers_fetched = true})
+        await this.fetchMyBids().then((res) => {this.bids_fetched = true})
+        await this.fetchMyWriters()
+        await this.fetchMyBrokers().then(() => {this.liaisons_fetched = true})
+        await this.fetchAllRequests().then((res) => {this.requests_fetched = true})
+        await this.getInvoices().then((res) => {
+          this.invoices_fetched = true
+        })
+        await this.fetchLogMessages().then((res) => {
+          this.chats_fetched = true
+        })
       } catch {
-        console.log(e)
       }
     }
   },
-  mounted(){
+  created(){
     this.boot()
   }
 }
 </script>
 <style lang="css" scoped>
-  .limiting_wrapper{
-    max-height: 70vh;
-    overflow: scroll;
+.padder{
+    margin: 1rem 2rem;
+    padding: 1rem 0;
+    animation: tada; /* referring directly to the animation's @keyframe declaration */
+    animation-duration: 2s;
+    animation-delay: 2s;
+    animation-iteration-count: 3;
   }
+  .padded{
+    background-color: rgb(228, 227, 227);
+    padding: 1rem 1rem;
+    font-size: 0.8rem;
+    border-radius: 3%;
+  }
+.main-wrapper{
+  overflow-x: hidden;
+  padding-bottom: 2rem;
+  min-height: calc(100vh - 50px);
+}
+
+  .limiting_wrapper{
+    max-height: 85vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  
+  .bold-tiny{
+  font-weight: 900;
+  font-size: 0.9rem;
+}
 </style>

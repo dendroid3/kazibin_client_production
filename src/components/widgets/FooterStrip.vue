@@ -1,25 +1,25 @@
 <template lang="html">
   <div>
-    <div class="grey lighten-4 pa-4">
+    <div class="primary-color white--text px-4 main-wrapper-local">
       <div class="d-flex">
         <div class="half col-6">
-          +254 797 72 72 53 <br>
-          wanjohi@kazib.in <br>
-          Paybill: 230945
+          +254 700 000 000 <br>
+          SUPPORT@KAZIBIN.COM <br>
+          TILL #: 000000
 
         </div>
         <div class="col-6">
-          DeHUB, DEKUT <br>
-          09h street Nyeri <br>
-          P.O.Box, 203-10103
+          328 GREENVILLE. <br>
+          NAIROBI <br>
+          P.O.BOX, 00-0000
         </div>
       </div>
       <div class="d-flex justify-center">
         <a class="link" @click="alert">
-          learn more
+          tutorials
         </a>
         <a class="link" @click="alert">
-          get started
+          bug report
         </a>
         <a class="link" @click="alert">
           about us
@@ -41,11 +41,11 @@
       </div>
       <div class="d-flex align-center justify-center">
         <span class="mx-4 d-flex align-center" >
-          <v-icon small>
+          <v-icon small class="white--text">
             mdi-copyright
           </v-icon>
             {{year}} 
-        <a class="mx-4" href="http://wta.nk">T&C apply</a>
+        <router-link to="/TermsAndConditions" class="text mx-4"> T&C apply </router-link>
         </span>
       </div>
       
@@ -77,8 +77,11 @@ export default {
 }
 
 .half{
-  border-right: solid 1px rgb(15,14,56);
+  border-right: solid 3px white;
 }
 
-  
+.main-wrapper-local{
+  padding-bottom: 5rem;
+  padding-top: 2rem;
+}
 </style>

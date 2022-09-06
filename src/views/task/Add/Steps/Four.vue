@@ -9,7 +9,7 @@
     v-if="due_date && due_time"
     outlined
     type="name"
-    :value="due_date + ' ' + due_time + ':00'"
+    :value="due_refined"
     @change="clearEntries"
     label="due time"
     required
@@ -55,19 +55,28 @@
   <div class="d-flex justify-center mt-2">
     <v-btn 
     small 
-    class="rounded grey red--text submit-button">
+    class="rounded grey white--text submit-button">
       learn more
     </v-btn>
   </div>
 </v-form>
 </template>
 <script>
+import relativeTime from 'dayjs/plugin/relativeTime'
+import dayjs from 'dayjs'
 import {mapActions, mapGetters} from 'vuex'
 export default {
   name: 'Four',
   computed:{
     ...mapGetters(['getStepOneResponse']),
+
+    due_refined(){
+      let refined_time = ' ( ' + dayjs(this.due_date + ' ' + this.due_time + ':00').fromNow(true) + ' from now )'
+      let formated_time = dayjs(this.due_date + ' ' + this.due_time + ':00').format('DD/MM/YYYY')
+      return formated_time + refined_time
+    }
   },
+
   data() {
     return{
       valid: true,
@@ -83,6 +92,7 @@ export default {
       loading: false
     }
   },
+
   methods: {
     ...mapActions(['stepFour']),
     clearEntries(){
@@ -95,11 +105,14 @@ export default {
         expiry_time: this.due_date + ' ' + this.due_time,
         task_id: this.getStepOneResponse.id
       }
-      console.log(data)
       this.stepFour(data).then((res) => {
         this.loading = res
       })
     }
+  },
+  
+  created(){
+    dayjs.extend(relativeTime)
   }
 }
 </script>

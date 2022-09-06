@@ -70,7 +70,7 @@
   <div class="d-flex justify-center mt-2">
     <v-btn 
     small 
-    class="rounded grey red--text submit-button">
+    class="rounded grey white--text submit-button">
       learn more
     </v-btn>
   </div>
@@ -123,7 +123,6 @@ export default {
           data.pay_day = this.pay_day + ' ' + this.pay_time
           break;
       }
-      console.log(data)
       this.stepFive(data).then((res) => {
         this.loading = res
       })

@@ -104,7 +104,7 @@ export default {
       lazy: false,
       task: {},
       mode: '',
-      payment_modes: ['per page', 'per slide', 'for the whole job'],
+      payment_modes: ['per page', 'for the whole job'],
       rules: {
         Required: [
           v => !!v || 'Field is required',

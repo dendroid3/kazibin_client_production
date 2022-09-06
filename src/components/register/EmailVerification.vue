@@ -51,7 +51,6 @@ export default {
     ...mapActions(['verifyEmail'])
   },
   mounted(){
-    console.log('in temp')
     this.verifyEmail()
   }
 }

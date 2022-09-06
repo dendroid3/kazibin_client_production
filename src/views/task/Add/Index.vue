@@ -1,11 +1,18 @@
 <template lang="html">
-  <div>
+  <div class="main-wrapper">
     <v-list
     v-if="getStepOneResponse"
     class="striped"
     subheader
     two-line
     >
+      <v-list-item class="stripped">
+        <v-list-item-content>
+          <v-list-item-title v-text="'code:'"></v-list-item-title>
+          <v-list-item-subtitle v-text="getStepOneResponse.code"></v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+
       <v-list-item class="stripped">
         <v-list-item-content>
           <v-list-item-title v-text="'topic:'"></v-list-item-title>
@@ -61,7 +68,7 @@
       </v-list>
 
       <p class="primary-color-text form-title d-flex justify-start px-2">
-          {{title}}
+          {{title}} 
       </p>
       <one v-if="getAddTaskStep == 1 || !getAddTaskStep" />
       <two v-if="getAddTaskStep == 2" />  
@@ -70,32 +77,18 @@
       <five v-if="getAddTaskStep == 5" />
       <six v-if="getAddTaskStep == 6" />
       <div class="bottom">
-        <div class="pa-2 d-flex ">
-          <span class="red lighten-3 pa-2 rounded"
-            v-if="getAddTaskStep != 1"
-            @click="back">
-            <v-icon small>
-              mdi-arrow-left
+        <div class="pa-2 d-flex justify-center">
+          <v-btn 
+          small 
+          :loading="deleting"
+          @click="deleteIt"
+          v-if="getAddTaskStep != 1"
+          class="rounded red submit-button white--text">
+            <v-icon small class="white--text">
+              mdi-delete
             </v-icon>
-            back
-          </span>
-          <v-spacer />
-          <span class="blue lighten-3 pa-2 rounded" 
-          v-if="getAddTaskStep < 6"
-          @click="skip">
-            skip
-            <v-icon small>
-              mdi-arrow-right
-            </v-icon>
-          </span>
-          <span class="green lighten-3 pa-2 rounded" 
-          v-else
-          @click="finish">
-            finish
-            <v-icon small>
-              mdi-check
-            </v-icon>
-          </span>
+            delete
+          </v-btn>
         </div>
       </div>
   </div>
@@ -120,7 +113,10 @@ export default {
     Six
   },
   computed: {
-    ...mapGetters(['getAddTaskStep', 'getStepOneResponse', 'getStepTwoResponse', 'getStepThreeResponse', 'getStepFourResponse', 'getStepFiveResponse', 'getStepSixResponse']),
+    ...mapGetters([
+      'getAddTaskStep', 'getStepOneResponse', 'getStepTwoResponse', 'getStepThreeResponse', 
+      'getStepFourResponse', 'getStepFiveResponse', 'getStepSixResponse'
+    ]),
     title(){
       switch (this.getAddTaskStep) {
         case 1:
@@ -172,27 +168,39 @@ export default {
       }
     }
   },
+  data(){
+    return{
+      deleting: false
+    }
+  },
   methods: {
-    ...mapActions(['setAddTaskStep', 'flashAdditionResponses']),
+    ...mapActions(['setAddTaskStep', 'flashAdditionResponses', 'deleteTask']),
     back(){
-        console.log(this.getAddTaskStep)
-
       if(this.getAddTaskStep > 1){
         this.setAddTaskStep(this.getAddTaskStep - 1)
-        console.log('in')
       }
     },
     skip(){
-        console.log(this.getAddTaskStep)
 
       if(this.getAddTaskStep < 6){
         this.setAddTaskStep(this.getAddTaskStep + 1)
-        console.log('in')
       }
     },
     finish(){
       this.flashAdditionResponses()
       this.setAddTaskStep(1)
+    },
+    deleteIt(){
+      const confirmation = "You are about to delete this task. This process is irreversable. \n Proceed?"
+      if(!confirm(confirmation)){return}
+      this.deleting = true
+      const data = {
+        task_id: this.getStepOneResponse.id
+      }
+      this.deleteTask(data).then((res) => (
+        this.finish(),
+        this.deleting = false
+      ))
     }
   }
 }
@@ -218,6 +226,9 @@ div{
 }
 .stripped:nth-child(even){
   background-color:#F5F5F5;
+}
+.main-wrapper{
+  padding-bottom: 5rem;
 }
 </style>
 

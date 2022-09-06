@@ -6,7 +6,7 @@
   <div class="d-flex">
     <v-file-input
     outlined
-    hint="Documents and what nots"
+    hint="Files, could be images, word documents or pdfs"
     multiple
     @change="registerFiles"
     label="Files"

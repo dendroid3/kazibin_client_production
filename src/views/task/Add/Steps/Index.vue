@@ -8,6 +8,15 @@ ref="form">
     clearable
     outlined
     type="name"
+    v-model="task.code"
+    :rules="rules.NoSpaces"
+    hint="Suppose you got the task from another platform where tasks are identified with code, you can input it here. This is optional, we will assign your task a code if you have none"
+    label="code(optional)"
+    > </v-text-field>  
+    <v-text-field 
+    clearable
+    outlined
+    type="name"
     v-model="task.topic"
     hint="This is the intended title of the task. Eg: Analysis of Devient Behaviors"
     label="topic"
@@ -88,7 +97,10 @@ export default {
       rules: {
         Required: [
           v => !!v || 'Field is required',
-        ],
+        ], 
+        NoSpaces: [
+          v => (v.split(" ").length == 1) || 'Task identifing code cannot have spaces'
+        ]
       },
       loading: false
     }
@@ -98,7 +110,7 @@ export default {
     submit(){
       this.loading = true
       this.stepOne(this.task).then((res) => {this.loading = res})
-    }
+    },
   }
 }
 </script>

@@ -1,73 +1,65 @@
 <template>
+   <div>
     <v-card
-    class="mx-auto"
-    color="rgb(15,14,56)"
-    outlined
-    style="border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;"
-    >
-    <v-list-item four-line>
-      <div  @click="goToProfile">
-        <v-list-item-avatar
-          class="elevation-20 tomato"
-          tile
-          size="80"
-        >
-        <div class="white--text">
-            <span class="d-flex initials">
-              {{initials}}
-            </span>
-            <v-divider dark/>
-            <span>
-              {{'broker'}}
-            </span>
-          </div>
-        </v-list-item-avatar>
-      </div>
-      <v-list-item-content>
-        <div class="d-flex align-center white--text text-h6" @click="goToProfile">
-          {{getUser.username}} 
-          <v-spacer />
+      class="mx-auto"
+      color="rgb(15,14,56)"
+      outlined
+      style="border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;"
+      >
+      <v-list-item four-line>
+        <div  @click="goToProfile">
+          <v-list-item-avatar
+            class="elevation-20 tomato"
+            tile
+            size="80"
+          >
+          <div class="white--text">
+              <span class="d-flex initials">
+                {{initials}}
+              </span>
+              <v-divider dark/>
+              <span>
+                {{user_type}}
+              </span>
+            </div>
+          </v-list-item-avatar>
         </div>
-        <div class="white--text text-h6" @click="goToProfile">
-          {{getUser.code}} 
-        </div>
-          <div class="d-flex text-caption align-center text-h6 white--text font-weight-light">
-            {{5}}
-            <v-icon color="yellow mb-4" x-small>
-              mdi-star
-            </v-icon>
-            <v-icon color="yellow mb-4" x-small>
-              mdi-star
-            </v-icon>
-            <v-icon color="yellow mb-4" x-small>
-              mdi-star
-            </v-icon>
-            <v-icon color="yellow mb-4" x-small>
-              mdi-star
-            </v-icon>
-            <v-icon color="yellow mb-4" x-small>
-              mdi-star
-            </v-icon>
+        <v-list-item-content>
+          <div class="d-flex align-center white--text text-h6" @click="goToProfile">
+            {{user.username}} 
+            <v-spacer />
           </div>
-      </v-list-item-content>
-    </v-list-item>
-  </v-card>
+          <div class="white--text text-h6" @click="goToProfile">
+            {{user.code}} 
+          </div>
+        </v-list-item-content>
+      </v-list-item>
+    </v-card>
+   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
 export default {
   name: 'UserCard',
+  props:['user'],
   computed:{
-    ...mapGetters(['getUser']),
+    ...mapGetters(['getDashboadDetails']),
     initials(){
-      let str = this.getUser.username
+      let str = this.user.username
       let matches = str.match( /\b(\w)/g )
       return matches.join('')
+    },
+    user_type(){
+      if(this.getDashboadDetails.posted.posted_all > this.getDashboadDetails.taken.taken_all){
+        return 'broker'
+      } else {
+        return 'writer'
+      }
     }
   },
   methods:{
     goToProfile(){
-      this.$router.push('/' + this.getUser.code)
+      this.$router.push('/' + this.user.code)
     }
   }
 }

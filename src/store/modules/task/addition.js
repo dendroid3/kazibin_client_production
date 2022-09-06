@@ -1,6 +1,7 @@
 // this module is for addition of tasks.
 
 import axios from 'axios'
+import router from '../../../router'
 
 const state = {
   step: 1,
@@ -25,14 +26,12 @@ const getters = {
 }
 
 const actions = {
-  async stepOne({commit}, data){
+  async stepOne({commit, dispatch}, data){
     try{
-      console.log('ibjnsdd')
       commit('SET_STEP_ONE_ERROR', null)
 
       const response = await
       axios.post('create_task/step_1', data)
-      console.log(response)
 
       if(response.status == 201){
         commit('SET_STEP_ONE_ERROR', response.data.errors)
@@ -44,12 +43,16 @@ const actions = {
 
       return false
     }catch(e){
-      commit('SET_STEP_ONE_ERROR', response.data.errors)
-      console.log(e)
+            if(e.response){
+                dispatch('handleError', {error: e, error_code: e.response.status, action: 'stepOne'}, {root: true})
+            } else {
+                dispatch('handleError', {error: e, action: 'stepOne'}, {root: true})
+            }
+      // commit('SET_STEP_ONE_ERROR', e.errors)
       return false
     }
   },
-  async stepTwo({commit}, data){
+  async stepTwo({commit, dispatch}, data){
     try{
       const response = await
       axios.post('create_task/step_2', data)
@@ -58,12 +61,16 @@ const actions = {
 
       return false
     }catch(e){
-      console.log(e)
+      if(e.response){
+          dispatch('handleError', {error: e, error_code: e.response.status, action: 'stepTwo'}, {root: true})
+      } else {
+          dispatch('handleError', {error: e, action: 'stepTwo'}, {root: true})
+      }
       return false
     }
   },
   
-  async stepThree({commit}, data){
+  async stepThree({commit, dispatch}, data){
     try{
       const response = await
       axios.post('create_task/step_3', data)
@@ -71,11 +78,15 @@ const actions = {
       commit('SET_ADD_TASK_STEP', 4)
       return false
     }catch(e){
-      console.log(e)
+      if(e.response){
+          dispatch('handleError', {error: e, error_code: e.response.status, action: 'stepThree'}, {root: true})
+      } else {
+          dispatch('handleError', {error: e, action: 'stepThree'}, {root: true})
+      }
       return false
     }
   },
-  async stepFour({commit}, data){
+  async stepFour({commit, dispatch}, data){
     try{
       const response = await
       axios.post('create_task/step_4', data)
@@ -83,11 +94,15 @@ const actions = {
       commit('SET_ADD_TASK_STEP', 5)
       return false
     }catch(e){
-      console.log(e)
+      if(e.response){
+          dispatch('handleError', {error: e, error_code: e.response.status, action: 'stepFour'}, {root: true})
+      } else {
+          dispatch('handleError', {error: e, action: 'stepFour'}, {root: true})
+      }
       return false
     }
   },
-  async stepFive({commit}, data){
+  async stepFive({commit, dispatch}, data){
     try{
       const response = await
       axios.post('create_task/step_5', data)
@@ -95,20 +110,52 @@ const actions = {
       commit('SET_ADD_TASK_STEP', 6)
       return false
     }catch(e){
-      console.log(e)
+      if(e.response){
+          dispatch('handleError', {error: e, error_code: e.response.status, action: 'stepFive'}, {root: true})
+      } else {
+          dispatch('handleError', {error: e, action: 'stepFive'}, {root: true})
+      }
       return false
     }
   },
-  async stepSix({commit}, data){
+  async stepSix({commit, dispatch}, data){
     try{
       const response = await
       axios.post('create_task/step_6', data)
-      commit('SET_STEP_SIX_RESPONSE', response.data.task)
-      commit('SET_ADD_TASK_STEP', 6)
-      console.log(response)
+      if(data.reassigning){
+        dispatch('openAlert', {message: response.data, code: 'success'}, {root: true})
+        router.push('/dashboard')
+      } else {
+        commit('SET_STEP_SIX_RESPONSE', response.data.task)
+        commit('FLASH_RESPONSES')
+        commit('SET_ADD_TASK_STEP', 1)
+        dispatch('openAlert', {message: response.data, code: 'success'}, {root: true})
+        router.push('/dashboard')
+        return false
+      }
+    }catch(e){
+      if(e.response){
+        dispatch('handleError', {error: e, error_code: e.response.status, action: 'stepSix'}, {root: true})
+      } else {
+        dispatch('handleError', {error: e, action: 'stepSix'}, {root: true})
+      }
+      return false
+    }
+  },
+  async deleteTask({dispatch}, data){
+    try{
+      const response = await
+      axios.post('task/delete', data)
+
+      dispatch('openAlert', {message: response.data.message, code: 'success'}, {root: true})
+      
       return false
     }catch(e){
-      console.log(e)
+      if(e.response){
+        dispatch('handleError', {error: e, error_code: e.response.status, action: 'deleteTask'}, {root: true})
+      } else {
+        dispatch('handleError', {error: e, action: 'deleteTask'}, {root: true})
+      }
       return false
     }
   },

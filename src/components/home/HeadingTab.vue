@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="d-flex">
+    <div class="d-flex align-center">
       <span class="heading primary-color-text">
         {{heading}}
       </span>

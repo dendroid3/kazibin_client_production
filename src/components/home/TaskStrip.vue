@@ -1,31 +1,39 @@
 <template lang="html">
-  <div class="wrapper pa-2">
-    <span class="head">
-      {{task.code}}
-      {{': '}}
-      {{task.topic}}  
-    </span>
-     <br>
-    {{task.unit}} {{task.type}} 
-    {{due_time}} <br>
-    {{full_pay }}{{mode_of_payment}} <br>
-    <div class="d-flex align-center">
-      {{"Broker: 3/5"}}
-      <v-icon color="yellow"  small>
-        mdi-star
-      </v-icon>
-      {{". Difficulty: 2/10"}}
-      <v-icon color="yellow"  small>
-        mdi-star
-      </v-icon>
-      {{". Files: 0"}}
-      <v-icon color="bleck"  small>
-        mdi-file
-      </v-icon>
-    </div>
+  <div class="grey lighten-3 wrapper pa-2">
+    <section>
+      <span class="head" @click="goToView">
+        {{task.code}}
+        {{': '}}
+        {{task.topic}}  
+      </span>
+      <br>
+      {{task.unit}} {{task.type}} 
+      {{due_time}} <br>
+      {{full_pay }}{{mode_of_payment}} <br>
+      <div class="d-flex align-center">
+        {{"Broker: "}}
+        {{task.broker.user.username}}
+        <v-icon color="yellow"  small>
+          mdi-star
+        </v-icon>
+        {{". Difficulty: " + task.difficulty + "/10"}}
+        <v-icon color="yellow"  small>
+          mdi-star
+        </v-icon>
+        {{". Files: 0"}}
+        <v-icon color="bleck"  small>
+          mdi-file
+        </v-icon>
+      </div>
+    </section>
     <div class="d-flex justify-end" >
-      <v-btn small class="elevation-15 red lighten-2 white--text" style="font-weight: 900;">
-        Bid
+      <v-btn small 
+      class="elevation-15 red lighten-2 white--text" 
+      style="font-weight: 900;" 
+      @click="initiateBid"
+      :disabled="bidded" 
+      :loading="bidding">
+        {{bidded ? 'bid sent' : 'bid'}}
       </v-btn>
     </div>
   </div>
@@ -34,12 +42,15 @@
 
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'TaskStrip',
   props:[
     'task'
   ],
+  mounted(){
+  },
   computed:{
     mode_of_payment(){
       switch (this.task.pay_day) {
@@ -72,7 +83,30 @@ export default {
   data(){
     return {
       rating:3,
-      difficulty: 2
+      difficulty: 2,
+      bidding: false,
+      bidded: false
+    }
+  },
+  methods:{
+    ...mapActions(['createBid']),
+    goToView(){
+      this.$router.push('/t/' + this.task.code)
+    },
+    initiateBid(){
+      let prompt_message = "You are about to bid on " + this.task.unit + " " + this.task.type +
+      " task, code: " + this.task.code + " worth " + this.task.full_pay + " KES. Proceed?"
+      if(!confirm(prompt_message)){
+        return
+      }
+      this.bidding = true
+      const data = {
+        task_id: this.task.id
+      }
+      this.createBid(data).then(() => {
+        this.bidding = false
+        this.bidded = true
+      })
     }
   },
   created(){
@@ -87,7 +121,7 @@ export default {
   }
   
   .wrapper{
-    background-color: #e0e0e0;
+    background-color: blue;
     position: relative;
   }
   .wrapper::after{

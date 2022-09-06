@@ -1,22 +1,19 @@
 <template lang="html">
-  <div class="right pa-2"  @click="view">
+  <div class="right-person pa-2 pointer"  @click="view">
     <div class="username">
-      {{(user.code) ? user.code : 'JH0P-5F65FG' }} 
+      {{(user.code) ? user.code + ": " + user.username: null }} 
     </div>
     <div class="username">
-      {{ user.username}} 
+      {{broker ? 'Posted :: ' + user.total_tasks : 'Taken :: ' + user.total_tasks}}
     </div>
     <div class="username">
-      {{writer ? 'Offered :: 18 ' : null}}
+      {{broker ? 'Available :: ' + user.available_tasks : 'Underway :: ' + user.underway_tasks }}
     </div>
     <div class="username">
-      {{broker ? 'Posted :' : 'Taken :'}}: 9
+      {{'Cancelled :: ' + user.cancelled_tasks}}
     </div>
     <div class="username">
-      {{broker ? 'Cancelled :: 1 ' : null}}
-    </div>
-    <div class="username">
-      Rating :: 4
+      {{broker ? 'Writers :: ' + user.writers : "Brokers :: " + user.brokers}}
     </div>
     <!-- <div class="username">
       Dennis Mwangi | Dennis Mwangi | Dennis Mwangi | Dennis Mwangi | Dennis Mwangi
@@ -33,25 +30,26 @@ export default {
     'broker'
   ],
   methods:{
-    ...mapActions(['setViewWriter']),
+    ...mapActions(['setViewWriter', 'setViewBroker']),
     view(){
       if(this.broker){
-        alert("broker" + this.user.id)
-        // setViewWriter
+        this.setViewBroker(this.user)
+        this.$router.push('/Broker/' + this.user.code)
       } else {
-        alert("writer" +this.user.id)
+        // alert("writer" +this.user.code)
         this.setViewWriter(this.user)
-        this.$router.push('/Writer/' + this.user.id)
+        this.$router.push('/Writer/' + this.user.code)
       }
     }
   }
 }
 </script>
 <style lang="css" scoped>
-.right{
+.right-person{
   border-right: solid 1px rgb(15,14,56);
   background-color: #e0e0e0;
   min-height: 5rem;
+  height: 100%;
 }
 .username{
   font-size: 1rem;

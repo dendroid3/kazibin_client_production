@@ -1,5 +1,13 @@
 <template>
   <div class="main-wrapper py-2">
+    <v-row class="no-gutters">
+      <v-col class="col-12 pa-4 d-flex justify-center">
+        <!-- <v-img class="icon pa-4" :src="require(`../../assets/icon.svg`)" contain style="height: 50px;" /> -->
+        <span @click="go('/')">
+          <animated-icon style="height:70px;" />
+        </span>
+      </v-col>
+    </v-row>
     <v-form class="full-width mt-4 mx-2"
     v-model="valid"
     :lazy-validation="lazy"
@@ -9,7 +17,8 @@
       </p>
       <div class="mx-2 px-4">
         <v-text-field 
-        hint="The username is intended just for the eyes only. It is not neccessary that is unique to you. Kazibin shall assign you a unique code that shall be your identifier on the platform."
+        hint="The username is intended just for the eyes only. It is not neccessary that is unique to you. Kazibin shall assign you a unique code that shall be your identifier on 
+              the platform."
         outlined
         clearable
         v-model="user.username"
@@ -22,7 +31,8 @@
       <div class="mx-2 px-4">
         <v-text-field 
         outlined
-        hint="The phone number must be a safaricom number. Your payments will be withdrawn only through this number. You can, however, deposit to pay for your tasks using whatever number you fancy."
+        hint="The phone number must be a safaricom number. Your payments will be withdrawn only through this number. You can, however, deposit to pay for your tasks 
+              using whatever number you fancy."
         clearable
         v-model="user.phone_number"
         type="number"
@@ -38,7 +48,8 @@
       </div>
       <div class="mx-2 px-4">
         <v-text-field 
-        hint="You must have access to this email address. You shall need to verify it at some point. Password resets will be done through this email and other comminication from Kazibin may be dispensed through this email as well."
+        hint="You must have access to this email address. You shall need to verify it at some point. Password resets will be done through this email and other comminication 
+              from Kazibin may be dispensed through this email as well."
         outlined
         clearable
         v-model="user.email"
@@ -69,14 +80,16 @@
           v-model="user.c_password"
           type="password"
           label="confirm password"
-          :rules="[matchpasswordRule]"
+          :rules="rules.c_passwordRules"
           :disabled="!user.pass"
           required
           > </v-text-field>  
       </div>
 
-      <div class="d-flex text-center mx-2">
-        <span>by registering you agree to our  <a href="http://192.168.61.51:8000/storage/Kazibin terms and conditions.pdf"> terms and conditions </a></span>
+      <div class="d-flex text-center justify-center mx-2 my-2">
+        <span>
+          by registering you agree to our<router-link to="/TermsAndConditions" class="text mx-1">terms and conditions </router-link>
+        </span>
       </div>
 
       <div class="d-flex justify-center">
@@ -89,14 +102,14 @@
           sign up
         </v-btn>
       </div>
-      <div class="d-flex justify-center mt-2">
+      <!-- <div class="d-flex justify-center mt-2">
         <v-btn 
         small 
         @click="goHelp" 
         class="rounded grey red--text submit-button">
           learn more
         </v-btn>
-      </div>
+      </div> -->
 
       <div class="mx-2 mt-2 d-flex align-center text-center">
         <v-spacer />
@@ -112,13 +125,11 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
+import AnimatedIcon from '../widgets/AnimatedIcon.vue'
 export default {
   name: 'CreateAccount',
-  computed:{
-    matchpasswordRule(){
-      return  this.user.password === this.user.c_password  || 'Your Passwords Do NOT Match!'
-    }
-  },
+  components:{AnimatedIcon},
+  computed:{  },
   data () {
     return {
       valid: true,
@@ -147,6 +158,10 @@ export default {
         passwordRules: [
           v => !!v || 'Password is required',
           v => (v && v.length >= 8 || 'Password is not long enough')
+        ],
+        c_passwordRules: [
+          v => !!v || 'Please confirm password',
+          v => (v === this.user.pass) || "Passwords do not match"
         ]
       },
       loading: false
@@ -159,7 +174,6 @@ export default {
       this.register(this.user).then((res) => {
         this.loading = res
       })
-      console.log(this.user)
     },
     goLogin () {
       this.$router.push('/Login')
@@ -169,12 +183,16 @@ export default {
     },
     submit(){
       alert(task)
+    },
+    go(code){
+      this.$router.push(code)
     }
   }
 }
 </script>
 <style lang="css" scoped>
   .main-wrapper{
+    padding-bottom: 5rem;
     align-items: center;
   }
 </style>

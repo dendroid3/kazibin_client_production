@@ -5,7 +5,8 @@ import router from '../../router'
 const state = {
   email_verified: false,
   user: {},
-  login_error: null
+  login_error: null,
+  token: false
 }
 
 const getters = {
@@ -20,44 +21,57 @@ const actions = {
       dispatch('setLoadingStatus', true, {root: true})
       const response = await
       axios.post('register', data)
-      console.log(response)
       dispatch('setLoadingStatus', false, {root: true})
       commit('SET_AUTH_DETAILS', response.data.token)
       commit('SET_USER_DETAILS', response.data.user)
       if(response.status == 201){return}
-      dispatch('inputRegistrationStep', 2, {root: true})
+      // dispatch('inputRegistrationStep', 3, {root: true})
+      window.location.href = process.env.VUE_APP_FRONT_END_URL + `MyProfile` 
       return false
     } catch (e) {
-      console.log(e)
+      if(e.response){
+        dispatch('handleError', {error: e, error_code: e.response.status, action: 'register'}, {root: true})
+      } else {
+        dispatch('handleError', {error: e, action: 'register'}, {root: true})
+      }
     }
   },
-  async verifyEmail ({commit, getters}) {
+
+  updateUserDetails({}, data){
+    commit('SET_USER_DETAILS', data)
+  },
+
+  async verifyEmail ({commit, dispatch, getters}) {
     try {
       const response = await
       axios.post('verify_email', getters.getUser)
-      console.log(response)
       if(response.status == 201) { 
-        console.log('nope') 
         return 
       }
       commit('SET_VERIFICATION', true)
     } catch (e) {
-      console.log(e)
+      if(e.response){
+        dispatch('handleError', {error: e, error_code: e.response.status, action: 'verifyEmail'}, {root: true})
+      } else {
+        dispatch('handleError', {error: e, action: 'verifyEmail'}, {root: true})
+      }
     }
   },
   
   async createProfile ({commit, dispatch}, data) {
     try {
       dispatch('setLoadingStatus', true, {root: true})
-      console.log('in auth')
       const response = await
       axios.post('create_profile', data)
       commit('SET_USER_DETAILS', response.data.user)
       dispatch('setLoadingStatus', false, {root: true})
       router.push('/dashboard')
-      console.log(response)
     } catch (e) {
-      console.log(e)
+      if(e.response){
+        dispatch('handleError', {error: e, error_code: e.response.status, action: 'createProfile'}, {root: true})
+      } else {
+        dispatch('handleError', {error: e, action: 'createProfile'}, {root: true})
+      }
     }
   },
   
@@ -65,20 +79,23 @@ const actions = {
     try {
       dispatch('setLoadingStatus', true, {root: true})
       commit('SET_LOGIN_ERROR', null)
-      console.log('in auth')
       const response = await
       axios.post('login', data)
       dispatch('setLoadingStatus', false, {root: true})
       if(response.status == 200){
         commit('SET_AUTH_DETAILS', response.data.token)
         commit('SET_USER_DETAILS', response.data.user)
-        router.push('/dashboard')
+        window.location.href = process.env.VUE_APP_FRONT_END_URL + `dashboard`
+        return true 
       } else {
         dispatch('setLoginError', response.data.error, {root: true})
       }
-      console.log(response)
-    } catch (e) {login
-      console.log(e)
+    } catch (e) {
+      if(e.response){
+        dispatch('handleError', {error: e, error_code: e.response.status, action: 'login'}, {root: true})
+      } else {
+        dispatch('handleError', {error: e, action: 'login'}, {root: true})
+      }
     }
   },
 

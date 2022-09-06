@@ -1,6 +1,6 @@
 {
   "name": "kazibin",
-  "version": "0.1.0",
+  "version": "2022.09.04.0.1.4",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -34,6 +34,8 @@
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^6.2.2",
+    "laravel-echo": "^1.14.0",
+    "pusher-js": "^7.4.0",
     "sass": "^1.32.0",
     "sass-loader": "^10.0.0",
     "vue-cli-plugin-vuetify": "~2.1.0",

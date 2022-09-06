@@ -38,6 +38,7 @@
       </div>
       <div class="d-flex justify-center">
         <v-btn 
+        :loading="loading"
         small 
         @click="loginUser" 
         class="rounded success submit-button"
@@ -70,6 +71,7 @@ export default {
       valid: true,
       lazy: false,
       user: {},
+      loading: false,
       rules: {
         emailRules: [
           v => !!v || 'Email is required',
@@ -88,7 +90,10 @@ export default {
   methods: {
     ...mapActions(['login', 'setLoginError']),
     loginUser(){
-      this.login(this.user)
+      this.loading = true
+      this.login(this.user).then(res => {
+        this.loading = false
+      })
     },
     goRegister(){
       this.$router.push('/register')

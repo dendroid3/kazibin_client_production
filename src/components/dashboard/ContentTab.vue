@@ -1,15 +1,15 @@
 <template>
-  <v-col class="col-4 px-1 mb-1">
-        <div class="white rounded elevation-1">
-          <div class="d-flex justify-center black--text bold">
+  <v-col class="col-4 px-1 mb-1 ">
+        <div class="grey pointer lighten-2 rounded elevation-10" @click="go">
+          <div class="d-flex justify-center bold">
             {{title}}
           </div>
-          <v-divider inset/>
+          <v-divider inset />
           <div class="d-flex justify-end align-center px-1 black--text">
-            <v-icon small class="green--text" v-if="1==2">
+            <v-icon x-small class="green--text" v-if="isGreen">
               mdi-circle
             </v-icon>
-            <v-icon small class="red--text" v-if="1==2">
+            <v-icon x-small class="red--text" v-if="isRed">
               mdi-circle
             </v-icon>
             <v-spacer />
@@ -29,7 +29,29 @@
 export default {
   name: 'ContentTab',
   props: [
-    'title', 'count', 'loading'
-  ]
+    'title', 'count', 'loading', 'url', 'isGreen', 'isRed'
+  ],
+  methods: {
+    go(){
+      if(this.url){
+        this.$router.push('/' +this.url)
+      }
+    }
+  }
 }
 </script>
+
+<style lang="css" scoped>
+  .redtext{
+    color: red;
+  }
+  .purpletext{
+    color: purple;
+  }
+  .greentext{
+    color: green;
+  }
+  .yellowtext{
+    color: yellow;
+  }
+</style>

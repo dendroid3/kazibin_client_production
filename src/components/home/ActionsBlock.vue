@@ -2,8 +2,8 @@
   <div class="grey lighten-1">
     
     <action-tab
-      :action="`post a task`"
-      :description="`access the the benefits`"
+      :action="`Post a Task`"
+      :description="`post task to over 10000 writers`"
       :route="`Task/Add`"
     />
     <action-tab

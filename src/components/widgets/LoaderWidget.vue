@@ -1,6 +1,7 @@
 <template>
   <v-progress-linear
     class="bottom primary-color"
+    color="red"
     indeterminate
   ></v-progress-linear>
 </template>
@@ -12,6 +13,6 @@ export default {
 <style lang="css" scoped>
   .bottom{
     position: fixed;
-    bottom: 0;
+    top: 50px;
   }
 </style>
