@@ -1,9 +1,13 @@
 <template lang="html">
   <div class="main grey lighten-3">
     <v-toolbar 
-      class="pb-4"
+      class="pb-4 top-toolbar"
       flat
-      style="padding-bottom: 5rem; position: fixed; top: 50px; right: 0; left: 0;">
+      :class="{
+        'full-width': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs,
+        'medium-width':  $vuetify.breakpoint.md,
+        'large-width':  $vuetify.breakpoint.lg,
+      }">
 
         <section v-if="getRequestChatView.broker" >
 
@@ -58,7 +62,12 @@
     <v-toolbar 
     :min-height="100"
     flat
-    style="padding-bottom: 5rem; position: fixed; bottom: 0; right: 0; left: 0;" >
+    class="bottom-toolbar"
+    :class="{
+      'full-width': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs,
+      'medium-width':  $vuetify.breakpoint.md,
+      'large-width':  $vuetify.breakpoint.lg,
+    }">
         <section v-if="getRequestChatView.status < 2">
           
           <section v-if="!getRequestChatView.mine" class="section">
@@ -178,7 +187,8 @@
 
     </section>
 
-    <div class="d-flex align-end" style="min-height:calc(100vh - 300px);" v-if="!fetching_messages">
+    <chat-box :messages="getRequestMessages" v-if="!fetching_messages"/>
+    <!-- <div class="d-flex align-end" style="min-height:calc(100vh - 300px);" v-if="!fetching_messages">
       <div>
 
         <div class="d-flex message"
@@ -230,7 +240,7 @@
         </div>
 
       </div>
-    </div>
+    </div> -->
     <div class="transparent transparent--text bottom" id="bottom">kazibin</div>
     <v-file-input
     class="d-none"
@@ -249,8 +259,10 @@
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import ChatBox from '../../../components/ChatBox.vue'
 export default {
   name: 'Chat',
+  components:{ChatBox},
   filters: {
     refineFileNameMessage: (name) => {
       if(name.length > 10 ){
@@ -344,7 +356,6 @@ export default {
         this.acceptLiaisonRequest(data).then(response => {
           this.accept_status = response.data.success
           this.accepting = false
-          this.$router.push('/dashboard')
         })
       } else {
         const data = {
@@ -353,7 +364,6 @@ export default {
         this.acceptLiaisonRequest(data).then(response => {
           this.accept_status = response.data.success
           this.accepting = false
-          this.$router.push('/dashboard')
         })
       }
     },
@@ -471,6 +481,19 @@ export default {
   .all_right{
     display: flex;
     justify-content: flex-end;
+  }
+  .bottom-toolbar{
+    padding-bottom: 5rem; 
+    position: fixed; 
+    bottom: 0; 
+    right: 0;
+  }
+  .top-toolbar{
+    padding-bottom: 5rem; 
+    position: fixed; 
+    top: 50px; 
+    right: 0; 
+    z-index: 1;
   }
   .main{
     height: 100%;

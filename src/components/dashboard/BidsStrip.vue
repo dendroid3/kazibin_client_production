@@ -1,6 +1,6 @@
 <template>
-  <v-row class="wrapper px-3">
-    <v-col class="col-12 col-block redlist pointer" :class="{
+  <div class="wrapper pointer">
+    <div class="col-12 pa-2 col-block redlist pointer" :class="{
       greenlist: status == 'Won',
       blacklist: status == 'Pulled'
     }"
@@ -41,8 +41,8 @@
         {{"Bid " + status}}
       </span>
 
-    </v-col>
-  </v-row>
+    </div>
+  </div>
 </template>
 
 <script>

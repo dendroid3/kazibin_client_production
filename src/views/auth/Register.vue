@@ -1,5 +1,5 @@
 <template lang="html">
-  <div>
+  <div class="grey lighten-3">
     <create-account v-if="getRegistrationStep == 1"/>
     <email-verification  v-if="getRegistrationStep == 2"/>
     <create-profile  v-if="getRegistrationStep == 3"/>

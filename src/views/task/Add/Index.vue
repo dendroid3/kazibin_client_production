@@ -1,11 +1,17 @@
 <template lang="html">
-  <div class="main-wrapper">
+  <div class="main-wrapper" :class="{
+        'full-width': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs,
+        'medium-width col-6 offset-3':  $vuetify.breakpoint.md,
+        'large-width col-6 offset-3':  $vuetify.breakpoint.lg,
+      }">
+
     <v-list
     v-if="getStepOneResponse"
     class="striped"
     subheader
     two-line
     >
+    
       <v-list-item class="stripped">
         <v-list-item-content>
           <v-list-item-title v-text="'code:'"></v-list-item-title>
@@ -77,6 +83,19 @@
       <five v-if="getAddTaskStep == 5" />
       <six v-if="getAddTaskStep == 6" />
       <div class="bottom">
+        <div class="pa-2 d-flex justify-center">
+          <v-btn 
+          small 
+          @click="skip"
+          v-if="getAddTaskStep == 2"
+          class="rounded grey submit-button white--text">
+            <v-icon small class="white--text">
+              mdi-arrow-right
+            </v-icon>
+            skip
+          </v-btn>
+        </div>
+        
         <div class="pa-2 d-flex justify-center">
           <v-btn 
           small 
@@ -181,7 +200,6 @@ export default {
       }
     },
     skip(){
-
       if(this.getAddTaskStep < 6){
         this.setAddTaskStep(this.getAddTaskStep + 1)
       }
@@ -229,6 +247,8 @@ div{
 }
 .main-wrapper{
   padding-bottom: 5rem;
+  /* margin-right: 40rem; */
+  overflow-x: hidden;
 }
 </style>
 

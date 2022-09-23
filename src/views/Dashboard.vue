@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="main-wrapper grey lighten-3">
     <user-card v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs" :user="getUser"/>
-    <!-- <transactions-belt class="px-3"/> -->
+    <transactions-belt class="px-3 my-4" v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs || $vuetify.breakpoint.md"/>
     <tabs-strip 
     v-if=" $vuetify.breakpoint.md || $vuetify.breakpoint.sm || $vuetify.breakpoint.xs"
     :posted_fetched="posted_fetched" 
@@ -12,6 +12,7 @@
     :invoices_fetched="invoices_fetched" 
     :chats_fetched="chats_fetched" 
     :requests_fetched="requests_fetched"
+    :transactions_fetched="transactions_fetched"
     />
     <section v-if="
         getAllTasksPostedByMe && 
@@ -34,7 +35,7 @@
         </div>
       </section>
 
-      <section  class="limiting_wrapper" v-if="getAllTasksDoneByMe">
+      <section v-if="getAllTasksDoneByMe">
         <title-strip :title="`tasks done`" :page="`Tasks/Taken`" :add_url="`/Tasks/Done`" v-if="getAllTasksDoneByMe[0]"/>
         <div class="limiting_wrapper" v-if="getAllTasksDoneByMe[0]">
           <tasks-strip v-for="(task, i) in getAllTasksDoneByMe" :key="i" :task="task" />
@@ -90,6 +91,14 @@
         </div>
       </section>
 
+      <section v-if="getMyTransactions">
+        <title-strip :title="`transactions`" :page="`/Transactions`"  v-if="getMyTransactions[0]"/> 
+        <div class="limiting_wrapper"  v-if="getMyTransactions[0]">
+          <!-- {{getMyTransactions}} -->
+          <transaction-strip :transaction="transaction" v-for="transaction in getMyTransactions" :key="transaction.id" />
+        </div>
+      </section>
+
       <section v-if="getLogMessages &&  ($vuetify.breakpoint.md || $vuetify.breakpoint.sm || $vuetify.breakpoint.xs)">
         <title-strip :title="`timeline`" :page="`/Logs`" v-if="getLogMessages[0]" />
         <div class="limiting_wrapper">
@@ -110,6 +119,7 @@
         !getCreditedInvoices ||
         !getRequestsToAndFromBrokers ||
         !getRequestsToAndFromWWriters ||
+        !getMyTransactions ||
         !getLogMessages
         ">
           <v-row class="no-gutters">
@@ -129,17 +139,18 @@
           </v-row>
       </section>
       <v-row class="padder" v-if="
-        !getAllTasksPostedByMe && 
-        !getAllTasksDoneByMe &&
-        !getMyOffers &&
-        !getMyBids && 
-        !getMyBrokers &&
-        !getMyWriters &&
-        !getDebitedInvoices &&
-        !getCreditedInvoices &&
-        !getRequestsToAndFromBrokers &&
-        !getRequestsToAndFromWWriters &&
-        !getLogMessages
+        !getAllTasksPostedByMe[0] && 
+        !getAllTasksDoneByMe[0] &&
+        !getMyOffers[0] &&
+        !getMyBids[0] && 
+        !getMyBrokers[0] &&
+        !getMyWriters[0] &&
+        !getDebitedInvoices[0] &&
+        !getCreditedInvoices[0] &&
+        !getRequestsToAndFromBrokers[0] &&
+        !getRequestsToAndFromWWriters[0] &&
+        !getLogMessages[0] &&
+        !getMyTransactions[0]
       ">
         <div class="padded mb-4">
           <v-row class="no-gutters d-flex align-center">
@@ -182,10 +193,11 @@ import InvoiceStrip from '../components/dashboard/InvoiceStrip.vue'
 import emptyHere from '../components/svg/emptyHere.vue'
 
 import { mapActions, mapGetters } from 'vuex'
+import TransactionStrip from '../components/dashboard/TransactionStrip.vue'
 
 export default {
   name: 'Dashboard',
-  components: { UserCard, TransactionsBelt, TitleStrip, TabsStrip, TasksStrip, LogsStrip, RequestsCard, NetworkStrip, OffersStrip, BidsStrip, InvoiceStrip, emptyHere },
+  components: { UserCard, TransactionsBelt, TitleStrip, TabsStrip, TasksStrip, LogsStrip, RequestsCard, NetworkStrip, OffersStrip, BidsStrip, InvoiceStrip, emptyHere, TransactionStrip },
   data(){
     return {
       posted_fetched: false,
@@ -196,17 +208,18 @@ export default {
       invoices_fetched: false, 
       chats_fetched: false,
       network_fetched: false,
-      requests_fetched: false
+      requests_fetched: false,
+      transactions_fetched: false
     } 
   },
   computed:{
     ...mapGetters(['getAllTasksPostedByMe', 'getLogMessages', 'getMyBrokers', 'getMyWriters', 'getMyOffers', 'getMyBids', 
     'getAllTasksDoneByMe', 'getRequestsToAndFromWWriters', 'getRequestsToAndFromBrokers', 'getDashboadDetails', 'getUser',
-    'getDebitedInvoices', 'getCreditedInvoices'])
+    'getDebitedInvoices', 'getCreditedInvoices', 'getMyTransactions'])
   },
   methods:{
     ...mapActions(['fetchAllPostedByMe','fetchAllDoneByMe', 'fetchAllRequests', 'fetchLogMessages', 'fetchMyWriters',
-     'fetchMyBrokers', 'fetchTaskOffers', 'fetchMyBids', 'fetchDashboardDetails', 'getInvoices']),
+     'fetchMyBrokers', 'fetchTaskOffers', 'fetchMyBids', 'fetchDashboardDetails', 'getInvoices', 'fetchMyTransactions']),
     go(code){
       this.$router.push('/' + code)
     },
@@ -223,6 +236,7 @@ export default {
         await this.getInvoices().then((res) => {
           this.invoices_fetched = true
         })
+        await this.fetchMyTransactions().then((res) => this.transactions_fetched = true)
         await this.fetchLogMessages().then((res) => {
           this.chats_fetched = true
         })
@@ -257,7 +271,7 @@ export default {
 }
 
   .limiting_wrapper{
-    max-height: 85vh;
+    max-height: 75vh;
     overflow-y: auto;
     overflow-x: hidden;
   }

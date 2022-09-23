@@ -103,6 +103,7 @@ const actions = {
           axios.post('transaction/mark_paid', data)
           dispatch('openAlert', {message: response.data.message, code: 'success'}, {root: true})
           dispatch('toogleTaskChatViewInvoice', false, {root: true})
+          
           router.push('/dashboard')
           return false
         }catch(e){

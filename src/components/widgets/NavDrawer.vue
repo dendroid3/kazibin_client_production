@@ -9,52 +9,62 @@
         class="row no-gutters"
         active-class="deep-blue--text red--text"
       >
-          <v-list-item-avatar
-            class="elevation-20 tomato"
-            tile
-            size="80"
-          >
-          <div class="white--text">
-              <span class="d-flex initials">
-                {{initials}}
-              </span>
-              <v-divider dark/>
-              <span>
-                {{'broker'}}
-              </span>
-            </div>
-          </v-list-item-avatar>
-        <!-- <v-list-item class="short-line-under">
-          <v-row class="no-gutters d-flex align-center">
-            <v-col class="col-9">
-          {{'Availability'}}
-            </v-col>
-            <v-col class="col-3 d-flex">
-              <div class="rounded white ml-3" style="height:0.5rem; width: 1.75rem;" v-if="available">
-                <div style="" class="rounded animated_to_right"  :class="{
-                }">
-                </div>
+          <div class="d-flex justify-center" style="width: 100%;">
+            <v-list-item-avatar
+              class="elevation-20 tomato"
+              tile
+              size="120"
+            >
+            <div class="white--text">
+                <span class="d-flex justify-center initials">
+                  {{initials}}
+                </span>
+                <v-divider dark/>
+                <span>
+                  {{'broker'}}
+                </span>
+                <v-divider dark/>
+                <span class="blue--text white pa-1 bold rounded">
+                  {{getUser.credential_verification ? 'verified' : 'unverified'}}
+                </span>
               </div>
-              <div class="rounded white ml-3" style="height:0.5rem; width: 1.75rem;" v-if="!available">
-                <div style=" margin-left: 1rem;" class="rounded  animated_to_left"  :class="{
-                }">
-                </div>
-              </div>
-            </v-col>
-          </v-row>
-        </v-list-item>
-       -->
-        <v-list-item class="short-line-under" @click="goToSection('MyProfile')">
-          {{'Profile'}}
+            </v-list-item-avatar>
+          </div>
+    
+        <v-list-item class="short-line-under" @click="goToSection('Verify')" v-if="!getUser.credential_verification">
+          <v-list-item-title>
+            {{'Verify AC'}}
+          </v-list-item-title>
         </v-list-item>
 
-        <v-list-item class="short-line-under" @click="goToSection('Dashboard')">
-          {{'Dashboard'}}
-        </v-list-item>
         
+        <v-list-item class="short-line-under" @click="goToSection('MyProfile')">
+          <v-list-item-title>
+            {{'Profile'}}
+          </v-list-item-title>
+        </v-list-item>
+
         <v-list-item class="short-line-under" @click="goToSection('')">
           {{'home'}}
         </v-list-item>
+
+        <v-list-group class="short-line-under"
+            no-action
+        >
+            <template v-slot:activator>
+            <v-list-item >
+                <v-list-item-title class="">{{'Dashboard'}}</v-list-item-title>
+            </v-list-item>
+            </template>
+
+            <v-list-item
+                v-for="(subbutton, i) in dashboard_links"
+                :to="subbutton.page"
+                :key="i"
+            >
+                <v-list-item-title v-text="subbutton.name" />
+            </v-list-item>
+        </v-list-group>
         
         <v-list-item class="short-line-under" @click="goToSection('Task/Add')">
           {{'Post Task'}}
@@ -98,7 +108,18 @@ export default {
   },
   data(){
     return{
-      available: false
+      available: false,
+      dashboard_links:[
+        {name: 'main', page: '/Dashboard'},
+        {name: 'tasks posted', page: '/Tasks/Posted'},
+        {name: 'tasks taken', page: '/Tasks/Taken'},
+        {name: 'tasks offers', page:'/Offers'},
+        {name: 'bids made', page: '/Bids'},
+        {name: 'network', page: '/Network'},
+        {name: 'requests', page: '/Requests'},
+        {name: 'invoices', page: '/Invoices'},
+        {name: 'transactions', page: '/Transactions'}
+      ]
     }
   },
   methods:{
@@ -110,9 +131,7 @@ export default {
     },
   },
   mounted(){
-    setInterval(() => {
-      this.available = !this.available
-    }, 1000);
+    console.log(this.getUser)
   }
 }
 </script>
@@ -123,7 +142,7 @@ export default {
   }
   .short-line-under::after{
     content: '';
-    border-bottom: solid 1px rgb(15,14,56);
+    border-bottom: solid 1px white;
     position: absolute;
     bottom: 0;
     width: 60%;

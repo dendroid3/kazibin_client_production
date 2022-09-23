@@ -1,5 +1,5 @@
 <template lang="html">
-<v-form class="full-width mt-4 mx-2"
+<v-form class="mt-4 px-4"
   v-model="valid"
   :lazy-validation="lazy"
   ref="form">
@@ -65,21 +65,16 @@
   </div>
     
   <!-- <div class="d-flex justify-center mb-4">
-    {{"Secure Task In Escrow: "}}
+    {{"Secure Task In Escrow: "}} v-if="offering == 'everyone'"
   </div> -->
-  <!-- <section v-if="offering == 'everyone'">
-  <div class="grey d-flex lighten-3 align-center liaison">
-    <div class="pa-2">
-      <span class="bold">
-        {{"broadcast on telegram "}}
-      </span>
+  <section v-if="offering == 'everyone'">
+    <div class=" d-flex lighten-3 align-center justify-center">
+      <v-checkbox
+        v-model="broadcast_on_telegram"
+        :label="`broadcast on telegram`"
+      ></v-checkbox>
     </div>
-    <v-spacer />
-    <v-btn small class="white--text mr-2" style="background-color: tomato;">
-      select
-    </v-btn>
-  </div>
-  </section> -->
+  </section>
   
   <div class="d-flex justify-center">
     <v-btn 
@@ -91,13 +86,6 @@
       submit
     </v-btn>
   </div>
-  <div class="d-flex justify-center mt-2">
-    <v-btn 
-    small 
-    class="rounded grey white--text submit-button">
-      learn more
-    </v-btn>
-  </div>
 </v-form>
 </template>
 <script>
@@ -105,7 +93,7 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Six',
   computed:{
-    ...mapGetters(['getStepOneResponse', 'getMyWriters']),
+    ...mapGetters(['getStepOneResponse', 'getMyWriters', 'getDashboadDetails']),
     computed_valid(){
       // if(this.offering_options == 'select writers'){
       //   if(this.takers){
@@ -134,13 +122,13 @@ export default {
       offering_options: ['all my writers', 'select writers', 'everyone'],
       offering: '',
       loading: false,
-      broadcast_on_telegram: true,
+      broadcast_on_telegram: false,
       selected_writers: [],
       takers: null
     }
   },
   methods:{
-    ...mapActions(['stepSix']),
+    ...mapActions(['stepSix', 'openAlert']),
     addWriter(writer_id){
       this.applied = false
       this.selected_writers.push(writer_id)
@@ -167,10 +155,24 @@ export default {
         const data = {
           takers: '',
           difficulty: this.task.difficulty,
-          //  this.task.difficulty,
           task_id: this.getStepOneResponse.id
         }
         if(this.broadcast_on_telegram){
+        
+          let prompt_message = "Broadcasting to telegram is sure to expose your task to a larger number of writers, faster. It costs 20 KES to broadcast to the XXX telegram group. Proceed?"
+          if(!confirm(prompt_message)){ this.loading = false; return }
+
+          if(this.getDashboadDetails.transactions.balance < 20){
+            const data = {
+              message: "You do not have enough balance to send broadcast this task, kindly top up and try again.",
+              code: 'error'
+            }
+            this.openAlert(data)
+            this.loading = false
+            console.log(data)
+            return 
+          }
+
           data.broadcast_on_telegram = true
         }
         this.stepSix(data).then((res) => {
@@ -215,6 +217,10 @@ export default {
         })
       }
     }
-  }
+  },
+
+  mounted() {
+    console.log(this.getMyWriters)
+  },
 }
 </script>

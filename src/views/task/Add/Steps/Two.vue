@@ -1,9 +1,10 @@
 <template lang="html">
-<v-form class="full-width mt-4 mx-2"
+<v-form class="mt-4 px-4"
+
   v-model="valid"
   :lazy-validation="lazy"
   ref="form">
-  <div class="d-flex">
+  <div class="d-flex justify-center">
     <v-file-input
     outlined
     hint="Files, could be images, word documents or pdfs"
@@ -25,13 +26,6 @@
     @click="submit"
     :disabled="!formdata">
       submit
-    </v-btn>
-  </div>
-  <div class="d-flex justify-center mt-2">
-    <v-btn 
-    small 
-    class="rounded grey white--text submit-button">
-      learn more
     </v-btn>
   </div>
 </v-form>

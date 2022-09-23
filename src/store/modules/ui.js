@@ -33,9 +33,6 @@ const actions = {
           break;
   
         case 500:
-          let error_message = 'Something went wrong while performing this action:::> ' + data.action +
-          ' Help us serve you better by sending us a bug report. Explain to us what you were trying to do. Call us on 07000000 if it is an urgent action. Thank you. '
-          dispatch('openAlert', {message: error_message, code: 'error', timeout: 10000}, {root: true})
           const error = {
             user_phone_number: getters.getUser.phone_number,
             url: data.error.response.config.url,
@@ -63,7 +60,6 @@ const actions = {
       let error_message = 'Something went wrong while performing this action:::> ' + data.action +
       ' Help us serve you better by sending us a bug report. Explain to us what you were trying to do. Call us on 07000000 if it is an urgent action. Thank you. '
       dispatch('openAlert', {message: error_message, code: 'error', timeout: 10000}, {root: true})
-      console.log(data)
       const error = {
         user_phone_number: getters.getUser.phone_number,
         message: data.error.message,
@@ -71,8 +67,6 @@ const actions = {
         action: data.action
       }
       axios.post('/log_error', error)
-
-      console.log(error)
     }
   },
 

@@ -1,9 +1,13 @@
 <template>
 <div class="main grey lighten-3">
   <v-toolbar 
-    class="pb-4"
+    class="pb-4 top-toolbar"
     flat
-    style="padding-bottom: 5rem; position: fixed; top: 50px; right: 0; left: 0; z-index: 1;"
+    :class="{
+      'full-width': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs,
+      'medium-width':  $vuetify.breakpoint.md,
+      'large-width':  $vuetify.breakpoint.lg,
+    }"
     >
         <div style="width:100%;">
           <v-toolbar-title class="ml-1">{{getTaskChatHeader.code + ": " + getTaskChatHeader.topic}} </v-toolbar-title> 
@@ -409,7 +413,12 @@
   v-if="getTaskChatHeader.status > 1"
   :min-height="100"
   flat
-  style="padding-bottom: 5rem; position: fixed; bottom: 0; right: 0; left: 0;">
+  class="bottom-toolbar"
+  :class="{
+    'full-width': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs,
+    'medium-width':  $vuetify.breakpoint.md,
+    'large-width':  $vuetify.breakpoint.lg,
+  }">
     <section class="section" >
       
       <v-btn 
@@ -529,7 +538,14 @@ export default {
     },
     
     diffForHumans: (date) => {
-      if(date > Date.now()){return 'past deadline'}
+      
+      let ex = dayjs(date).format('DD/M/YY @ hh:mm')
+      let today = dayjs(Date.now()).format('DD/M/YY @ hh:mm')
+
+      if((today > ex))
+      {
+        return dayjs(date).format('DD/M/YY @ hh:mm') + ' ( Past Deadline! )'
+      }
       return dayjs(date).format('DD/M/YY @ hh:mm') + " ( " + dayjs(date).fromNow(true) + " left )"
     },
     
@@ -897,6 +913,19 @@ export default {
   }  
   .bottom{
     height: 3rem;
+  }
+  .bottom-toolbar{
+    padding-bottom: 5rem; 
+    position: fixed; 
+    bottom: 0; 
+    right: 0;
+  }
+  .top-toolbar{
+    padding-bottom: 5rem; 
+    position: fixed; 
+    top: 50px; 
+    right: 0; 
+    z-index: 1;
   }
   .padder{
     margin: 1rem 2rem;

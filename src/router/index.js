@@ -5,6 +5,7 @@ import Cookies from 'js-cookie'
 
 import store from '../store'
 import auth from './middleware/auth'
+import emailverified from './middleware/emailverified'
 import middlewarePipeline from './middlewarePipeline'
 
 //This injects the api url removing the need for it to be changed in VueX modules everytime it changes
@@ -28,7 +29,7 @@ const routes = [
     component: () => import('../views/Home.vue'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
 
@@ -49,12 +50,42 @@ const routes = [
     component: () => import('../views/auth/Login.vue')
   },
   {
+    path: '/Verify_email/:email_verification',
+    name: 'VerifyEmail',
+    component: () => import('../views/auth/VerifyEmail.vue')
+  },
+  {
+    path: '/Password/Reset',
+    name: 'PasswordResetApplication',
+    component: () => import('../views/auth/PasswordResetApplication.vue')
+  },
+  {
     path: '/Dashboard',
     name: 'Dashboard',
     component: () => import('../views/Dashboard.vue'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
+      ]
+    }
+  },
+  {
+    path: '/Verify',
+    name: 'Verify',
+    component: () => import('../views/verifications/VerifyAccount.vue'),
+    meta:{
+      middleware: [
+        auth, emailverified
+      ]
+    }
+  },
+  {
+    path: '/Transactions',
+    name: 'Transactions',
+    component: () => import('../views/transactions/Transactions.vue'),
+    meta:{
+      middleware: [
+        auth, emailverified
       ]
     }
   },
@@ -64,7 +95,7 @@ const routes = [
     component: () => import('../views/task/Add/Index.vue'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
   },
@@ -74,7 +105,7 @@ const routes = [
     component: () => import('../views/bid/Chat.vue'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
   },
@@ -84,7 +115,7 @@ const routes = [
     component: () => import('../views/task/TaskChat.vue'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
   },
@@ -94,7 +125,7 @@ const routes = [
     component: () => import('../views/CreateInvoice.vue'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
   },
@@ -104,7 +135,7 @@ const routes = [
     component: () => import('../views/network/Network.vue'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
   },
@@ -114,7 +145,7 @@ const routes = [
     component: () => import('../views/tasks/Posted'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
   },
@@ -124,7 +155,7 @@ const routes = [
     component: () => import('../views/tasks/Posted'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
   },
@@ -134,7 +165,7 @@ const routes = [
     component: () => import('../views/bid/Bids'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
   },
@@ -144,7 +175,7 @@ const routes = [
     component: () => import('../views/offer/Offers'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
   },
@@ -154,7 +185,7 @@ const routes = [
     component: () => import('../views/invoice/Invoices'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
   },
@@ -164,7 +195,7 @@ const routes = [
     component: () => import('../views/invoice/ViewInvoice'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
   },
@@ -174,7 +205,7 @@ const routes = [
     component: () => import('../views/tasks/Taken'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
   },
@@ -194,7 +225,7 @@ const routes = [
     component: () => import('../views/task/Explore.vue'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
   },
@@ -204,7 +235,7 @@ const routes = [
     component: () => import('../views/task/Edit.vue'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
   },
@@ -214,7 +245,7 @@ const routes = [
     component: () => import('../views/explore/Users.vue'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
   },
@@ -224,7 +255,7 @@ const routes = [
     component: () => import('../views/liaison/ViewWriter.vue'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
   },
@@ -234,7 +265,7 @@ const routes = [
     component: () => import('../views/profile/MyProfile.vue'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
   },
@@ -244,7 +275,7 @@ const routes = [
     component: () => import('../views/liaison/ViewBroker.vue'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
   },
@@ -254,7 +285,7 @@ const routes = [
     component: () => import('../views/dashboard/Invoice/View.vue'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
   },
@@ -264,7 +295,7 @@ const routes = [
     component: () => import('../views/dashboard/Requests/ViewRequests.vue'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
   },
@@ -274,7 +305,7 @@ const routes = [
     component: () => import('../views/dashboard/Requests/Chat.vue'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
   },
@@ -284,7 +315,7 @@ const routes = [
     component: () => import('../views/offer/Chat.vue'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
   },
@@ -294,7 +325,7 @@ const routes = [
     component: () => import('../views/log/Logs.vue'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
   },
@@ -322,7 +353,7 @@ const routes = [
     component: () => import('../views/PageNotFound.vue'),
     meta:{
       middleware: [
-        auth
+        auth, emailverified
       ]
     }
   },

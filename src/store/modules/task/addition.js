@@ -52,6 +52,7 @@ const actions = {
       return false
     }
   },
+
   async stepTwo({commit, dispatch}, data){
     try{
       const response = await
@@ -86,6 +87,7 @@ const actions = {
       return false
     }
   },
+
   async stepFour({commit, dispatch}, data){
     try{
       const response = await
@@ -102,6 +104,7 @@ const actions = {
       return false
     }
   },
+
   async stepFive({commit, dispatch}, data){
     try{
       const response = await
@@ -118,6 +121,7 @@ const actions = {
       return false
     }
   },
+
   async stepSix({commit, dispatch}, data){
     try{
       const response = await
@@ -127,10 +131,11 @@ const actions = {
         router.push('/dashboard')
       } else {
         commit('SET_STEP_SIX_RESPONSE', response.data.task)
-        commit('FLASH_RESPONSES')
-        commit('SET_ADD_TASK_STEP', 1)
+        // commit('FLASH_RESPONSES')
+        // commit('SET_ADD_TASK_STEP', 1)
         dispatch('openAlert', {message: response.data, code: 'success'}, {root: true})
-        router.push('/dashboard')
+        dispatch('fetchDashboardDetails', null, {root: true})
+        // router.push('/Tasks/Posted')
         return false
       }
     }catch(e){
@@ -142,6 +147,7 @@ const actions = {
       return false
     }
   },
+
   async deleteTask({dispatch}, data){
     try{
       const response = await
@@ -159,6 +165,7 @@ const actions = {
       return false
     }
   },
+
   setAddTaskStep({commit}, step){
     commit('SET_ADD_TASK_STEP', step)
   },

@@ -6,12 +6,6 @@
       :count="getDashboadDetails.posted.posted_all"
       :loading="!posted_fetched"
     />
-    <content-tab
-      :title="`underway`"
-      :url="`Tasks/Posted/Underway`"
-      :count="getDashboadDetails.posted.posted_underway"
-      :loading="!posted_fetched"
-    />
   
     <content-tab
       :title="`taken`"
@@ -19,12 +13,14 @@
       :count="getDashboadDetails.taken.taken_all"
       :loading="!taken_fetched"
     />
+
     <content-tab
       :title="`offers`"
       :url="`Offers`"
       :count="getDashboadDetails.offers.offers_all"
       :loading="!offers_fetched"
     />
+
     <content-tab
       :title="`bids`"
       :url="`Bids`"
@@ -32,24 +28,35 @@
       :loading="!bids_fetched"
       :isGreen="getDashboadDetails.bids.bids_is_green"
     />
+
     <content-tab
       :title="`network`"
       :url="`Network`"
       :count="getDashboadDetails.network_count"
       :loading="!liaisons_fetched"
     />
+
     <content-tab
       :title="`requests`"
       :url="`Requests`"
       :count="getDashboadDetails.requests_count"
       :loading="!requests_fetched"
     />
+
     <content-tab
       :title="`invoices`"
       :url="`Invoices`"
       :count="getDashboadDetails.invoices.invoices_count"
       :loading="!invoices_fetched"
     />
+    
+    <content-tab
+      :title="`transactions`"
+      :url="`Transactions`"
+      :count="getDashboadDetails.transactions.count"
+      :loading="!transactions_fetched"
+    />
+    
     <content-tab
       :title="`activity`"
       :count="getLogMessages ? getLogMessages.length : 0"
@@ -70,7 +77,8 @@ export default {
     'liaisons_fetched', 
     'invoices_fetched', 
     'chats_fetched',
-    'requests_fetched'
+    'requests_fetched',
+    'transactions_fetched'
   ],
   components:{
     ContentTab

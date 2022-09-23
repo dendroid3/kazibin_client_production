@@ -82,7 +82,7 @@ export default {
                 recipient: recipient
             }
             this.setCurrentInvoiceId(data)
-            this.$router.push('Invoice/View')
+            this.$router.push('/Invoice/View')
         }
 
     },

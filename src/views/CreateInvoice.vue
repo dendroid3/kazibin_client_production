@@ -7,7 +7,12 @@
         <fetching-items :message="`getting ready`"  v-if="fetching"/>
         
         <div  style="align-items: center;" v-else>
-            <v-form class="full-width mt-4 mx-2"
+            <v-form class="mt-4 px-2"
+            :class="{
+                'full-width': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs,
+                'medium-width':  $vuetify.breakpoint.md,
+                'large-width':  $vuetify.breakpoint.lg,
+            }"
             v-model="valid"
             :lazy-validation="lazy"
             ref="form">

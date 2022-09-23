@@ -2,125 +2,119 @@
   <div class="main-wrapper py-2">
     <v-row class="no-gutters">
       <v-col class="col-12 pa-4 d-flex justify-center">
-        <!-- <v-img class="icon pa-4" :src="require(`../../assets/icon.svg`)" contain style="height: 50px;" /> -->
-        <span @click="go('/')">
+        <span @click="goHome">
           <animated-icon style="height:70px;" />
         </span>
       </v-col>
     </v-row>
-    <v-form class="full-width mt-4 mx-2"
-    v-model="valid"
-    :lazy-validation="lazy"
-    ref="form">
-      <p class="backg d-flex justify-center heading">
-        Create An Account
-      </p>
-      <div class="mx-2 px-4">
-        <v-text-field 
-        hint="The username is intended just for the eyes only. It is not neccessary that is unique to you. Kazibin shall assign you a unique code that shall be your identifier on 
-              the platform."
-        outlined
-        clearable
-        v-model="user.username"
-        type="name"
-        label="user name"
-        :rules="rules.UserNameRules"
-        required
-        > </v-text-field>  
-      </div>
-      <div class="mx-2 px-4">
-        <v-text-field 
-        outlined
-        hint="The phone number must be a safaricom number. Your payments will be withdrawn only through this number. You can, however, deposit to pay for your tasks 
-              using whatever number you fancy."
-        clearable
-        v-model="user.phone_number"
-        type="number"
-        label="phone number"
-        :disabled="!user.username"
-        :rules="rules.phoneRules"
-        required
-        >
-          <span slot="prepend">
-            +254
-          </span>
-        </v-text-field>  
-      </div>
-      <div class="mx-2 px-4">
-        <v-text-field 
-        hint="You must have access to this email address. You shall need to verify it at some point. Password resets will be done through this email and other comminication 
-              from Kazibin may be dispensed through this email as well."
-        outlined
-        clearable
-        v-model="user.email"
-        type="name"
-        label="email"
-        :disabled="user.phone_number < 99999999"
-        :rules="rules.emailRules"
-        required
-        > </v-text-field>  
-      </div>
-      <div class="mx-2 px-4">
-        <v-text-field 
-        hint="Password must contain at least 8 characters. Kazibin does not care much for this, but for your own security, include both Upper and Lowercases and special characters"
-        outlined
-        clearable
-        v-model="user.pass"
-        type="password"
-        label="password"
-        :disabled="!user.email"
-        :rules="rules.passwordRules"
-        required
-        > </v-text-field>  
-      </div>
-      <div class="mx-2 px-4">
+    <div class="d-flex justify-center pb-4">
+      <v-form class="mt-4 mx-2 mb-4 pb-4"
+     
+      v-model="valid"
+      :lazy-validation="lazy"
+      ref="form">
+        <p class="backg d-flex justify-center heading">
+          Create An Account
+        </p>
+        <div class="mx-2 px-4">
           <v-text-field 
+          hint="The username is intended just for the eyes only. It is not neccessary that is unique to you. Kazibin shall assign you a unique code that shall be your identifier on 
+                the platform."
           outlined
           clearable
-          v-model="user.c_password"
-          type="password"
-          label="confirm password"
-          :rules="rules.c_passwordRules"
-          :disabled="!user.pass"
+          v-model="user.username"
+          type="name"
+          label="user name"
+          :rules="rules.userNameRules"
           required
           > </v-text-field>  
-      </div>
+        </div>
+        <div class="mx-2 px-4">
+          <v-text-field 
+          outlined
+          hint="The phone number must be a safaricom number. Your payments will be withdrawn only through this number. You can, however, deposit to pay for your tasks 
+                using whatever number you fancy."
+          clearable
+          v-model="user.phone_number"
+          type="number"
+          label="phone number"
+          :disabled="!user.username"
+          :rules="rules.phoneRules"
+          required
+          >
+            <span slot="prepend">
+              +254
+            </span>
+          </v-text-field>  
+        </div>
+        <div class="mx-2 px-4">
+          <v-text-field 
+          hint="You must have access to this email address. You shall need to verify it at some point. Password resets will be done through this email and other comminication 
+                from Kazibin may be dispensed through this email as well."
+          outlined
+          clearable
+          v-model="user.email"
+          type="name"
+          label="email"
+          :disabled="user.phone_number < 99999999"
+          :rules="rules.emailRules"
+          required
+          > </v-text-field>  
+        </div>
+        <div class="mx-2 px-4">
+          <v-text-field 
+          hint="Password must contain at least 8 characters. Kazibin does not care much for this, but for your own security, include both Upper and Lowercases and special characters"
+          outlined
+          clearable
+          v-model="user.pass"
+          type="password"
+          label="password"
+          :disabled="!user.email"
+          :rules="rules.passwordRules"
+          required
+          > </v-text-field>  
+        </div>
+        <div class="mx-2 px-4">
+            <v-text-field 
+            outlined
+            clearable
+            v-model="user.c_password"
+            type="password"
+            label="confirm password"
+            :rules="rules.c_passwordRules"
+            :disabled="!user.pass"
+            required
+            > </v-text-field>  
+        </div>
 
-      <div class="d-flex text-center justify-center mx-2 my-2">
-        <span>
-          by registering you agree to our<router-link to="/TermsAndConditions" class="text mx-1">terms and conditions </router-link>
-        </span>
-      </div>
+        <div class="d-flex text-center justify-center mx-2 my-2">
+          <span>
+            by registering you agree to our<router-link to="/TermsAndConditions" class="text mx-1">terms and conditions </router-link>
+          </span>
+        </div>
 
-      <div class="d-flex justify-center">
-        <v-btn 
-        small 
-        @click="registerUser" 
-        :loading='loading'
-        class="rounded success submit-button"
-        :disabled="!valid">
-          sign up
-        </v-btn>
-      </div>
-      <!-- <div class="d-flex justify-center mt-2">
-        <v-btn 
-        small 
-        @click="goHelp" 
-        class="rounded grey red--text submit-button">
-          learn more
-        </v-btn>
-      </div> -->
-
-      <div class="mx-2 mt-2 d-flex align-center text-center">
-        <v-spacer />
-        Already have an account? 
-        <v-spacer />
-          <v-btn small @click="goLogin" class="success">
-            login
+        <div class="d-flex justify-center">
+          <v-btn 
+          small 
+          @click="registerUser" 
+          :loading='loading'
+          class="rounded success submit-button"
+          :disabled="!valid">
+            sign up
           </v-btn>
-        <v-spacer />
-      </div>
-    </v-form>
+        </div>
+
+        <div class="mx-2 mt-2 d-flex align-center text-center">
+          <v-spacer />
+          Already have an account? 
+          <v-spacer />
+            <v-btn small @click="goLogin" class="success">
+              login
+            </v-btn>
+          <v-spacer />
+        </div>
+      </v-form>
+    </div>
   </div>
 </template>
 <script>
@@ -136,7 +130,7 @@ export default {
       lazy: false,
       user: {},
       rules: {
-        UserNameRules: [
+        userNameRules: [
           v => !!v || 'Name is required',
           v => (v && v.length <= 10) || 'Name must be less than 10 characters',
         ],
@@ -184,9 +178,13 @@ export default {
     submit(){
       alert(task)
     },
-    go(code){
-      this.$router.push(code)
-    }
+    goHome(){
+      if(this.getUser){
+        this.$router.push('/')
+      } else {
+        window.location.href="https://kazibin.adilirealestate.com"
+      }
+    },
   }
 }
 </script>

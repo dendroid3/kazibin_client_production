@@ -61,6 +61,7 @@ export default {
   
   .wrapper{
     position: relative;
+    z-index: 1;
   }
   .wrapper::after{
     content: '';

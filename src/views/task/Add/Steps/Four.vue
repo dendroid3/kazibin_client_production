@@ -1,5 +1,6 @@
 <template lang="html">
-<v-form class="full-width mt-4 mx-2"
+<v-form class="mt-4 px-4"
+
   v-model="valid"
   :lazy-validation="lazy"
   ref="form">
@@ -50,13 +51,6 @@
     class="rounded success submit-button"
     :disabled="!due_time || !due_date">
       submit
-    </v-btn>
-  </div>
-  <div class="d-flex justify-center mt-2">
-    <v-btn 
-    small 
-    class="rounded grey white--text submit-button">
-      learn more
     </v-btn>
   </div>
 </v-form>

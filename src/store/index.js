@@ -22,6 +22,9 @@ import Invoices from './modules/transaction/invoices'
 import Profile from './modules/profile/profile'
 import Sockets from './modules/sockets/sockets'
 import Search from './modules/search/search'
+import Transactions from './modules/transaction/transactions'
+import Statistics from './modules/statistics/statistics'
+import Verification from './modules/verification/verifications'
 
 Vue.use(Vuex);
 
@@ -42,13 +45,24 @@ export default new Vuex.Store({
     Invoices,
     Profile,
     Sockets,
-    Search
+    Search,
+    Transactions,
+    Statistics,
+    Verification
   },
   plugins: [
 
     createPersistedState({
       key:'AUTH',
       paths:['auth']
+    }),
+    createPersistedState({
+      key:'Transactions',
+      paths:['Transactions']
+    }),
+    createPersistedState({
+      key:'Statistics',
+      paths:['Statistics']
     }),
     createPersistedState({
       key:'Sockets',
@@ -72,7 +86,7 @@ export default new Vuex.Store({
     }),
     createPersistedState({
       key:'UI',
-      paths:['UI']
+      paths:['ui']
     }),
     createPersistedState({
       key:'taskChat',
@@ -109,6 +123,10 @@ export default new Vuex.Store({
     createPersistedState({
       key:'brokersFetch',
       paths:['brokersFetch']
+    }),
+    createPersistedState({
+      key:'Verification',
+      paths:['Verification']
     }),
     createPersistedState({
       key: 'KAZIBIN_TOKEN',

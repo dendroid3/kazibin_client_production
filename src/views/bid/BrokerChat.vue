@@ -1,9 +1,14 @@
 <template>
   <div class="main grey lighten-3">
     <v-toolbar 
-    class="pb-4"
+    class="pb-4 top-toolbar"
     flat
-    style="padding-bottom: 5rem; position: fixed; top: 50px; right: 0; left: 0; z-index: 1;">
+    :class="{
+      'full-width': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs,
+      'medium-width':  $vuetify.breakpoint.md,
+      'large-width':  $vuetify.breakpoint.lg,
+    }"
+    >
         <section>
 
           <div class="d-flex">
@@ -20,8 +25,12 @@
     <v-toolbar 
     :min-height="100"
     flat
-    style="padding-bottom: 5rem; position: fixed; bottom: 0; right: 0; left: 0;  z-index: 1;"
-    >
+    class="bottom-toolbar"
+    :class="{
+      'full-width': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs,
+      'medium-width':  $vuetify.breakpoint.md,
+      'large-width':  $vuetify.breakpoint.lg,
+    }">
       <section class="section"  v-if="getBidChatHeader.status < 2">
         
         <div class="d-flex justify-center mb-2">
@@ -315,6 +324,19 @@ export default {
     border-radius:10px;
     color: black;
     padding: 0.75rem;
+  }
+  .bottom-toolbar{
+    padding-bottom: 5rem; 
+    position: fixed; 
+    bottom: 0; 
+    right: 0;
+  }
+  .top-toolbar{
+    padding-bottom: 5rem; 
+    position: fixed; 
+    top: 50px; 
+    right: 0; 
+    z-index: 1;
   }
   .right{
     text-align: right;

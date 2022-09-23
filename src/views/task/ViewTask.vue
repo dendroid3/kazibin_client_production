@@ -27,9 +27,13 @@
         <section v-else>
             <section v-if="getTaskForBidding.broker">
                 <v-toolbar 
-                    class="pb-4"
+                    class="pb-4 top-toolbar"
                     flat
-                    style="padding-bottom: 5rem; position: fixed; top: 50px; right: 0; left: 0;">
+                    :class="{
+                        'full-width': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs,
+                        'medium-width':  $vuetify.breakpoint.md,
+                        'large-width':  $vuetify.breakpoint.lg,
+                    }">
                     
                     <div class="d-flex bold">
                         <v-toolbar-title>{{"Broker: " + getTaskForBidding.broker.user.code + ": "}}</v-toolbar-title>
@@ -156,7 +160,7 @@
                     </div>
 
                     <div class="d-flex justify-center mx-4 my-1" >
-                        <v-btn small class="elevation-15 submit-button red lighten-2 white--text" style="font-weight: 900;" @click="initiateBid" :loading="bidding">
+                        <v-btn small class="elevation-15 submit-button red lighten-2 white--text" style="font-weight: 900;" @click="initiateBid" :loading="bidding" :disabled="bidded">
                             Bid Now!
                         </v-btn>
                     </div>
@@ -194,7 +198,11 @@ export default {
     
     filters:{
         diffForHumans: (date) => {
-            if(date > Date.now()){return 'past deadline'}
+            
+            let ex = dayjs(date).format('DD/M/YY @ hh:mm')
+            let today = dayjs(Date.now()).format('DD/M/YY @ hh:mm')
+
+            if(today > ex){return dayjs(date).format('DD/M/YY @ hh:mm') + ' ( Past Deadline! )'}
             return dayjs(date).format('DD/M/YY @ hh:mm') 
         },
         refineFileNameMessage: (name) => {
@@ -275,17 +283,37 @@ export default {
         },
 
         initiateBid(){
-            let prompt_message = "You are about to bid on " + this.getTaskForBidding.unit + " " + this.getTaskForBidding.type +
-            " task, code: " + this.getTaskForBidding.code + " worth " + this.getTaskForBidding.full_pay + " KES. Proceed?"
+            let bid_cost = null
+            if(parseInt(this.getTaskForBidding.full_pay) <= 1000){
+                bid_cost = 10
+            } else if((parseInt(this.getTaskForBidding.full_pay) > 1000) && (parseInt(this.getTaskForBidding.full_pay) <= 5000)){
+                bid_cost = 20
+            } else {
+                bid_cost = 30
+            }
+
+            let caution = ''
+            
+            let ex = dayjs(this.getTaskForBidding.expiry_time).format('DD/M/YY @ hh:mm')
+            let today = dayjs(Date.now()).format('DD/M/YY @ hh:mm')
+
+            if(ex < today){
+                caution = ' You are risking this for the task is already past the deadline.'
+            }
+
+            let prompt_message = "You are about to bid on a " + this.getTaskForBidding.unit + " " + this.getTaskForBidding.type +
+            " task, code: " + this.getTaskForBidding.code + " worth " + this.getTaskForBidding.full_pay + " KES. This bid costs " + bid_cost +" KES." + caution + " Proceed?"
             if(!confirm(prompt_message)){
                 return
             }
             this.bidding = true
             const data = {
+                bid_cost: bid_cost,
                 task_id: this.getTaskForBidding.id
             }
-            this.createBid(data).then(() => {
-                this.bidding = false
+            this.createBid(data).then((res) => {
+                this.bidding = false,
+                this.bidded = res
             })
             // this.bidding = false
         }
@@ -296,7 +324,8 @@ export default {
         return {
             fetching: true,
             bidding: false,
-            time_left: null
+            time_left: null,
+            bidded: false
         }
     },
 
@@ -316,4 +345,11 @@ export default {
         overflow-x: scroll;
         padding-bottom: 5rem;
     }
+    .top-toolbar{
+    padding-bottom: 5rem; 
+    position: fixed; 
+    top: 50px; 
+    right: 0; 
+    z-index: 1;
+  }
 </style>

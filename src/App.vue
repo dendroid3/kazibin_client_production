@@ -15,13 +15,14 @@
           kazibin
         </span>
       </div>
+      
       <v-spacer></v-spacer>
 
-      <div v-if="!getUser.email">
-        <router-link to="/register" class="text mr-4" style="text-decoration: none; color: white;"> register </router-link>
-        <router-link to="/login" class="text" style="text-decoration: none; color: white;"> login </router-link>
-      </div>
-          
+      <section v-if="getUser">
+        <div v-if="!getUser.email">
+          <router-link to="/register" class="text mr-4" style="text-decoration: none; color: white;"> register </router-link>
+          <router-link to="/login" class="text" style="text-decoration: none; color: white;"> login </router-link>
+        </div>
 
       <v-icon small class="white--text ml-2 rounded pa-1" @click="home_drawer = !home_drawer"
       v-if="($vuetify.breakpoint.sm || $vuetify.breakpoint.xs) && getUser.email">
@@ -31,53 +32,41 @@
       v-if="$vuetify.breakpoint.md || $vuetify.breakpoint.xl || $vuetify.breakpoint.lg">
         {{getUser.email}}
       </span>
+    </section>
+
     </v-toolbar>
-    <!-- <loader-widget v-if="isLoading"/> -->
 
     <v-navigation-drawer
-      v-if="getUser.email"
-      class="grey lighten-2"
-      v-model="home_drawer"
-      temporary
-      clipped 
-      right
-      fixed
-      width = '60%'
-      >
-        <div class="d-flex justify-end">
-          <div class="white pa-2 rounded" @click="home_drawer = false" style="position: fixed; top: 0; right: 0; z-index:900;">
-            <v-icon class="red--text">
-              mdi-close
-            </v-icon>
-          </div>
+    v-if="getUser"
+    class="grey lighten-2"
+    v-model="home_drawer"
+    temporary
+    clipped 
+    right
+    fixed
+    width = '80%'
+    >
+      <div class="d-flex justify-end">
+        <div class="white pa-2 rounded" @click="home_drawer = false" style="position: fixed; top: 0; right: 0; z-index:900;">
+          <v-icon class="red--text">
+            mdi-close
+          </v-icon>
         </div>
-        <nav-drawer />
-      </v-navigation-drawer>
+      </div>
+      <nav-drawer />
+    </v-navigation-drawer>
       <alert-box />
-    <v-main class="main">
+    <v-main class="main grey lighten-3">
       <v-container fluid class="pa-0">
-        <v-row class="no-gutters"  style="padding-top: 50px;" v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs">
-          <v-col class="col-md-2 col-lg-1" v-if=" $vuetify.breakpoint.lg || $vuetify.breakpoint.md">
+        <v-row class="no-gutters"  style="padding-top: 50px;">
+          <v-col class="col-md-2 col-lg-1" v-if=" ($vuetify.breakpoint.lg || $vuetify.breakpoint.md) && show_nav_bar">
             <farleft-sidebar />
           </v-col>
-          <v-col class="col-md-4 grey lighten-3 px-4" v-if=" $vuetify.breakpoint.lg">
+          <v-col style="overflow-y: hidden;" class="col-md-4 grey lighten-3 px-4" v-if=" ($vuetify.breakpoint.lg && show_nav_bar)">
             <midleft-sidebar />
           </v-col>
-          <v-col style="overflow-y: scroll; height: 100vh;">
+          <v-col style="overflow-y: scroll; height: calc(100vh - 50px);">
             <router-view />
-          </v-col>
-        </v-row>
-        <v-row v-else  style="padding-top: 70px; min-height: calc(100vh - 50px);" class="no-gutters">
-          <v-img class="icon" :src="require(`./assets/under_contruction.svg`)" style="height: 60vh;" contain />
-          <v-col class="col-12 d-flex justify-center">
-            <h1>
-              {{"Desktop View Under Construction. "}}
-            </h1>
-          </v-col>
-          <v-col class="col-12 d-flex justify-center">
-            <h4>
-              {{"Kindly switch to mobile to continue enjoying the platform."}}
-            </h4>
           </v-col>
         </v-row>
       </v-container>
@@ -101,6 +90,7 @@ export default {
     isGuest(){
       return true
     },
+
   },
 
   data(){
@@ -123,23 +113,51 @@ export default {
 
     go(code){
       this.$router.push('/' + code)
+    },
+
+    showNavBar(){
+      if(this.$router.history.current.name == "Login" ){
+        return false
+      } else if(this.$router.history.current.name == "Register"){
+        return false
+      } else if(this.$router.history.current.name == "VerifyEmail"){
+        return false
+      }else if(this.$router.history.current.name == "Verify"){
+        return false
+      }else if(this.$router.history.current.name == "PasswordResetApplication"){
+        return false
+      } else {
+        return true
+      }
     }
   },
   updated(){
-    this.show_nav_bar = !(this.$router.history.current.name == "Register")
+    this.show_nav_bar = this.showNavBar()
   },
   mounted(){
-      this.bootAllSockets()
-      Echo.channel('public_logger')
-      .listen('Loginfor', (e) => {
-        console.log('public log')
-        console.log(e)
-      })
+    this.show_nav_bar = this.showNavBar()
+    this.bootAllSockets()
+      // Echo.channel('public_logger')
+      // .listen('Loginfor', (e) => {
+      //   console.log('public log')
+      //   console.log(e)
+      // })
   }
 //a7d98b2e21a38e553e564fced22647bf
 };
 </script>
 <style lang="css">
+   .col-block{
+        position: relative;
+    }
+    .col-block::after{
+        content: '';
+        border-bottom: solid 1px white;
+        position: absolute;
+        bottom: 0;
+        width: 80%;
+        left: 10%;
+    }
  .underline{
     text-decoration: underline;
   }
@@ -227,27 +245,38 @@ export default {
     font-size: 0.8rem;
     border-radius: 3%;
   }
-  .file-left{
-    border: 1px black solid;
-    text-align: left;
-    margin-right: 3rem;
-    border-radius:10px;
-    color: black;
-    padding:  0.5rem 0.5rem;
+
+  .full-width{
+    width: 100vw;
+    overflow-x: hidden;
+  }
+  .large-width{
+    width: 58.3333vw;
+    overflow-x: hidden;
+  }
+  .medium-width{
+    width: 83.333vw;
+    overflow-x: hidden;
+  }
+  .top-toolbar{
+    padding-bottom: 5rem; 
+    position: fixed; 
+    top: 50px; 
+    right: 0; 
+    z-index: 1;
+  }
+
+  .bottom-toolbar{
+    padding-bottom: 5rem; 
+    position: fixed; 
+    bottom: 0; 
+    right: 0;
   }
   
   .bottom{
     height: 10rem;
   }
-  .file-right{
-    text-align: right;
-    margin-left: 3rem;
-    position: relative;  
-    right: 0;
-    border-radius:10px;
-    border: 1px black solid;
-    padding: 0.5rem 0.5rem;
-  }
+
   .yellowlist{
     background-color: rgb(231, 231, 231); 
     border-left: solid 5px yellow;
@@ -394,26 +423,25 @@ export default {
     100% {transform: translate(-1rem, 0); background: red;}
   }
   /* width */
-/* ::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 5px;
-  background: red;
-
-} */
+  background: transparent;
+}
 
 /* Track */
-/* ::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: transparent;
-} */
+}
 
 /* Handle */
-/* ::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background: #888;
   display: none;
-} */
+}
 
 /* Handle on hover */
-/* ::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
   background: rgb(15,14,56);
   display: block;
-} */
+}
 </style>

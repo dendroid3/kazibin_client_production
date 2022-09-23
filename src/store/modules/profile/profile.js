@@ -53,6 +53,7 @@ const actions = {
 
             return response.data
         } catch(e){
+            console.log(e)
             if(e.response){
                 dispatch('handleError', {error: e, error_code: e.response.status, action: 'changeAvailability'}, {root: true})
             } else {
@@ -105,7 +106,7 @@ const actions = {
         }
     },
 
-    setNewBidsDetails(commit){
+    setNewBidsDetails({commit}){
         commit('SET_NEW_BID_DETAILS')
     }
 }

@@ -65,7 +65,11 @@ const actions = {
     try{
       const response = await
       axios.post('/liaison/request/accept', data)
-      dispatch('openAlert', {message: response.data.message.message, code: 'success'}, {root: true})
+      console.log(response)
+      dispatch('openAlert', {message: response.data.message, code: 'success'}, {root: true})
+      dispatch('fetchMyWriters', null, {root: true})
+      dispatch('fetchMyBrokers', null, {root: true})
+      
       router.push('/Network')
       return response
     }catch(e){

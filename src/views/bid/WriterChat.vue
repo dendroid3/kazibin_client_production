@@ -1,9 +1,13 @@
 <template>
-  <div class="main  grey lighten-3">
+  <div class="main bg-image">
     <v-toolbar 
-    class="pb-4"
+    class="pb-4 top-toolbar"
     flat
-    style="padding-bottom: 5rem; position: fixed; top: 50px; right: 0; left: 0;  z-index: 1;">
+    :class="{
+      'full-width': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs,
+      'medium-width':  $vuetify.breakpoint.md,
+      'large-width':  $vuetify.breakpoint.lg,
+    }">
 
         <section>
 
@@ -11,16 +15,16 @@
             <v-toolbar-title>{{getBidChatHeader.task.code + ": " + getBidChatHeader.task.topic}}</v-toolbar-title>
           </div>
             <v-toolbar-title>
-            
-              <v-row class="no-gutters" style="width: 100vw;">
+              <v-row class="no-gutters" >
                 <v-col class="col-8">
                   {{"Broker: " + getBidChatHeader.task.broker.user.username}}
                 </v-col>
+                <v-spacer />
                 <v-col class="col-3 d-flex justify-end">
-                  <span class="blue--text" @click="openMoreInfo" v-if="!more_info_open">
+                  <span class="blue--text  pointer" @click="openMoreInfo" v-if="!more_info_open">
                     {{'more info'}}
                   </span>
-                  <span class="blue--text"  @click="closeMoreInfo" v-if="more_info_open">
+                  <span class="blue--text  pointer"  @click="closeMoreInfo" v-if="more_info_open">
                     {{'close'}}
                   </span>
                 </v-col>
@@ -34,10 +38,13 @@
     <v-toolbar 
     :min-height="100"
     flat
-    style="padding-bottom: 5rem; position: fixed; bottom: 0; right: 0; left: 0;  z-index: 1;"
-    >
+    class="bottom-toolbar"
+    :class="{
+      'full-width': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs,
+      'medium-width':  $vuetify.breakpoint.md,
+      'large-width':  $vuetify.breakpoint.lg,
+    }">
       <section class="section" v-if="getBidChatHeader.status < 2">
-        
         <div class="d-flex justify-center mb-2">
           <v-btn 
           small 
@@ -117,7 +124,7 @@
       <a href="#instructions" id="top_button"></a>
     </div>
     
-  <section v-if="more_info_open" style="margin-top: 10rem;">
+  <section v-if="more_info_open" style="margin-top: 10rem;" class="">
       
     <v-row class="d-flex mx-4 no-gutters bold">
       <v-col class="col-2 d-flex align-center">
@@ -217,22 +224,23 @@
     </v-row>
 
   </section>
-    <div style="min-height:calc(100vh - 300px); margin-top: 4rem; margin-bottom: 5rem;" v-if="!fetching_messages">
+    <chat-box :messages="getBidMessages" />
+    <!-- <div style="min-height:calc(100vh - 300px); margin-top: 4rem; margin-bottom: 5rem; z-index; 1;" v-if="!fetching_messages">
       <div>
 
-        <div class="d-flex message"
+        <div class="d-flex message " style="background-color: transparent; "
           v-for="message in getBidMessages" 
           :key="message.created_at" 
           :class="{ all_right: message.mine }">
-            <div style="min-height: 3rem; width:100vw;"  class="justify-end pa-2">
+            <div style="min-height: 3rem; "  class=" justify-end pa-2">
               <div :class="{
               'center d-flex': !message.mine  && message.user_id == 1, 
-              'right': message.mine && (message.type == 'text') && (message.type == 'text'), 
-              'file-right': message.mine && !(message.type == 'text'), 
-              'left': !message.mine  && message.user_id != 1 && (message.type == 'text'), 
-              'file-left': !message.mine  && message.user_id != 1 && !(message.type == 'text'), 
+              'right white': message.mine && (message.type == 'text') && (message.type == 'text'), 
+              'file-right white': message.mine && !(message.type == 'text'), 
+              'left white': !message.mine  && message.user_id != 1 && (message.type == 'text'), 
+              'file-left white': !message.mine  && message.user_id != 1 && !(message.type == 'text'), 
               }">
-                <div v-if="message.type == 'text'" >
+                <div v-if="message.type == 'text'"  >
                   {{message.message}}
                 </div>
                 <v-row v-else class="no-gutters grey lighten-3">
@@ -253,9 +261,8 @@
               </div>
             </div>
         </div>
-
       </div>
-    </div>
+    </div> -->
 
     <div class="transparent transparent--text bottom" id="bottom">kazibin</div>
     <v-file-input
@@ -280,9 +287,12 @@
 import { mapActions, mapGetters } from 'vuex'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import ChatBox from '../../components/ChatBox.vue'
 
 export default {
   name: 'WriterChat',
+
+  components:{ChatBox},
   
   filters:{
     refineFileNameMessage: (name) => {
@@ -294,7 +304,11 @@ export default {
     },
 
     diffForHumans: (date) => {
-      if(date > Date.now()){return 'past deadline'}
+      
+      let ex = dayjs(date).format('DD/M/YY @ hh:mm')
+      let today = dayjs(Date.now()).format('DD/M/YY @ hh:mm')
+
+      if(today > ex){return dayjs(date).format('DD/M/YY @ hh:mm') + ' ( Past Deadline! )'}
       return dayjs(date).format('DD/M/YY @ hh:mm') + " ( " + dayjs(date).fromNow(true) + " left )"
     },
   },
@@ -343,13 +357,7 @@ export default {
   methods:{
     ...mapActions(['sendBidMessage', 'fetchMessages', 'pullBid']),
     
-    isImage(url){
-      let base = url.substring((url.lastIndexOf('.') + 1), (url.lastIndexOf('.') + 4))
-      if(base == 'jpg' || base =='png' || base =='jpe' || base =='svg'){
-        return true
-      }
-      return false
-    },
+  
 
     openMoreInfo(){
       this.more_info_open = true
@@ -445,9 +453,6 @@ export default {
 </script>
 
 <style lang="css" scoped>
-   .section{
-    width: 100%;
-  }
   .left{
     text-align: left;
     margin-right: 3rem;
@@ -463,6 +468,7 @@ export default {
     color: black;
     padding: 0.75rem;
   }
+ 
   .right{
     text-align: right;
     margin-left: 3rem;
@@ -474,6 +480,16 @@ export default {
   } 
   .filemessage{
     width: 60vw;
+  }
+  
+  .full-width{
+    width: 100vw;
+  }
+  .large-width{
+    width: 58.3333vw;
+  }
+  .medium-width{
+    width: 83.333vw;
   }
   .all_right{
     display: flex;
@@ -502,6 +518,19 @@ export default {
     bottom: 1rem; 
     right: 5px;
   }
+  .bottom-toolbar{
+    padding-bottom: 5rem; 
+    position: fixed; 
+    bottom: 0; 
+    right: 0;
+  }
+  .top-toolbar{
+    padding-bottom: 5rem; 
+    position: fixed; 
+    top: 50px; 
+    right: 0; 
+    z-index: 1;
+  }
   
   .attach{
     position: fixed; 
@@ -512,5 +541,9 @@ export default {
     position: fixed; 
     bottom: 0.25rem; 
     right: 0.25rem;
+  }
+  .bg-image{
+    background-image: url('~@/assets/c2.jpg');
+
   }
 </style>

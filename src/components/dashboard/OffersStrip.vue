@@ -2,7 +2,7 @@
   <div class="grey lighten-3 col-block" >
     
     <v-row  class="box">
-      <v-col class="col-12 " :class="{
+      <v-col class="col-12 pointer" :class="{
         redlist: offer.status == 1 || offer.status == 3, 
         blacklist: offer.status == 2, 
         greenlist: offer.status == 4, 

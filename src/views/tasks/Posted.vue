@@ -130,13 +130,13 @@
       <tasks-strip v-for="task in tasks" :key="task.id" :task="task" />
     </section>
 
-    <v-row class="padder" v-if="!getAllTasksPostedByMe[0] && pagination_links_set" >
+    <v-row class="padder d-flex justify-center" v-if="!getAllTasksPostedByMe[0] && pagination_links_set" >
       <div class="padded mb-4">
         <v-row class="no-gutters " style="min-width: 80vw;">
         <v-col class="col-12 d-flex align-center justify-center">
         <emptyHere />
         </v-col>
-        <v-col class="col-12 d-flex align-center justify-center" v-if="filter_model === 'all'">
+        <v-col class="col-12 text-center" v-if="filter_model === 'all'">
           You have not posted a task yet. Once you post a task, it will appear here. You can post a task
           <span @click="go('Task/Add')" class="blue--text bold-tiny">here</span> and specify the option you decide. You may offer it to the public for writers to bid on it,
           or you can offer it to all or some of the writers on your network. 

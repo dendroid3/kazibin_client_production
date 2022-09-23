@@ -20,19 +20,29 @@ const getters = {
 const actions = {
   async createBid({dispatch,commit, getters}, data){
     try{
-      const bids_count = getters.getDashboadDetails
+      const balance = getters.getDashboadDetails.transactions.balance
+      console.log(balance)
+
+      if(data.bid_cost > balance){
+        dispatch('openAlert', {message: 'You do not have enough balance to send this bid, kindly top up and try again.', code: 'error'}, {root: true})
+        return false
+      }
+
       const response = await
       axios.post('/bid/create', data)
       
-      if(response.data.status == 200){
-        dispatch('openAlert', {message: response.data.message, code: 'success'}, {root: true})
-        dispatch('setNewBidsDetails', null, {root: true})
-      }
-      router.push('/dashboard')
+      dispatch('openAlert', {message: response.data.message, code: 'success'}, {root: true})
+      dispatch('setNewBidsDetails', null, {root: true})
+      dispatch('fetchDashboardDetails', null, {root: true})
+      router.push('/Bids')
       return true
     } catch(e){
-      dispatch('handleError', {error_code: e.response.status}, {root: true})
-
+      if(e.response){
+        dispatch('handleError', {error: e, error_code: e.response.status, action: 'createBid'}, {root: true})
+      } else {
+        dispatch('handleError', {error: e, action: 'createBid'}, {root: true})
+      }
+      return false
     }
   },
 

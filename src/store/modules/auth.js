@@ -15,6 +15,8 @@ const getters = {
   getLoginError: (state) => (state.login_error),
 }
 
+
+
 const actions = {
   async register ({commit, dispatch}, data) {
     try {
@@ -25,8 +27,8 @@ const actions = {
       commit('SET_AUTH_DETAILS', response.data.token)
       commit('SET_USER_DETAILS', response.data.user)
       if(response.status == 201){return}
-      // dispatch('inputRegistrationStep', 3, {root: true})
-      window.location.href = process.env.VUE_APP_FRONT_END_URL + `MyProfile` 
+      dispatch('inputRegistrationStep', 2, {root: true})
+      window.location.href = process.env.VUE_APP_FRONT_END_URL + `register` 
       return false
     } catch (e) {
       if(e.response){
@@ -37,23 +39,61 @@ const actions = {
     }
   },
 
+
   updateUserDetails({}, data){
-    commit('SET_USER_DETAILS', data)
+    // commit('SET_USER_DETAILS', data)
   },
 
-  async verifyEmail ({commit, dispatch, getters}) {
+  async verifyEmail ({dispatch}, data) {
     try {
       const response = await
-      axios.post('verify_email', getters.getUser)
+      axios.post('verify_email', data)
       if(response.status == 201) { 
+        dispatch('openAlert', {message: 'Could not verify account. It May have have already been verified or non-existent altogether. Try Logging in', code: 'error'}, {root: true})
+        router.push('/Login')
         return 
       }
-      commit('SET_VERIFICATION', true)
+      dispatch('openAlert', {message: 'Verification Successful. Please Log In.', code: 'success'}, {root: true})
+      router.push('/Login')
     } catch (e) {
       if(e.response){
         dispatch('handleError', {error: e, error_code: e.response.status, action: 'verifyEmail'}, {root: true})
       } else {
         dispatch('handleError', {error: e, action: 'verifyEmail'}, {root: true})
+      }
+    }
+  },
+  
+  async initialisePasswordReset ({dispatch}, data) {
+    try {
+      const response = await
+      axios.post('initialise_password_reset', data)
+      if(response.status == 201) { 
+        dispatch('openAlert', {message: 'Sorry, We do not recogonise this email.', code: 'error'}, {root: true})
+        return 
+      }
+      dispatch('openAlert', {message: 'Email sent. Kindly check your inbox for farther instructions.', code: 'success'}, {root: true})
+    } catch (e) {
+      if(e.response){
+        dispatch('handleError', {error: e, error_code: e.response.status, action: 'initialisePasswordReset'}, {root: true})
+      } else {
+        dispatch('handleError', {error: e, action: 'initialisePasswordReset'}, {root: true})
+      }
+    }
+  },
+  
+  async resendVerificationEmail ({dispatch}) {
+    try {
+      const response = await
+      axios.get('resend_verification_email')
+      dispatch('openAlert', {message: 'Email resent. You will recieve it in a few minutes.', code: 'success'}, {root: true})
+
+      console.log(response)
+    } catch (e) {
+      if(e.response){
+        dispatch('handleError', {error: e, error_code: e.response.status, action: 'resendVerificationEmail'}, {root: true})
+      } else {
+        dispatch('handleError', {error: e, action: 'resendVerificationEmail'}, {root: true})
       }
     }
   },
@@ -74,6 +114,30 @@ const actions = {
       }
     }
   },
+
+  async checkIfAccountIsVerified({dispatch}){
+    try{
+      const response  = await
+      axios.get('is_account_verified')
+      if(!response.data){
+        dispatch('openAlert', {message: 'No it is not verified. Please verify.', code: 'error'}, {root: true})
+      } else {
+        dispatch('openAlert', {message: 'Yes! You are right! It is already verified. Please log in.', code: 'success'}, {root: true})
+        dispatch('inputRegistrationStep', 1, {root: true})
+        router.push('/Login')
+
+      }
+      console.log(response)
+      return true
+    } catch(e){
+      console.log(e)
+      if(e.response){
+        dispatch('handleError', {error: e, error_code: e.response.status, action: 'checkIfAccountIsVerified'}, {root: true})
+      } else {
+        dispatch('handleError', {error: e, action: 'checkIfAccountIsVerified'}, {root: true})
+      }
+    }
+  },
   
   async login ({commit, dispatch}, data) {
     try {
@@ -85,10 +149,17 @@ const actions = {
       if(response.status == 200){
         commit('SET_AUTH_DETAILS', response.data.token)
         commit('SET_USER_DETAILS', response.data.user)
-        window.location.href = process.env.VUE_APP_FRONT_END_URL + `dashboard`
-        return true 
+        if(!response.data.user.email_verification){
+          window.location.href = process.env.VUE_APP_FRONT_END_URL + `dashboard`
+          return true 
+        } else {
+          dispatch('openAlert', {message: 'Email not verified. Verify email.', code: 'error'}, {root: true})
+          dispatch('inputRegistrationStep', 2, {root: true})
+          window.location.href = process.env.VUE_APP_FRONT_END_URL + `register`
+        }
       } else {
-        dispatch('setLoginError', response.data.error, {root: true})
+          dispatch('openAlert', {message: 'Email or password do not match any of our records. Please try again. In case you have forgotten your account`s credentials then click on the `forgot password` link to recover your account', code: 'error'}, {root: true})
+          dispatch('setLoginError', response.data.error, {root: true})
       }
     } catch (e) {
       if(e.response){

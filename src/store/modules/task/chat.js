@@ -66,7 +66,7 @@ const actions = {
       const response = await
       axios.post('/task/mark_complete', data)
       dispatch('openAlert', {message: response.data[0].message, code: 'success'}, {root: true})
-      router.push('dashboard')
+      router.push('/dashboard')
       return true
     } catch(e) {
       if(e.response){

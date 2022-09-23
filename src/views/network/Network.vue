@@ -71,6 +71,13 @@ export default {
       setNetworkModel(code){
         this.network_model = code
       }
+    },
+
+    mounted(){
+      console.log('brokers')
+      console.log(this.getMyBrokers)
+      console.log('writers')
+      console.log(this.getMyWriters)
     }
 }
 </script>

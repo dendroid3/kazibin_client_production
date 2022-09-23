@@ -1,5 +1,6 @@
 <template lang="">
     <div class="mid-left-bar grey lighten-3">
+        <TransactionsBelt style="z-index: 1;" />
         <tabs-strip 
         :posted_fetched="true" 
         :taken_fetched="true" 
@@ -21,10 +22,12 @@
 import TabsStrip from '../../components/dashboard/TabsStrip.vue';
 import TitleStrip from '../../components/dashboard/TitleStrip.vue';
 import LogsStrip from '../../components/dashboard/LogsStrip.vue';
+import TransactionsBelt from '../../components/dashboard/TransactionsBelt.vue';
 import { mapGetters } from 'vuex';
 export default {
     name: "MidleftSidebar",
-    components:{TabsStrip, TitleStrip, LogsStrip},
+
+    components:{TabsStrip, TitleStrip, LogsStrip, TransactionsBelt},
 
     computed:{
         ...mapGetters(['getLogMessages'])

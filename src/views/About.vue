@@ -18,97 +18,50 @@
     </v-row>
     <div class="container  pa-0" v-for="(faq, i) in faqs" :key="i">
       <div class="bold pointer px-4" @click="openFaq(i)">{{faq.question}}</div>
-      <div class="px-4 backg" v-if="open_faq == i">{{faq.answer}}</div>
-    </div>
-    <div class="container">
-      <span class="bold">Not answered? </span> <br>
-      <textarea class="send-bar d-flex" :placeholder="`ask us here`"></textarea>
-      <div class="d-flex justify-end">
-        <v-icon>
+      <div class="pa-4 white rounded mx-2" v-if="open_faq == i">{{faq.answer}}</div>
+    </div> <br>
+    <span class="bold mx-4 mt-4">Not answered? </span> <br>
+
+    <div class="container d-flex justify-end align-center">
+      <textarea class="send-bar d-flex pa-2" :placeholder="`ask us here`"></textarea>
+      <div class=" ml-2 green--text">
+        <v-icon class="white--text green pa-2">
           mdi-send
         </v-icon>
       </div>
     </div>
-    <div class="d-flex justify-center">
+    <!-- <div class="d-flex justify-center">
       <h3 class="bold active" id="testimonials">
         WHAT PEOPLE SAY ABOUT US
       </h3>
-    </div>
-    <div class="backg ma-4 d-flex justify-center">
-      <div>
-        <div class="d-flex justify-center">
-          <v-avatar class="my-2 circle" contain size="200">
-              <v-img  :src="require(`../assets/icon.svg`)" />
-          </v-avatar>
-        </div>
-        <p class="bold">Erick Ndung'u</p>
-        <p>Kazibin a dependable platform and partner for professional freelance academic and article writers </p>
-      </div>
-    </div>
-    <div class="backg ma-4 d-flex justify-center">
-      <div>
-        <div class="d-flex justify-center">
-          <v-avatar class="my-2 circle" contain size="200">
-              <v-img  :src="require(`../assets/icon.svg`)" />
-          </v-avatar>
-        </div>
-        <p class="bold">Erick Ndung'u</p>
-        <p>Kazibin a dependable platform and partner for professional freelance academic and article writers </p>
-      </div>
-    </div>
-    <div class="backg ma-4 d-flex justify-center">
-      <div>
-        <div class="d-flex justify-center">
-          <v-avatar class="my-2 circle" contain size="200">
-              <v-img  :src="require(`../assets/icon.svg`)" />
-          </v-avatar>
-        </div>
-        <p class="bold">Erick Ndung'u</p>
-        <p>Kazibin a dependable platform and partner for professional freelance academic and article writers </p>
-      </div>
-    </div>
-    <div class="backg ma-4 d-flex justify-center">
-      <div>
-        <div class="d-flex justify-center">
-          <v-avatar class="my-2 circle" contain size="200">
-              <v-img  :src="require(`../assets/icon.svg`)" />
-          </v-avatar>
-        </div>
-        <p class="bold">Erick Ndung'u</p>
-        <p>Kazibin a dependable platform and partner for professional freelance academic and article writers </p>
-      </div>
-    </div>
-    <div class="backg ma-4 d-flex justify-center">
-      <div>
-        <div class="d-flex justify-center">
-          <v-avatar class="my-2 circle" contain size="200">
-              <v-img  :src="require(`../assets/icon.svg`)" />
-          </v-avatar>
-        </div>
-        <p class="bold">Erick Ndung'u</p>
-        <p>Kazibin a dependable platform and partner for professional freelance academic and article writers </p>
-      </div>
-    </div>
+    </div> -->
     <div class="d-flex justify-center" style="font-size: 3rem;">
-      940,320  
+      {{getAboutStatistics.words_written | formatToReadable}}
     </div>
     <div class="d-flex justify-center">
       words writen  
     </div>
     <div class="d-flex justify-center" style="font-size: 3rem;">
-      220  
+      {{getAboutStatistics.tasks_completed | formatToReadable}}  
     </div>
     <div class="d-flex justify-center pb-4">
-      jobs completed  
+      tasks completed  
     </div>
     <footer-strip />
   </div>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import FooterStrip from '../components/widgets/FooterStrip.vue'
 export default {
     name: "About",
+    filters:{
+      formatToReadable(number){
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+    },
     computed: {
+      ...mapGetters(['getAboutStatistics']),
         options() {
             return {
                 duration: 500,
@@ -165,7 +118,8 @@ export default {
         };
     },
     methods: {
-        faqs() {
+      ...mapActions(['fetchAboutStatistics']),
+        tofaqs() {
             this.$vuetify.goTo("#faqs", this.options);
         },
         testimonials() {
@@ -179,7 +133,10 @@ export default {
           }
 s        }
     },
-    components: { FooterStrip }
+    components: { FooterStrip },
+    mounted(){
+      this.fetchAboutStatistics()
+    }
 }
 </script>
 <style lang="css" scoped>

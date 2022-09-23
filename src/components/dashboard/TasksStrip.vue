@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="pa-2 wrapper" @click="startChat" :class="{
+  <div class="pa-2 wrapper pointer" @click="startChat" :class="{
           redlist: task.status == 1, 
           purplelist: task.status == 2, 
           greenlist: task.status == 3, 

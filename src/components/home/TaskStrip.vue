@@ -94,18 +94,28 @@ export default {
       this.$router.push('/t/' + this.task.code)
     },
     initiateBid(){
+      let bid_cost = null
+      if(parseInt(this.task.full_pay) <= 1000){
+        bid_cost = 10
+      } else if((parseInt(this.task.full_pay) > 1000) && (parseInt(this.task.full_pay) <= 5000)){
+        bid_cost = 20
+      } else {
+        bid_cost = 30
+      }
+
       let prompt_message = "You are about to bid on " + this.task.unit + " " + this.task.type +
-      " task, code: " + this.task.code + " worth " + this.task.full_pay + " KES. Proceed?"
+      " task, code: " + this.task.code + " worth " + this.task.full_pay + " KES. This bid costs " + bid_cost + " KES. Proceed?"
       if(!confirm(prompt_message)){
         return
       }
       this.bidding = true
       const data = {
+        bid_cost: bid_cost,
         task_id: this.task.id
       }
-      this.createBid(data).then(() => {
+      this.createBid(data).then((res) => {
         this.bidding = false
-        this.bidded = true
+        this.bidded = res
       })
     }
   },

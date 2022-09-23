@@ -53,11 +53,11 @@
       </v-row>
     </div>
     
-    <div class="pa-3" v-if="getBrokerMetrics.ratings[0]">
+    <div class="pa-3" v-if="getWriterMetrics.writer.ratings[0]">
       <span class="bold">
-        {{"Reviews: " + getBrokerMetrics.broker.broker.number_of_reviews}}
+        {{"Reviews: " + getViewWriter.writer.number_of_reviews}}
       </span>
-      <v-row class="px-1 py-1" v-for="rating in getBrokerMetrics.broker.broker.ratings.slice(0,5)" :key="rating.id">
+      <v-row class="px-1 py-1" v-for="rating in getViewWriter.writer.ratings.slice(0,5)" :key="rating.id">
           <div class="px-4 white rounded my-1 col-12" style="font-size: 0.95rem;" >
             {{rating.review}}
             <div class="d-flex justify-end col-12" style="font-size: 0.95rem;">
@@ -134,6 +134,8 @@ export default {
 
   mounted(){
     this.boot()
+    console.log('this')
+    console.log(this.getWriterMetrics)
   }
 }
 </script>
