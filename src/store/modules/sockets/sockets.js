@@ -15,8 +15,8 @@ const actions = {
       'BidRejected',
       'BidAccepted',
       'MyBidAccepted',
-      'OfferMade',
 
+      'OfferMade',
       'OfferAccepted',
       'OtherOfferAccepted',
       'OfferPulled',
@@ -32,10 +32,11 @@ const actions = {
     ]
     events.forEach(element => {
       console.log('listening on ' + element)
+      console.log(store.state.auth.user.id)
       
       // dispatch('openAlert', {message: element}, {root: true})
 
-      window.Echo.private('private_notification_' + store.state.auth.user.id,)
+      window.Echo.private('private_notification_' + store.state.auth.user.id)
       .listen(element, (e) => {
         dispatch('handle' + element, e.system_message, { root: true })
         console.log()
@@ -45,8 +46,24 @@ const actions = {
   },
 
   handleBidMade({dispatch}, message){
-      dispatch('openAlert', {message: message, code: 'success'}, {root: true})
-  }
+    dispatch('openAlert', {message: message, code: 'success', tomeout: 10000}, {root: true})
+  },
+
+  handleBidPulled({dispatch}, message){
+    dispatch('openAlert', {message: message, code: 'success'}, {root: true})
+  },
+
+  handleBidRejected({dispatch}, message){
+    dispatch('openAlert', {message: message, code: 'success'}, {root: true})
+  },
+
+  handleBidAccepted({dispatch}, message){
+    dispatch('openAlert', {message: message, code: 'success'}, {root: true})
+  },
+
+  handleMyBidAccepted({dispatch}, message){
+    dispatch('openAlert', {message: message, code: 'success'}, {root: true})
+  },
 }
 
 const mutations = {}

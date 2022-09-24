@@ -34,7 +34,7 @@ const actions = {
       dispatch('openAlert', {message: response.data.message, code: 'success'}, {root: true})
       dispatch('setNewBidsDetails', null, {root: true})
       dispatch('fetchDashboardDetails', null, {root: true})
-      router.push('/Bids')
+      // router.push('/Bids')
       return true
     } catch(e){
       if(e.response){
