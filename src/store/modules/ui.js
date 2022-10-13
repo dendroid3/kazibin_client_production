@@ -10,7 +10,8 @@ const state = {
   alert: false,
   alert_code: false,
   task_chat_invoice: false,
-  task_chat_view_invoice: false
+  task_chat_view_invoice: false,
+  alert_endpoint: false
 }
 
 const getters = {
@@ -19,6 +20,7 @@ const getters = {
   isAlertOpen: (state) => (state.alert),
   getAlertCode: (state) => (state.alert_code),
   getAlertMessage: (state) => (state.alert_message),
+  getAlertEndPoint: (state) => (state.alert_endpoint),
   getTaskChatInvoice: (state) => (state.task_chat_invoice),
   getTaskChatViewInvoice: (state) => (state.task_chat_view_invoice),
 }
@@ -57,9 +59,11 @@ const actions = {
           break;
       }
     } else{
-      let error_message = 'Something went wrong while performing this action:::> ' + data.action +
-      ' Help us serve you better by sending us a bug report. Explain to us what you were trying to do. Call us on 07000000 if it is an urgent action. Thank you. '
-      dispatch('openAlert', {message: error_message, code: 'error', timeout: 10000}, {root: true})
+      let error_message = 'Something went wrong while performing this action ::> ' + data.action +
+      '. Help us serve you better by sending us a bug report. Explain to us what you were trying to do. Call us on 07000000 if it is an urgent action. Thank you.'
+
+      dispatch('openAlert', {message: error_message, code: 'error', timeout: 5000}, {root: true})
+
       const error = {
         user_phone_number: getters.getUser.phone_number,
         message: data.error.message,
@@ -100,7 +104,8 @@ const actions = {
     }
     const data = {
       message: text.message,
-      code: text.code
+      code: text.code,
+      endpoint: text.endpoint
     }
     commit('OPEN_ALERT', data)
     setTimeout(() => {
@@ -123,7 +128,8 @@ const mutations = {
   OPEN_ALERT: (state, data) => (
     state.alert = true,
     state.alert_message = data.message,
-    state.alert_code = data.code
+    state.alert_code = data.code,
+    state.alert_endpoint = data.endpoint
   ),
   CLOSE_ALERT: (state) => (
     state.alert = false,

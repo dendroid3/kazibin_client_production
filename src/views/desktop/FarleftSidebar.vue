@@ -9,43 +9,52 @@
                 class="row no-gutters d-flex justify-center"
                 active-class="deep-blue--text red--text"
             >
-                <v-list-item-avatar
+                <div class="d-flex justify-center" style="width: 100%;">
+                    <v-list-item-avatar
                     class="elevation-20 tomato"
                     tile
-                    size="400 justify-self-center"
-                >
-                <div class="pa-4 tomato" v-if="getUser.id">
-                    <div class="d-flex justify-center initials">
+                    size="120"
+                    >
+                    <div class="white--text">
+                        <span class="d-flex justify-center initials">
                         {{initials}}
-                    </div>
-                    <v-divider dark/>
-                    <span>
+                        </span>
+                        <v-divider dark/>
+                        <span>
                         {{'broker'}}
-                    </span>
+                        </span>
+                        <v-divider dark/>
+                        <span class="blue--text white pa-1 bold rounded">
+                        {{getUser.credential_verification ? 'verified' : 'unverified'}}
+                        </span>
+                    </div>
+                    </v-list-item-avatar>
                 </div>
-                </v-list-item-avatar>
+                
+                <v-list-item class="short-line-under" dark @click="goToSection('Verify')" v-if="!getUser.credential_verification">
+                {{'Verify AC'}}
+                </v-list-item>
+                <v-list-item class="short-line-under" dark @click="goToSection('MyProfile')">
+                {{'Profile'}}
+                </v-list-item>
                 <v-list-item class="short-line-under" dark @click="goToSection('Dashboard')">
                 {{'Dashboard'}}
                 </v-list-item>
                 
-                <v-list-item class="short-line-under" dark @click="goToSection('')">
-                {{'home'}}
-                </v-list-item>
-                
                 <v-list-item class="short-line-under" dark @click="goToSection('Task/Add')">
-                {{'Post Task'}}
+                {{'Post '}}
                 </v-list-item>
                 
                 <v-list-item class="short-line-under" dark @click="goToSection('Explore/Task')">
-                {{'Explore Tasks'}}
+                {{'Available'}}
                 </v-list-item>
                 
                 <v-list-item class="short-line-under" dark @click="goToSection('Explore/Writers')">
-                {{'Discover Writers'}}
+                {{'Writers'}}
                 </v-list-item>
                 
                 <v-list-item class="short-line-under" dark @click="goToSection('explore/Brokers')">
-                {{'Discover Brokers'}}
+                {{'Brokers'}}
                 </v-list-item>
                 
                 <v-list-item class="short-line-under" dark @click="goToSection('About')">

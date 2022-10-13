@@ -9,7 +9,7 @@
       dense
       dismissible
       type="info"
-    >{{getAlertMessage}}</v-alert>
+    ><span v-html="getAlertMessage" @click="resolve" /></v-alert>
     <v-alert
       @input="onclose"
       v-if="isAlertOpen && getAlertCode == 'info'"
@@ -19,8 +19,7 @@
       dense
       dismissible
       type="info"
-    >{{getAlertMessage}}</v-alert>
-      <!--  -->
+    ><span v-html="getAlertMessage" @click="resolve" /></v-alert>
 
     <v-alert
       @input="onclose"
@@ -31,26 +30,36 @@
       dense
       dismissible
       type="success"
-    >{{getAlertMessage}}</v-alert>
+     
+    ><span v-html="getAlertMessage" @click="resolve" /></v-alert>
 
   </div>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import router from '../../router';
 export default {
   name: 'AlertBox',
   props :[
     'message',
-    'code'
+    'code',
+    'endpoint'
   ],
   computed:{
-    ...mapGetters(['isAlertOpen', 'getAlertCode', 'getAlertMessage'])
+    ...mapGetters(['isAlertOpen', 'getAlertCode', 'getAlertMessage', 'getAlertEndPoint'])
   },
 
   methods: {
     ...mapActions(['closeAlert']),
     onclose(){
       this.closeAlert()
+    },
+    resolve(){
+      if(this.getAlertEndPoint){
+        this.$router.push('/' + this.getAlertEndPoint)
+      } else {
+        alert('nothing')
+      }
     }
   }
 }

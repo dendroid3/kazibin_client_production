@@ -34,7 +34,7 @@ const actions = {
       dispatch('openAlert', {message: response.data.message, code: 'success'}, {root: true})
       dispatch('setNewBidsDetails', null, {root: true})
       dispatch('fetchDashboardDetails', null, {root: true})
-      // router.push('/Bids')
+      router.push('/Bids')
       return true
     } catch(e){
       if(e.response){
@@ -107,6 +107,10 @@ const actions = {
     }
   },
 
+  setBidMessages({commit}, messages_array){
+    commit('SET_BID_MESSAGES', messages_array)
+  },
+
   async fetchMessages({commit, dispatch}, data){
     try{
       const response = await 
@@ -121,7 +125,7 @@ const actions = {
     }
   },
 
-  async acceptBid({commit, dispatch}, data){
+  async acceptBid({dispatch}, data){
     try{
       const response = await
       axios.post('/bid/accept', data)
@@ -139,7 +143,7 @@ const actions = {
     }
   },
 
-  async rejectBid({commit, dispatch}, data){
+  async rejectBid({dispatch}, data){
     try{
       const response = await
       axios.post('/bid/reject', data)
@@ -154,7 +158,7 @@ const actions = {
     }
   },
 
-  async pullBid({commit, dispatch}, data){
+  async pullBid({dispatch}, data){
     try{
       const response = await
       axios.post('/bid/pull', data)

@@ -57,24 +57,21 @@
 
         <div class="mx-2 mt-2 d-flex align-center text-center">
           <v-spacer />
-          Forgot password? 
-          <v-spacer />
-            <v-btn small @click="goReset" class="success">
-              recover
-            </v-btn>
+            <span  @click="goReset" class="pointer blue--text">
+              Forgot password
+            </span>
           <v-spacer />
         </div>
 
         
         <div class="mx-2 mt-2 d-flex align-center text-center">
           <v-spacer />
-          Do not have an account? 
-          <v-spacer />
-            <v-btn small @click="goRegister" class="success">
-              sign up
-            </v-btn>
+            <span  @click="goRegister" class="pointer blue--text">
+              Sign Up
+            </span>
           <v-spacer />
         </div>
+
       </v-form>
     </div>
   </div>

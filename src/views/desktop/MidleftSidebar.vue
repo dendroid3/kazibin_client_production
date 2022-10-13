@@ -1,5 +1,5 @@
 <template lang="">
-    <div class="mid-left-bar grey lighten-3">
+    <div class="mid-left-bar grey lighten-2">
         <TransactionsBelt style="z-index: 1;" />
         <tabs-strip 
         :posted_fetched="true" 

@@ -62,10 +62,10 @@
           <v-col class="col-md-2 col-lg-1" v-if=" ($vuetify.breakpoint.lg || $vuetify.breakpoint.md) && show_nav_bar">
             <farleft-sidebar />
           </v-col>
-          <v-col style="overflow-y: hidden;" class="col-md-4 grey lighten-3 px-4" v-if=" ($vuetify.breakpoint.lg && show_nav_bar)">
+          <v-col style="overflow-y: scroll;" class="col-md-4 grey lighten-2  px-4" v-if=" ($vuetify.breakpoint.lg && show_nav_bar)">
             <midleft-sidebar />
           </v-col>
-          <v-col style="overflow-y: scroll; height: calc(100vh - 50px);">
+          <v-col style="overflow-y: auto; width: 100;" class="pa-0">
             <router-view />
           </v-col>
         </v-row>
@@ -104,7 +104,7 @@ export default {
   methods:{
     ...mapActions(['bootAllSockets']),
     goHome(){
-      if(this.getUser.id){
+      if(this.getUser){
         this.$router.push('/')
       } else {
         window.location.href="https://kazibin.adilirealestate.com"
@@ -424,7 +424,7 @@ export default {
   }
   /* width */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 10px;
   background: transparent;
 }
 

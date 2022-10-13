@@ -6,6 +6,7 @@ import Cookies from 'js-cookie'
 import store from '../store'
 import auth from './middleware/auth'
 import emailverified from './middleware/emailverified'
+import guest from './middleware/guest'
 import middlewarePipeline from './middlewarePipeline'
 
 //This injects the api url removing the need for it to be changed in VueX modules everytime it changes
@@ -37,7 +38,12 @@ const routes = [
   {
     path: '/Register',
     name: 'Register',
-    component: () => import('../views/auth/Register.vue')
+    component: () => import('../views/auth/Register.vue'),
+    meta:{
+      middleware: [
+        guest
+      ]
+    }
   },
   {
     path: '/email/:email/:email_verification',
@@ -47,7 +53,12 @@ const routes = [
   {
     path: '/Login',
     name: 'Login',
-    component: () => import('../views/auth/Login.vue')
+    component: () => import('../views/auth/Login.vue'),
+    meta:{
+      middleware: [
+        guest
+      ]
+    }
   },
   {
     path: '/Verify_email/:email_verification',

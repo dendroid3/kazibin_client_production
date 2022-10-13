@@ -837,8 +837,6 @@ export default {
     },
 
     startBidChat(bid){
-      // bid.task_code = 'dsfgds' //this.getTaskChatHeader.code
-      // bid.task_topic = 'sdfsafg' // this.getTaskChatHeader.topic
       this.setBidChatHeader(bid)
       this.setCurrentBidTask({
         topic: this.getTaskChatHeader.topic,

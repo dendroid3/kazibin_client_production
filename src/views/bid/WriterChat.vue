@@ -224,7 +224,7 @@
     </v-row>
 
   </section>
-    <chat-box :messages="getBidMessages" />
+    <chat-box :messages="getBidMessages" v-if="!fetching_messages"/>
     <!-- <div style="min-height:calc(100vh - 300px); margin-top: 4rem; margin-bottom: 5rem; z-index; 1;" v-if="!fetching_messages">
       <div>
 
@@ -356,8 +356,6 @@ export default {
 
   methods:{
     ...mapActions(['sendBidMessage', 'fetchMessages', 'pullBid']),
-    
-  
 
     openMoreInfo(){
       this.more_info_open = true

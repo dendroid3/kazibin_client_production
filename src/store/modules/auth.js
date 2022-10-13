@@ -169,6 +169,27 @@ const actions = {
       }
     }
   },
+  
+  async logout ({commit, dispatch}) {
+    try {
+      dispatch('setLoadingStatus', true, {root: true})
+      const response = await
+      axios.get('logout')
+      dispatch('setLoadingStatus', false, {root: true})
+      if(response.status == 200){
+        commit('SET_AUTH_DETAILS', null)
+        commit('SET_USER_DETAILS', null)
+        dispatch('openAlert', {message: 'You have been successfully logged out.', code: 'info'}, {root: true})
+        window.location.href = process.env.VUE_APP_LANDING_URL
+      }
+    } catch (e) {
+      if(e.response){
+        dispatch('handleError', {error: e, error_code: e.response.status, action: 'login'}, {root: true})
+      } else {
+        dispatch('handleError', {error: e, action: 'login'}, {root: true})
+      }
+    }
+  },
 
   async setLoginError({commit}, data){
     commit('SET_LOGIN_ERROR', data)

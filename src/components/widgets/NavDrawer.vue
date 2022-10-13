@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <div class="mt-4 bold-2"  style="z-index: 999;">
     <v-list
       class=" text-uppercase"
@@ -86,12 +86,18 @@
         {{'About Us'}}
         </v-list-item>
         
+        <v-list-item class="d-flex justify-end" @click="logoutUser">
+          <v-btn small class="red white--text" :loading="logging_out">
+            logout
+          </v-btn>
+        </v-list-item>
+        
       </v-list-item-group>
     </v-list>
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'NavDrawer',
   computed:{
@@ -108,6 +114,7 @@ export default {
   },
   data(){
     return{
+      logging_out: false,
       available: false,
       dashboard_links:[
         {name: 'main', page: '/Dashboard'},
@@ -123,6 +130,15 @@ export default {
     }
   },
   methods:{
+    ...mapActions(['logout']),
+    logoutUser(){
+      let confirmation = "You are about to logout, you will be logged out in all other devices. Proceed?"
+      this.logging_out = true
+      if(!confirm(confirmation  )) {return}
+      this.logout().then(() => (
+        this.logging_out = false
+      ))
+    },
     go(code){
       this.$router.push(code)
     },
