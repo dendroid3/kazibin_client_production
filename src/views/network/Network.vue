@@ -74,10 +74,6 @@ export default {
     },
 
     mounted(){
-      console.log('brokers')
-      console.log(this.getMyBrokers)
-      console.log('writers')
-      console.log(this.getMyWriters)
     }
 }
 </script>

@@ -10,7 +10,6 @@ const actions = {
         try{
             const response = await
             axios.post('initialise_verification', data)
-            console.log(response)
 
             if(response.status == 201){
                 dispatch('openAlert', {message: response.data.error, code: 'info', timeout: 5000}, {root: true})
@@ -21,7 +20,6 @@ const actions = {
                 router.push('/dashboard')
             }
         } catch(e){
-            console.log(e)
         }
     }
 }

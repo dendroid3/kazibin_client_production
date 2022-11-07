@@ -25,6 +25,7 @@ import Search from './modules/search/search'
 import Transactions from './modules/transaction/transactions'
 import Statistics from './modules/statistics/statistics'
 import Verification from './modules/verification/verifications'
+import Download from './modules/download'
 
 Vue.use(Vuex);
 
@@ -48,7 +49,8 @@ export default new Vuex.Store({
     Search,
     Transactions,
     Statistics,
-    Verification
+    Verification,
+    Download
   },
   plugins: [
 
@@ -131,7 +133,6 @@ export default new Vuex.Store({
     createPersistedState({
       key: 'KAZIBIN_TOKEN',
       paths: ['auth.token'],
-      //save token in cookies
       storage: {
         getItem: key => Cookies.get(key),
         setItem: (key, value) => Cookies.set(key, value, { expires: 3000, secure: false }),

@@ -21,7 +21,6 @@ const actions = {
   async createBid({dispatch,commit, getters}, data){
     try{
       const balance = getters.getDashboadDetails.transactions.balance
-      console.log(balance)
 
       if(data.bid_cost > balance){
         dispatch('openAlert', {message: 'You do not have enough balance to send this bid, kindly top up and try again.', code: 'error'}, {root: true})
@@ -97,7 +96,6 @@ const actions = {
       }
       return true
     }catch(e){
-      console.log(e)
       if(e.response){
         dispatch('handleError', {error: e, error_code: e.response.status, action: 'sendBidMessage'}, {root: true})
       } else {

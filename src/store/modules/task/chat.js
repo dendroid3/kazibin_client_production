@@ -81,7 +81,6 @@ const actions = {
     try{
       const response = await
       axios.post('/task/rate_user', data)
-      console.log(response)
       dispatch('openAlert', {message: response.data, code: 'success'}, {root: true})
       router.push('/Tasks/Taken')
       return true

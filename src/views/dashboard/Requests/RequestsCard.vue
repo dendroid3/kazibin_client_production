@@ -274,8 +274,6 @@ export default {
         }
       }
       this.page = this.$router.history.current.name
-      // console.log('getRequestsPaginationDetails')
-      // console.log(this.getRequestsPaginationDetails)
     }
   },
   created(){

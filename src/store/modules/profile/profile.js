@@ -17,7 +17,6 @@ const actions = {
         try{
             const response = await
             axios.get('/profile/get_dashboard_details')
-            console.log(response)
             commit('SET_DASHBOARD_DETAILS', response.data[0])
         } catch(e){
             if(e.response){
@@ -32,7 +31,6 @@ const actions = {
         try{
             const response = await
             axios.post('/profile/change_my_bio', data)
-            console.log(response.data)
             dispatch('updateUserDetails', response.data, {root: true})
             return response.data
         } catch(e){
@@ -53,7 +51,6 @@ const actions = {
 
             return response.data
         } catch(e){
-            console.log(e)
             if(e.response){
                 dispatch('handleError', {error: e, error_code: e.response.status, action: 'changeAvailability'}, {root: true})
             } else {
@@ -80,7 +77,6 @@ const actions = {
         try{
             const response = await
             axios.post('/profile/get_broker_metrics', data)
-            console.log(response)
             commit('SET_BROKER_METRICS', response.data[0])
         } catch(e){
             if(e.response){
@@ -95,7 +91,6 @@ const actions = {
         try{
             const response = await
             axios.post('/profile/get_writer_metrics', data)
-            console.log(response)
             commit('SET_WRITER_METRICS', response.data[0])
         } catch(e){
             if(e.response){

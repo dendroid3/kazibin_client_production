@@ -34,7 +34,6 @@ export default {
 
         this.verifyEmail(data)
 
-        console.log('mounted')
     }
 }
 </script>

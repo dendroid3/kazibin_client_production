@@ -33,7 +33,6 @@ const actions = {
     events.forEach(element => {
       window.Echo.private('private_notification_' + store.state.auth.user.id)
       .listen(element, (e) => {
-        console.log(e)
 
         if(element == 'BidMessageSent'){
           let second_stub = e.message.type == 'text' ? 
@@ -58,18 +57,13 @@ const actions = {
   },
 
   notify({}, notification_details){
-    console.log('notification_details')
-    console.log(notification_details)
     if(window.Notification){
-      console.log('in notifications')
       Notification.requestPermission( permission => {
         let notification = new Notification(notification_details.title, {
           body: notification_details.message, // content for the alert
           // icon: "https://pusher.com/static_logos/320x320.png" // optional image 
           icon: "https://api.kazibin.adilirealestate.com/icon.svg"
         });
-        console.log('permission')
-        console.log(permission)
         notification.onclick = () => {
           window.open(process.env.VUE_APP_FRONT_END_URL);
         };
@@ -148,7 +142,6 @@ const actions = {
   },
 
   handleOtherBidAccepted({getters, dispatch}, e){
-    console.log(e)
     dispatch('openAlert', {message: e.message, code: 'info', endpoint: 'Bids'}, {root: true})
     if(getters.getBidChatHeader.id == e.bid_id && (router.history.current.name == "BidChat")){
       const bid = getters.getBidChatHeader

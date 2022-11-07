@@ -15,7 +15,6 @@ const actions = {
         try{
             const response = await
             axios.post('transaction/claim', data)
-            console.log(response)
             if(response.data.error){
                 dispatch('openAlert', {message: response.data.message, code: 'error', timeout: 5000}, {root: true})
                 return true
@@ -56,7 +55,6 @@ const actions = {
         try{
             const response = await
             axios.get('transaction/get_mine')
-            console.log(response)
             commit('SET_MY_TRANSACTIONS', response.data)
             return true
             

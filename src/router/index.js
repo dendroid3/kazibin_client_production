@@ -71,6 +71,11 @@ const routes = [
     component: () => import('../views/auth/PasswordResetApplication.vue')
   },
   {
+    path: '/Password/Reset/:token',
+    name: 'ResetPassword',
+    component: () => import('../views/auth/ResetPassword.vue')
+  },
+  {
     path: '/Dashboard',
     name: 'Dashboard',
     component: () => import('../views/Dashboard.vue'),
@@ -223,12 +228,7 @@ const routes = [
   {
     path: '/t/:task_code',
     name: 'ViewTaskForBidding',
-    component: () => import('../views/task/ViewTask.vue'),
-    // meta:{
-    //   middleware: [
-    //     auth
-    //   ]
-    // }
+  component: () => import('../views/task/ViewTask.vue'),
   },
   {
     path: '/Explore/Task',

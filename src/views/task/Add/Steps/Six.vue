@@ -169,7 +169,6 @@ export default {
             }
             this.openAlert(data)
             this.loading = false
-            console.log(data)
             return 
           }
 
@@ -220,7 +219,6 @@ export default {
   },
 
   mounted() {
-    console.log(this.getMyWriters)
   },
 }
 </script>

@@ -19,24 +19,18 @@
             <v-text-field 
             outlined
             clearable
-            v-model="user.email"
+            v-model="email"
             type="name"
             label="email"
             :rules="rules.emailRules"
             required
             > </v-text-field>  
           </div>
-          <div class="d-flex mb-2 justify-center align-center" v-if="getLoginError">
-            <v-icon large class="red--text">
-              mdi-alert
-            </v-icon>
-            {{getLoginError}}
-          </div>
           <div class="d-flex justify-center">
             <v-btn 
             :loading="loading"
             small 
-            @click="loginUser" 
+            @click="initialise" 
             class="rounded success submit-button"
             :disabled="!valid">
               submit
@@ -53,14 +47,11 @@
   export default {
     name: 'PasswordResetApplication',
     components:{AnimatedIcon},
-    computed:{
-      ...mapGetters(['getLoginError', 'getRegistrationStep'])
-    },
     data () {
       return {
         valid: true,
         lazy: false,
-        user: {},
+        email: null,
         loading: false,
         rules: {
           emailRules: [
@@ -78,13 +69,16 @@
       }
     },
     methods: {
-      ...mapActions(['login', 'setLoginError']),
+      ...mapActions(['initialisePasswordReset']),
       goHome(){
         window.location.href="https://kazibin.adilirealestate.com"
       },
-      loginUser(){
+      initialise(){
         this.loading = true
-        this.login(this.user).then(res => {
+        const data = {
+          email:this.email
+        }
+        this.initialisePasswordReset(data).then(res => {
           this.loading = false
         })
       },

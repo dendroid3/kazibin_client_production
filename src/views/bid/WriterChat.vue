@@ -124,146 +124,108 @@
       <a href="#instructions" id="top_button"></a>
     </div>
     
-  <section v-if="more_info_open" style="margin-top: 10rem;" class="">
-      
-    <v-row class="d-flex mx-4 no-gutters bold">
-      <v-col class="col-2 d-flex align-center">
-        {{"Instructions: "}}
-      </v-col>
-      <v-col class="col-10 justify-end d-flex">
-        <v-icon @click="instructions_open = false" v-if="instructions_open">
-          mdi-arrow-up
-        </v-icon>
-        <v-icon @click="instructions_open = true" v-if="!instructions_open">
-          mdi-arrow-down
-        </v-icon>
-      </v-col>
-    </v-row>
-    <div class="px-2">
-      <v-card class="d-flex mx-4 white instructions elevated-4 px-2" v-if="instructions_open"> 
-        {{getBidChatHeader.task.instructions }}
-      </v-card> 
-      <!-- {{getBidChatHeader.task}} -->
-    </div>
-    
-    <v-row class="d-flex mx-4 no-gutters bold">
-      <v-col class="col-2 d-flex align-center">
-        {{"Files: "}}
-      </v-col>
-      <v-col class="col-10 justify-end d-flex">
-        <v-icon @click="files_open = false" v-if="files_open">
-          mdi-arrow-up
-        </v-icon>
-        <v-icon @click="files_open = true" v-if="!files_open">
-          mdi-arrow-down
-        </v-icon>
-      </v-col>
-    </v-row>
-
-    <div v-if="files_open">
-      <v-card class="mx-4 pa-1 rounded mb-1" v-for="file in getBidChatHeader.task.files" :key="file.id">
-        <v-row class="no-gutters">
-          <v-col class="col-1 d-flex align-center">
-              <v-icon x-small class="white--text green rounded pa-1">mdi-image</v-icon>
-          </v-col>
-          <v-col class="col-10 d-flex align-center justify-center">
-            {{file.name | refineFileName}}
-          </v-col>
-          <v-col class="col-1 d-flex align-center justify-center">
-            <a :href="gethref(file.url)" class=" ">
-              <v-icon x-small class="white--text green rounded pa-1">mdi-arrow-collapse-down</v-icon>
-            </a> 
-          </v-col>
-        </v-row>
-      </v-card>
-    </div>
-
-    <v-row class="d-flex mx-4 no-gutters bold">
-      <v-col class="col-4">
-        {{"Deadline: " }}
-      </v-col>
-      <v-col class="col-8 d-flex align-center">
-       {{getBidChatHeader.task.expiry_time | diffForHumans}}
-      </v-col>
-    </v-row>
-
-    <v-row class="d-flex mx-4 no-gutters bold" v-if="getBidChatHeader.task.page_cost">
-      <v-col class="col-4">
-        {{"Pages: " }}
-      </v-col>
-      <v-col class="col-8">
-       {{page_count}}
-      </v-col>
-    </v-row>
-
-    <v-row class="d-flex mx-4 no-gutters bold" v-if="getBidChatHeader.task.page_cost">
-      <v-col class="col-4">
-        {{"CPP: " }}
-      </v-col>
-      <v-col class="col-8">
-       {{"KES " + getBidChatHeader.task.page_cost}}
-      </v-col>
-    </v-row>
-
-    <v-row class="d-flex mx-4 no-gutters bold">
-      <v-col class="col-4">
-        {{"Full pay: " }}
-      </v-col>
-      <v-col class="col-8">
-       {{"KES " + getBidChatHeader.task.full_pay}}
-      </v-col>
-    </v-row>
-
-    <v-row class="d-flex mx-4 no-gutters bold">
-      <v-col class="col-4">
-        {{"Pay mode: " }}
-      </v-col>
-      <v-col class="col-8">
-       {{pay_mode}}
-      </v-col>
-    </v-row>
-
-  </section>
-    <chat-box :messages="getBidMessages" v-if="!fetching_messages"/>
-    <!-- <div style="min-height:calc(100vh - 300px); margin-top: 4rem; margin-bottom: 5rem; z-index; 1;" v-if="!fetching_messages">
-      <div>
-
-        <div class="d-flex message " style="background-color: transparent; "
-          v-for="message in getBidMessages" 
-          :key="message.created_at" 
-          :class="{ all_right: message.mine }">
-            <div style="min-height: 3rem; "  class=" justify-end pa-2">
-              <div :class="{
-              'center d-flex': !message.mine  && message.user_id == 1, 
-              'right white': message.mine && (message.type == 'text') && (message.type == 'text'), 
-              'file-right white': message.mine && !(message.type == 'text'), 
-              'left white': !message.mine  && message.user_id != 1 && (message.type == 'text'), 
-              'file-left white': !message.mine  && message.user_id != 1 && !(message.type == 'text'), 
-              }">
-                <div v-if="message.type == 'text'"  >
-                  {{message.message}}
-                </div>
-                <v-row v-else class="no-gutters grey lighten-3">
-                  <v-col class="col-2 d-flex align-center">
-                      <v-icon small class="pa-2 green--text" v-if="!isImage(message.message)">mdi-file</v-icon>
-                      <v-icon small class="pa-2 green--text" v-if="isImage(message.message)">mdi-image</v-icon>
-                  
-                  </v-col>
-                  
-                  <v-col class="col-8 align-center black--text d-flex justify-center">
-                    {{message.message | refineFileNameMessage}}
-                  </v-col>
-                  
-                  <v-col class="col-2 d-flex align-center justify-end">
-                    <v-icon x-small class="pa-1 white--text green rounded">mdi-arrow-collapse-down</v-icon>
-                  </v-col>
-                </v-row>
-              </div>
-            </div>
-        </div>
+    <section v-if="more_info_open" style="margin-top: 10rem;" class="">
+        
+      <v-row class="d-flex mx-4 no-gutters bold">
+        <v-col class="col-2 d-flex align-center">
+          {{"Instructions: "}}
+        </v-col>
+        <v-col class="col-10 justify-end d-flex">
+          <v-icon @click="instructions_open = false" v-if="instructions_open">
+            mdi-arrow-up
+          </v-icon>
+          <v-icon @click="instructions_open = true" v-if="!instructions_open">
+            mdi-arrow-down
+          </v-icon>
+        </v-col>
+      </v-row>
+      <div class="px-2">
+        <v-card class="d-flex mx-4 white instructions elevated-4 px-2" v-if="instructions_open"> 
+          {{getBidChatHeader.task.instructions }}
+        </v-card> 
+        <!-- {{getBidChatHeader.task}} -->
       </div>
-    </div> -->
+      
+      <v-row class="d-flex mx-4 no-gutters bold">
+        <v-col class="col-2 d-flex align-center">
+          {{"Files: "}}
+        </v-col>
+        <v-col class="col-10 justify-end d-flex">
+          <v-icon @click="files_open = false" v-if="files_open">
+            mdi-arrow-up
+          </v-icon>
+          <v-icon @click="files_open = true" v-if="!files_open">
+            mdi-arrow-down
+          </v-icon>
+        </v-col>
+      </v-row>
 
+      <div v-if="files_open">
+        <v-card class="mx-4 pa-1 rounded mb-1" v-for="file in getBidChatHeader.task.files" :key="file.id">
+          <v-row class="no-gutters">
+            <v-col class="col-1 d-flex align-center">
+                <v-icon x-small class="white--text green rounded pa-1">mdi-image</v-icon>
+            </v-col>
+            <v-col class="col-10 d-flex align-center justify-center">
+              {{file.name | refineFileName}}
+            </v-col>
+            <v-col class="col-1 d-flex align-center justify-center">
+              <a :href="gethref(file.url)" class=" ">
+                <v-icon x-small class="white--text green rounded pa-1">mdi-arrow-collapse-down</v-icon>
+              </a> 
+            </v-col>
+          </v-row>
+        </v-card>
+      </div>
+
+      <v-row class="d-flex mx-4 no-gutters bold">
+        <v-col class="col-4">
+          {{"Deadline: " }}
+        </v-col>
+        <v-col class="col-8 d-flex align-center">
+        {{getBidChatHeader.task.expiry_time | diffForHumans}}
+        </v-col>
+      </v-row>
+
+      <v-row class="d-flex mx-4 no-gutters bold" v-if="getBidChatHeader.task.page_cost">
+        <v-col class="col-4">
+          {{"Pages: " }}
+        </v-col>
+        <v-col class="col-8">
+        {{page_count}}
+        </v-col>
+      </v-row>
+
+      <v-row class="d-flex mx-4 no-gutters bold" v-if="getBidChatHeader.task.page_cost">
+        <v-col class="col-4">
+          {{"CPP: " }}
+        </v-col>
+        <v-col class="col-8">
+        {{"KES " + getBidChatHeader.task.page_cost}}
+        </v-col>
+      </v-row>
+
+      <v-row class="d-flex mx-4 no-gutters bold">
+        <v-col class="col-4">
+          {{"Full pay: " }}
+        </v-col>
+        <v-col class="col-8">
+        {{"KES " + getBidChatHeader.task.full_pay}}
+        </v-col>
+      </v-row>
+
+      <v-row class="d-flex mx-4 no-gutters bold">
+        <v-col class="col-4">
+          {{"Pay mode: " }}
+        </v-col>
+        <v-col class="col-8">
+        {{pay_mode}}
+        </v-col>
+      </v-row>
+
+    </section>
+    <chat-box :messages="getBidMessages" :type='"bid"' v-if="!fetching_messages"/>
+    
     <div class="transparent transparent--text bottom" id="bottom">kazibin</div>
     <v-file-input
     class="d-none"
@@ -451,35 +413,9 @@ export default {
 </script>
 
 <style lang="css" scoped>
-  .left{
-    text-align: left;
-    margin-right: 3rem;
-    background-color: rgba(15,14,56,0.3);
-    border-radius:10px;
-    color: black;
-    padding:  0.5rem 0.5rem;
-  } 
-  .center{
-    text-align: center;
-    justify-content: center;
-    border-radius:10px;
-    color: black;
-    padding: 0.75rem;
-  }
- 
-  .right{
-    text-align: right;
-    margin-left: 3rem;
-    position: relative;  
-    right: 0;
-    background-color: rgba(36, 99, 75, 0.3);
-    border-radius:10px;
-    padding: 0.5rem 0.5rem;
-  } 
-  .filemessage{
-    width: 60vw;
-  }
-  
+   .section{
+    width: 100%;
+   }  
   .full-width{
     width: 100vw;
   }
@@ -542,6 +478,6 @@ export default {
   }
   .bg-image{
     background-image: url('~@/assets/c2.jpg');
-
+    background-attachment: fixed;
   }
 </style>

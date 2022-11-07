@@ -322,8 +322,11 @@
     </div>
   
   </section>
+  <div class="bg-image" style="min-height:calc(100vh - 30px); margin-top: 4rem;" v-if="!fetching_messages">
+    <chat-box :messages="getTaskMessages" v-if="!fetching_messages" :type='"task_chat"'/>
+  </div>
   
-  <div class="d-flex align-end" style="min-height:calc(100vh - 300px); margin-top: 4rem; margin-bottom: 100px;" v-if="!fetching_messages" >
+  <!-- <div class="d-flex align-end" style="min-height:calc(100vh - 300px); margin-top: 4rem; margin-bottom: 100px;" v-if="!fetching_messages" >
     <div>
 
     <div class="d-flex message"
@@ -361,53 +364,51 @@
     </div>
 
     </div>
-  </div>
+  </div> -->
   
   <div style=" margin-bottom: 100px;">
     <create-invoice v-if="getTaskChatInvoice" />
     <view-invoice v-if="getTaskChatViewInvoice" :invoice_id="getTaskChatHeader.invoice_id" :recipient="recipient" />
       <!--===== rating section ====-->
-  <section class="ma-4 pa-4 grey lighten-3 " v-if="rating_open">
-    <div class="d-flex justify-end">
-      <v-icon @click="rating_open = false" class="red--text">
-        mdi-close
-      </v-icon>
-    </div>
-    <v-text-field
-    outlined
-    v-model="review"
-    clearable
-    type="name"
-    label="write a review"
-    class="white"
-    required
-    > </v-text-field>
-    <div class="d-flex">
-      <v-rating
-        v-model="rating"
+    <section class="ma-4 pa-4 grey lighten-3 " v-if="rating_open">
+      <div class="d-flex justify-end">
+        <v-icon @click="rating_open = false" class="red--text">
+          mdi-close
+        </v-icon>
+      </div>
+      <v-text-field
+      outlined
+      v-model="review"
+      clearable
+      type="name"
+      label="write a review"
+      class="white"
+      required
+      > </v-text-field>
+      <div class="d-flex">
+        <v-rating
+          v-model="rating"
+          small
+          background-color="white"
+          color="yellow accent-4"
+          dense
+          size="18"
+          :length="5"
+          hover
+        ></v-rating> 
+        {{"("}} {{rating}} {{" / 5)"}}
+        <v-spacer />
+        <v-btn 
+        :disabled="rating == 0 || review == ''"
         small
-        background-color="white"
-        color="yellow accent-4"
-        dense
-        size="18"
-        :length="5"
-        hover
-      ></v-rating> 
-      {{"("}} {{rating}} {{" / 5)"}}
-      <v-spacer />
-      <v-btn 
-      :disabled="rating == 0 || review == ''"
-      small
-      @click="rate"
-      :loading="is_rating" 
-      class="green white--text mx-1">
-        rate
-      </v-btn>
-    </div>
-  </section>
+        @click="rate"
+        :loading="is_rating" 
+        class="green white--text mx-1">
+          rate
+        </v-btn>
+      </div>
+    </section>
   </div>
-
-
   
   <v-toolbar 
   v-if="getTaskChatHeader.status > 1"
@@ -420,52 +421,57 @@
     'large-width':  $vuetify.breakpoint.lg,
   }">
     <section class="section" >
-      
-      <v-btn 
-        v-if="getTaskChatHeader.status == 2 && !marked"
-        small 
-        :loading="marking"
-        @click="complete"
-        class="green white--text mx-1">
-          mark complete
-      </v-btn>
-      
-        <!-- :disabled="initialise_pay"
-        @click="initialisePay" -->
-      <v-btn 
-        v-if="getTaskChatHeader.status == 3"
-        small 
-        :disabled="getTaskChatInvoice"
-        @click="openInvoiceCreate"
-        class="green white--text mx-1">
-          create invoice
-      </v-btn>
-      <v-btn 
-        v-if="getTaskChatHeader.status == 3"
-        small 
-        :disabled="getTaskChatInvoice"
-        @click="openInvoiceCreate"
-        class="red white--text mx-1">
-          cancel
-      </v-btn>
-      
-      <v-btn 
-        v-if="getTaskChatHeader.status == 5 || getTaskChatHeader.status == 8"
-        small 
-        :disabled="getTaskChatViewInvoice"
-        @click="openInvoiceView"
-        class="green white--text mx-1">
-          view invoice
-      </v-btn>
 
-      <v-btn 
-        v-if="canRate"
-        small 
-        :disabled="rating_open"
-        @click="openRating"
-        class="green white--text mx-1">
-          {{getTaskChatHeader.broker ? 'rate broker' : 'rate writer'}}
-      </v-btn>
+      <div class="d-flex justify-center mb-2">
+        
+        <v-btn 
+          v-if="getTaskChatHeader.status == 2 && !marked"
+          small 
+          :loading="marking"
+          @click="complete"
+          class="green white--text mx-1">
+            mark complete
+        </v-btn>
+        
+          <!-- :disabled="initialise_pay"
+          @click="initialisePay" -->
+        <v-btn 
+          v-if="getTaskChatHeader.status == 3"
+          small 
+          :disabled="getTaskChatInvoice"
+          @click="openInvoiceCreate"
+          class="green white--text mx-1">
+            create invoice
+        </v-btn>
+        <v-btn 
+          v-if="getTaskChatHeader.status == 3"
+          small 
+          :disabled="getTaskChatInvoice"
+          @click="openInvoiceCreate"
+          class="red white--text mx-1">
+            cancel
+        </v-btn>
+        
+        <v-btn 
+          v-if="getTaskChatHeader.status == 5 || getTaskChatHeader.status == 8"
+          small 
+          :disabled="getTaskChatViewInvoice"
+          @click="openInvoiceView"
+          class="green white--text mx-1">
+            view invoice
+        </v-btn>
+
+        <v-btn 
+          v-if="canRate"
+          small 
+          :disabled="rating_open"
+          @click="openRating"
+          class="green white--text mx-1">
+            {{getTaskChatHeader.broker ? 'rate broker' : 'rate writer'}}
+        </v-btn>
+        
+      </div>
+        
 
       <v-row class="no-gutters d-flex align-center">
         <v-col class="col-9">
@@ -494,8 +500,6 @@
 
   </v-toolbar>
 
-
-
   <v-file-input
   class="d-none"
   outlined
@@ -523,9 +527,9 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import EmptyHere from '../../components/widgets/EmptyHere.vue'
 import CreateInvoice from './CreateInvoice.vue'
 import ViewInvoice from './ViewInvoice.vue'
-
+import ChatBox from '../../components/ChatBox.vue'
 export default {
-  components: { EmptyHere, CreateInvoice, ViewInvoice },
+  components: { EmptyHere, CreateInvoice, ViewInvoice, ChatBox },
   name: "TaskChat",
   filters:{
        
@@ -688,7 +692,6 @@ export default {
         review: this.review,
         rating: this.rating
       }
-      console.log(data)
       this.rateUser(data)
     },
     
@@ -889,7 +892,6 @@ export default {
     dayjs.extend(relativeTime)
   },
   mounted(){
-    console.log(this.getTaskChatHeader)
     if(this.getTaskChatHeader.status > 1){
       const data = {
         task_id: this.getTaskChatHeader.id
@@ -1005,6 +1007,10 @@ export default {
     position: fixed; 
     bottom: 0.25rem; 
     right: 0.25rem;
+  }
+  .bg-image{
+    background-image: url('~@/assets/c2.jpg');
+    background-attachment: fixed;
   }
 
 </style>

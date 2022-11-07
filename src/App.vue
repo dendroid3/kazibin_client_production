@@ -11,7 +11,7 @@
 
       <div class="d-flex rounded align-center white pointer pr-2" @click="goHome"> 
         <v-img class="icon" :src="require(`./assets/icon.svg`)" contain />
-        <span class="text-hdsds bold whitje--text">
+        <span class="bold">
           kazibin
         </span>
       </div>
@@ -28,10 +28,39 @@
       v-if="($vuetify.breakpoint.sm || $vuetify.breakpoint.xs) && getUser.email">
         mdi-menu
       </v-icon>
-      <span class="white--text pointer" @click="go(`dashboard`)"
+      <!-- <span class="white--text pointer" @click="go(`dashboard`)"
       v-if="$vuetify.breakpoint.md || $vuetify.breakpoint.xl || $vuetify.breakpoint.lg">
-        {{getUser.email}}
+      </span> -->
+
+      <span class="white--text pointer"
+        v-bind="attrs"
+        v-on="on"
+        v-if="($vuetify.breakpoint.md || $vuetify.breakpoint.xl || $vuetify.breakpoint.lg) && logging_out">
+          {{'logging out'}}
       </span>
+      <v-btn loading flat small class="white--text" style="background: rgb(15,14,56);" v-if="($vuetify.breakpoint.md || $vuetify.breakpoint.xl || $vuetify.breakpoint.lg) && logging_out"></v-btn>
+
+      <v-menu 
+        v-if="($vuetify.breakpoint.md || $vuetify.breakpoint.xl || $vuetify.breakpoint.lg) && !logging_out"
+        transition="slide-y-transition"
+        bottom
+        open-on-hover>
+        <template v-slot:activator="{ on, attrs }">
+        <span class="white--text pointer"
+          v-bind="attrs"
+          v-on="on"
+          v-if="$vuetify.breakpoint.md || $vuetify.breakpoint.xl || $vuetify.breakpoint.lg">
+            {{getUser.email}}
+        </span>
+        </template>
+        <v-list>
+            <v-list-item
+            @click="logoutUser"
+            class="pointer">
+            {{logging_out ? 'logging out..' : 'log out'}}
+            </v-list-item>
+        </v-list>
+        </v-menu>
     </section>
 
     </v-toolbar>
@@ -59,13 +88,13 @@
     <v-main class="main grey lighten-3">
       <v-container fluid class="pa-0">
         <v-row class="no-gutters"  style="padding-top: 50px;">
-          <v-col class="col-md-2 col-lg-1" v-if=" ($vuetify.breakpoint.lg || $vuetify.breakpoint.md) && show_nav_bar">
+          <v-col class="col-md-2 col-lg-1" v-if=" ($vuetify.breakpoint.lg || $vuetify.breakpoint.md) && show_nav_bar" style="height:100vh; overflow-y: auto;">
             <farleft-sidebar />
           </v-col>
-          <v-col style="overflow-y: scroll;" class="col-md-4 grey lighten-2  px-4" v-if=" ($vuetify.breakpoint.lg && show_nav_bar)">
+          <v-col class="col-md-4 grey lighten-2  px-4" v-if=" ($vuetify.breakpoint.lg && show_nav_bar)" style="height:100vh; overflow-y: auto;">
             <midleft-sidebar />
           </v-col>
-          <v-col style="overflow-y: auto; width: 100;" class="pa-0">
+          <v-col style="width: 100; height:100vh; overflow-y: auto;" class="pa-0">
             <router-view />
           </v-col>
         </v-row>
@@ -80,6 +109,8 @@ import AlertBox from './components/widgets/AlertBox.vue'
 import NavDrawer from './components/widgets/NavDrawer.vue'
 import FarleftSidebar from './views/desktop/FarleftSidebar.vue';
 import MidleftSidebar from './views/desktop/MidleftSidebar.vue';
+import Cookies from 'js-cookie'
+
 export default {
   name: 'App',
 
@@ -97,12 +128,21 @@ export default {
     return{
       available: false,
       home_drawer: false,
-      show_nav_bar: true
+      show_nav_bar: true,
+      logging_out: false
     }
   },
 
   methods:{
-    ...mapActions(['bootAllSockets']),
+    ...mapActions(['bootAllSockets', 'logout']),
+    logoutUser(){
+      let confirmation = "You are about to logout, you will be logged out in all other devices. Proceed?"
+      this.logging_out = true
+      if(!confirm(confirmation  )) {return}
+      this.logout().then(() => (
+        this.logging_out = false
+      ))
+    },
     goHome(){
       if(this.getUser){
         this.$router.push('/')
@@ -122,11 +162,14 @@ export default {
         return false
       } else if(this.$router.history.current.name == "VerifyEmail"){
         return false
-      }else if(this.$router.history.current.name == "Verify"){
+      } else if(this.$router.history.current.name == "Verify"){
         return false
-      }else if(this.$router.history.current.name == "PasswordResetApplication"){
+      } else if(this.$router.history.current.name == "PasswordResetApplication"){
         return false
-      } else {
+      } else if(this.$router.history.current.name == "ResetPassword"){
+
+      }
+       else {
         return true
       }
     }
@@ -136,28 +179,24 @@ export default {
   },
   mounted(){
     this.show_nav_bar = this.showNavBar()
-    this.bootAllSockets()
-      // Echo.channel('public_logger')
-      // .listen('Loginfor', (e) => {
-      //   console.log('public log')
-      //   console.log(e)
-      // })
+    if(JSON.parse(Cookies.get('KAZIBIN_TOKEN')).auth.token){
+      this.bootAllSockets()
+    }
   }
-//a7d98b2e21a38e553e564fced22647bf
 };
 </script>
 <style lang="css">
-   .col-block{
-        position: relative;
-    }
-    .col-block::after{
-        content: '';
-        border-bottom: solid 1px white;
-        position: absolute;
-        bottom: 0;
-        width: 80%;
-        left: 10%;
-    }
+  .col-block{
+    position: relative;
+  }
+  .col-block::after{
+    content: '';
+    border-bottom: solid 1px white;
+    position: absolute;
+    bottom: 0;
+    width: 80%;
+    left: 10%;
+  }
  .underline{
     text-decoration: underline;
   }
@@ -424,7 +463,7 @@ export default {
   }
   /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 0px;
   background: transparent;
 }
 

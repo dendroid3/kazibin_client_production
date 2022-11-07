@@ -50,11 +50,9 @@ const actions = {
   async fetchAllBrokersPaginated({commit, dispatch}, data){
     try{
       let page_url = data.link ? data.link :'/task/get_all_brokers_paginated'
-      console.log('response')
 
       const response =  await
       axios.post(page_url, data)
-      console.log(response)
       commit('SET_ALL_BROKERS', response.data.data)
       commit('SET_BROKERS_PAGINATION_DETAILS', response.data)
 

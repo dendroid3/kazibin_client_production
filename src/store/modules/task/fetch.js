@@ -114,7 +114,6 @@ const actions = {
       let page_url = data.link ? data.link :'/task/get_available_for_bidding_paginated'
       const response = await
       axios.post(page_url, data)
-      console.log(response)
       commit('SET_ALL_TASKS_AVAILABLE_FOR_BIDDING', response.data.data)
       commit('SET_TASKS_AVAILABLE_FOR_BIDDING_BY_ME_PAGINATION_DETAILS', response.data)
       return true

@@ -158,15 +158,9 @@ export default {
 
     boot(){
       if(this.page === "Brokers"){
-        this.fetchAllBrokersPaginated(null).then((res) => (
-          console.log('this.getBrokerPaginationDetails'),
-          console.log(this.getBrokerPaginationDetails)
-        ))
+        this.fetchAllBrokersPaginated(null)
       } else {
-        this.fetchAllWritersPaginated(null).then((res) => (
-          console.log(this.getWriterPaginationDetails)
-        ))
-
+        this.fetchAllWritersPaginated(null)
       }
     }
   },

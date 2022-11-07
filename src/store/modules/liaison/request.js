@@ -65,7 +65,6 @@ const actions = {
     try{
       const response = await
       axios.post('/liaison/request/accept', data)
-      console.log(response)
       dispatch('openAlert', {message: response.data.message, code: 'success'}, {root: true})
       dispatch('fetchMyWriters', null, {root: true})
       dispatch('fetchMyBrokers', null, {root: true})
@@ -100,11 +99,8 @@ const actions = {
   async fetchAllRequestsPaginated({commit, dispatch}, data){
     try{
       let page_url = data.link ? data.link :'/liaison/requests/get_all_paginated'
-      console.log('sdsdasd')
       const response = await
       axios.post(page_url, data)
-      console.log(response)
-      // console.log(data.filter_option)
       commit('SET_REQUESTS_PAGINATION_DETAILS', response.data)
       if(data.filter_option == 'to writers' || data.filter_option == 'from writers'){
         commit('SET_LIAISON_REQUESTS_TO_AND_FROM_WRITERS', response.data.data)
@@ -113,12 +109,11 @@ const actions = {
       }
       return response
     }catch(e){     
-      console.log(e) 
-      // if(e.response){
-      //   dispatch('handleError', {error: e, error_code: e.response.status, action: 'fetchAllRequests'}, {root: true})
-      // } else {
-      //   dispatch('handleError', {error: e, action: 'fetchAllRequests'}, {root: true})
-      // }
+      if(e.response){
+        dispatch('handleError', {error: e, error_code: e.response.status, action: 'fetchAllRequests'}, {root: true})
+      } else {
+        dispatch('handleError', {error: e, action: 'fetchAllRequests'}, {root: true})
+      }
     }
   },
 

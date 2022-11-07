@@ -9,7 +9,7 @@
         class="row no-gutters"
         active-class="deep-blue--text red--text"
       >
-          <div class="d-flex justify-center" style="width: 100%;">
+          <div class="d-flex justify-center" style="width: 100%;"  v-if="getUser.username">
             <v-list-item-avatar
               class="elevation-20 tomato"
               tile
@@ -147,7 +147,6 @@ export default {
     },
   },
   mounted(){
-    console.log(this.getUser)
   }
 }
 </script>

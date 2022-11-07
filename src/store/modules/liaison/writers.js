@@ -37,7 +37,6 @@ const actions = {
 
       const response =  await
       axios.post(page_url, data)
-      console.log(response)
       commit('SET_ALL_WRITERS', response.data.data)
       commit('SET_WRITERS_PAGINATION_DETAILS', response.data)
 
@@ -59,7 +58,6 @@ const actions = {
     try{
       const response =  await
       axios.get('/liaison/get_my_writers')
-      console.log(response)
       commit('SET_MY_WRITERS', response.data.writers)
     } catch (e){
       if(e.response){

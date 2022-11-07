@@ -1,5 +1,5 @@
 <template>
-  <div class="main grey lighten-3">
+  <div class="main bg-image">
     <v-toolbar 
     class="pb-4 top-toolbar"
     flat
@@ -93,6 +93,8 @@
         </span>
       </section>
     </v-toolbar>
+
+    
     <section v-if="fetching_messages">
 
       <div style="margin-top: 50px;" class="center">
@@ -115,7 +117,9 @@
       </v-row>
 
     </section>
-    <div class="d-flex align-end" style="min-height:calc(100vh - 300px);" v-if="!fetching_messages">
+    <chat-box :messages="getBidMessages" v-if="!fetching_messages" :type='"bid"' />
+
+    <!-- <div class="d-flex align-end" style="min-height:calc(100vh - 300px);" v-if="!fetching_messages">
       <div>
 
         <div class="d-flex message"
@@ -153,7 +157,7 @@
         </div>
 
       </div>
-    </div>
+    </div> -->
 
     <div class="transparent transparent--text bottom" id="bottom">kazibin</div>
     <v-file-input
@@ -177,8 +181,13 @@
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import ChatBox from '../../components/ChatBox.vue'
 export default {
   name: 'BrokerChat',
+
+  components:{
+    ChatBox
+  },
   
   filters:{
     refineFileNameMessage: (name) => {
@@ -387,5 +396,9 @@ export default {
     position: fixed; 
     bottom: 0.25rem; 
     right: 0.25rem;
+  }
+  .bg-image{
+    background-image: url('~@/assets/c2.jpg');
+    background-attachment: fixed;
   }
 </style>

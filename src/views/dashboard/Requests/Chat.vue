@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <div class="main grey lighten-3">
     <v-toolbar 
       class="pb-4 top-toolbar"
@@ -17,11 +17,11 @@
           </div>
 
           <div v-if="getRequestChatView.mine">
-            Request sent to broker
+            Request to broker
           </div>
           
           <div v-else>
-            Request sent from broker 
+            Request from broker 
           </div>
 
         </section>
@@ -186,61 +186,9 @@
       </v-row>
 
     </section>
-
-    <chat-box :messages="getRequestMessages" v-if="!fetching_messages"/>
-    <!-- <div class="d-flex align-end" style="min-height:calc(100vh - 300px);" v-if="!fetching_messages">
-      <div>
-
-        <div class="d-flex message"
-        v-for="message in getRequestMessages" 
-        :key="message.created_at" 
-        :class="{ all_right: message.mine }">
-          <div style="min-height: 3rem; width:100vw;"  class="justify-end pa-2">
-
-            <div :class="{
-              'center d-flex': !message.mine  && message.sender_id == 1, 
-              'right': message.mine, 
-              left: !message.mine  && message.sender_id != 1, 
-            }">
-              <div :class="{
-              mine: message.mine, 
-              not_mine: !message.mine  && message.sender_id != 1, 
-              }">
-
-                <v-row v-if="message.url" class="no-gutters grey lighten-3 filemessage">
-                  <v-col class="col-2 d-flex align-center">
-                      <v-icon small class="pa-2 green--text" v-if="!isImage(message.url)">mdi-file</v-icon>
-                      <v-icon small class="pa-2 green--text" v-if="isImage(message.url)">mdi-image</v-icon>
-                  
-                  </v-col>
-                  
-                  <v-col class="col-8 align-center black--text d-flex justify-center">
-                    {{message.name | refineFileNameMessage}}
-                  </v-col>
-                  
-                  <v-col class="col-2 d-flex align-end justify-center">
-                    <a :href="gethref(message.url)"  class=" rounded">
-                      <v-icon x-small class="pa-2 green--text">mdi-arrow-collapse-down</v-icon>
-                    </a> 
-                  </v-col>
-
-              </v-row>
-              </div>
-
-              
-
-              <div>
-                {{message.message}}
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-    </div> -->
+    <div class="bg-image" style="min-height:calc(100vh - 50px);" v-if="!fetching_messages">
+      <chat-box :messages="getRequestMessages" :type='"request"' v-if="!fetching_messages"/>
+    </div>
     <div class="transparent transparent--text bottom" id="bottom">kazibin</div>
     <v-file-input
     class="d-none"
@@ -404,10 +352,10 @@ export default {
           fd.append('documents[]', event[i])
       }
       this.formdata = fd;
-      this.formdata.append('liaisonrequest_id', this.getRequestChatView.id)
+      this.formdata.append('request_id', this.getRequestChatView.id)
 
       this.sendRequestMessage(this.formdata).then(response => {
-        if(response.data.success){
+        if(response.status == 200){
           this.uploading = false
           this.goBottom()
         }
@@ -450,37 +398,6 @@ export default {
 <style lang="css" >
   .section{
     width: 100%;
-  }
-  .left{
-    text-align: left;
-    margin-right: 3rem;
-    background-color: rgba(15,14,56,0.3);
-    border-radius:10px;
-    color: black;
-    padding:  0.5rem 0.5rem;
-  } 
-  .center{
-    text-align: center;
-    justify-content: center;
-    border-radius:10px;
-    color: black;
-    padding: 0.75rem;
-  }
-  .right{
-    text-align: right;
-    margin-left: 3rem;
-    position: relative;  
-    right: 0;
-    background-color: rgba(36, 99, 75, 0.3);
-    border-radius:10px;
-    padding: 0.5rem 0.5rem;
-  } 
-  .filemessage{
-    width: 60vw;
-  }
-  .all_right{
-    display: flex;
-    justify-content: flex-end;
   }
   .bottom-toolbar{
     padding-bottom: 5rem; 
@@ -528,5 +445,10 @@ export default {
     position: fixed; 
     bottom: 0.25rem; 
     right: 0.25rem;
+  }
+  .bg-image{
+    background-image: url('~@/assets/c2.jpg');
+    background-attachment: fixed;
+
   }
 </style>

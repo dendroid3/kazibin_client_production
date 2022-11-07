@@ -1,5 +1,5 @@
 <template lang="">
-  <div class="main grey lighten-3">
+  <div class="main bg-image">
     <v-toolbar 
       class="pb-4 top-toolbar"
       flat
@@ -203,50 +203,7 @@
     application/vnd.openxmlformats-officedocument.wordprocessingml.document,
     application/msword"
     ></v-file-input> 
-    <div class="d-flex align-end chat-body" style="min-height:calc(100vh - 300px);" v-if="!fetching_messages">
-      <div>
-
-        <div class="d-flex message"
-        v-for="message in getOfferMessages" 
-        :key="message.created_at" 
-        :class="{ all_right: message.mine }">
-          <div style="min-height: 3rem; width:100vw;"  class="justify-end pa-2">
-
-            <div :class="{
-            'center d-flex': !message.mine  && message.user_id == 1, 
-            'right': message.mine && (message.type == 'text') && (message.type == 'text'), 
-            'file-right': message.mine && !(message.type == 'text'), 
-            'left': !message.mine  && message.user_id != 1 && (message.type == 'text'), 
-            'file-left': !message.mine  && message.user_id != 1 && !(message.type == 'text'), 
-            }">
-
-              <div v-if="message.type == 'text'" >
-                {{message.message}}
-              </div>
-              <v-row v-else class="no-gutters grey lighten-3">
-                <v-col class="col-2 d-flex align-center">
-                    <v-icon small class="pa-2 green--text" v-if="!isImage(message.message)">mdi-file</v-icon>
-                    <v-icon small class="pa-2 green--text" v-if="isImage(message.message)">mdi-image</v-icon>
-                
-                </v-col>
-                
-                <v-col class="col-8 align-center black--text d-flex justify-center">
-                  {{message.message | refineFileNameMessage}}
-                </v-col>
-                
-                <v-col class="col-2 d-flex align-center justify-end">
-                  <v-icon x-small class="pa-1 white--text green rounded">mdi-arrow-collapse-down</v-icon>
-                </v-col>
-              </v-row>
-              
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-    </div>
+    <chat-box :messages="getOfferMessages" :type='"offer"' v-if="!fetching_messages"/>
 
     <v-toolbar 
     :min-height="100"
@@ -257,9 +214,9 @@
       'medium-width':  $vuetify.breakpoint.md,
       'large-width':  $vuetify.breakpoint.lg,
     }">
-    <section v-if="getOfferChatHeader.status == 1">
+    <section  class="section" v-if="getOfferChatHeader.status == 1" >
 
-      <section class="section" v-if="(getOfferChatHeader.writer_id) && (getOfferChatHeader.writer_id != getUser.writer.id)">
+      <section v-if="(getOfferChatHeader.writer_id) && (getOfferChatHeader.writer_id != getUser.writer.id)" >
         
         <div class="d-flex justify-center mb-2">
           <v-btn 
@@ -385,9 +342,13 @@
 <script>
 import relativeTime from 'dayjs/plugin/relativeTime'
 import dayjs from 'dayjs'
+import ChatBox from '../../components/ChatBox.vue'
 import { mapActions, mapGetters } from 'vuex'
   export default{
     name: 'Chat',
+
+    components:{ChatBox},
+
     filters:{
       diffForHumans: (date) => {
         
@@ -597,18 +558,14 @@ import { mapActions, mapGetters } from 'vuex'
     }
   }
 </script>
-<style lang="css" >
+<style lang="css">
+  .bg-image{
+    background-image: url('~@/assets/c2.jpg');
+    background-attachment: fixed;
+  }
   .section{
     width: 100%;
   }
-  .left{
-    text-align: left;
-    margin-right: 3rem;
-    background-color: rgba(15,14,56,0.3);
-    border-radius:10px;
-    color: black;
-    padding:  0.5rem 0.5rem;
-  } 
   .bottom-toolbar{
     padding-bottom: 5rem; 
     position: fixed; 
@@ -622,22 +579,6 @@ import { mapActions, mapGetters } from 'vuex'
     right: 0; 
     z-index: 1;
   }
-  .center{
-    text-align: center;
-    justify-content: center;
-    border-radius:10px;
-    color: black;
-    padding: 0.75rem;
-  }
-  .right{
-    text-align: right;
-    margin-left: 3rem;
-    position: relative;  
-    right: 0;
-    background-color: rgba(36, 99, 75, 0.3);
-    border-radius:10px;
-    padding: 0.5rem 0.5rem;
-  } 
   .chat-body{
     margin-bottom: 5rem;
   }

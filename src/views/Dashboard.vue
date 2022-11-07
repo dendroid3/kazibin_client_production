@@ -246,7 +246,6 @@ export default {
   },
   created(){
     this.boot()
-    console.log(this.getAllTasksPostedByMe)
   }
 }
 </script>

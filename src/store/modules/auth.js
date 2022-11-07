@@ -39,7 +39,6 @@ const actions = {
     }
   },
 
-
   updateUserDetails({}, data){
     // commit('SET_USER_DETAILS', data)
   },
@@ -81,6 +80,25 @@ const actions = {
       }
     }
   },
+
+  async resetPassword ({dispatch}, data) {
+    try {
+      const response = await
+      axios.post('reset_password', data)
+      if(response.status == 201) { 
+        dispatch('openAlert', {message: 'Sorry, Link unrecognised, could not reset password.', code: 'error'}, {root: true})
+        return 
+      }
+      dispatch('openAlert', {message: 'Password reset successfully, please login', code: 'success'}, {root: true})
+      router.push('/login')
+    } catch (e) {
+      if(e.response){
+        dispatch('handleError', {error: e, error_code: e.response.status, action: 'resetPassword'}, {root: true})
+      } else {
+        dispatch('handleError', {error: e, action: 'resetPassword'}, {root: true})
+      }
+    }
+  },
   
   async resendVerificationEmail ({dispatch}) {
     try {
@@ -88,7 +106,6 @@ const actions = {
       axios.get('resend_verification_email')
       dispatch('openAlert', {message: 'Email resent. You will recieve it in a few minutes.', code: 'success'}, {root: true})
 
-      console.log(response)
     } catch (e) {
       if(e.response){
         dispatch('handleError', {error: e, error_code: e.response.status, action: 'resendVerificationEmail'}, {root: true})
@@ -127,10 +144,8 @@ const actions = {
         router.push('/Login')
 
       }
-      console.log(response)
       return true
     } catch(e){
-      console.log(e)
       if(e.response){
         dispatch('handleError', {error: e, error_code: e.response.status, action: 'checkIfAccountIsVerified'}, {root: true})
       } else {

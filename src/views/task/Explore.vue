@@ -217,7 +217,6 @@ export default {
           this.pagination_links_set = true
         ))
       }
-      // console.log(data)
     },
     toogleFilter(){
       this.filter_open = !this.filter_open

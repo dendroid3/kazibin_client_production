@@ -59,7 +59,7 @@
     
     <content-tab
       :title="`activity`"
-      :count="getLogMessages ? getLogMessages.length : 0"
+      :count="getLogMessages.length ? getLogMessages.length : 0"
       :loading="!chats_fetched"
     />
   </v-row>

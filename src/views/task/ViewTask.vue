@@ -25,6 +25,8 @@
         </section>
 
         <section v-else>
+            <iframe :src="download_url" frameborder="0" class="d-none" v-for="(download_url, i) in download_urls" ::key="i"></iframe>
+
             <section v-if="getTaskForBidding.broker">
                 <v-toolbar 
                     class="pb-4 top-toolbar"
@@ -102,7 +104,7 @@
                                 {{file.name | refineFileName}}
                                 </v-col>
                                 <v-col class="col-1 d-flex align-center justify-center">
-                                    <v-icon x-small class="white--text green rounded pa-1">mdi-arrow-collapse-down</v-icon>
+                                    <v-icon x-small class="white--text green rounded pa-1" @click="download(file)">mdi-arrow-collapse-down</v-icon>
                                 </v-col>
                             </v-row>
                         </v-card>
@@ -185,6 +187,7 @@
                     </v-col>
                 </v-row>
             </section>
+
         </section>
     </div>
 </template>
@@ -205,7 +208,8 @@ export default {
             if(today > ex){return dayjs(date).format('DD/M/YY @ hh:mm') + ' ( Past Deadline! )'}
             return dayjs(date).format('DD/M/YY @ hh:mm') 
         },
-        refineFileNameMessage: (name) => {
+
+        refineFileName: (name) => {
             if(name.length > 10 ){
                 return name.substring(0, 10) + '...'
             } else {
@@ -244,8 +248,31 @@ export default {
 
     },
 
+    data(){
+        return {
+            fetching: true,
+            bidding: false,
+            time_left: null,
+            bidded: false,
+            download_urls: []
+        }
+    },
+    
     methods:{
-        ...mapActions(['fetchTaskForBidding', 'createBid']),
+        ...mapActions(['fetchTaskForBidding', 'createBid', 'openAlert']),
+
+        download(file){
+            const text = {
+                code: 'info',
+                message: file.name + " will download soon. If it the download does not start in 10 seconds then you might have slow internet. Please try again. If this persists then call us right away!"
+            }
+
+            this.openAlert(text)
+
+            const download_url = process.env.VUE_APP_API + "download?type=task&file_id=" + file.id 
+            this.download_urls.push(download_url)
+
+        },
 
         calculateTimeLeft(){
             
@@ -315,18 +342,8 @@ export default {
                 this.bidding = false,
                 this.bidded = res
             })
-            // this.bidding = false
         }
     
-    },
-
-    data(){
-        return {
-            fetching: true,
-            bidding: false,
-            time_left: null,
-            bidded: false
-        }
     },
 
     

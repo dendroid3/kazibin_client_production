@@ -131,11 +131,11 @@ const actions = {
         router.push('/dashboard')
       } else {
         commit('SET_STEP_SIX_RESPONSE', response.data.task)
-        // commit('FLASH_RESPONSES')
-        // commit('SET_ADD_TASK_STEP', 1)
+        commit('FLASH_RESPONSES')
+        commit('SET_ADD_TASK_STEP', 1)
         dispatch('openAlert', {message: response.data, code: 'success'}, {root: true})
         dispatch('fetchDashboardDetails', null, {root: true})
-        // router.push('/Tasks/Posted')
+        router.push('/Tasks/Posted')
         return false
       }
     }catch(e){

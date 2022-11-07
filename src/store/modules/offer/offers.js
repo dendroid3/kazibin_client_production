@@ -36,7 +36,6 @@ const actions = {
 
       const response = await
       axios.post(page_url, data)
-      console.log(response)
       commit('SET_TASK_OFFERS', response.data.data)
       commit('SET_TASK_OFFERS_PAGINATION_DETAILS', response.data)
       return true
@@ -71,7 +70,6 @@ const actions = {
     try{
       const response = await
       axios.post('/offer/send_message', data)
-      console.log(response)
       if(!response.data.files){
         const messages_array = [...getters.getOfferMessages]
         const new_message = response.data.message

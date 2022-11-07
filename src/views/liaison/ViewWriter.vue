@@ -123,8 +123,7 @@ export default {
             user_id: this.getViewWriter.id
           }
           this.fetchWriterMetrics(data).then( res => {
-            this.fetching = false,
-            console.log(this.getWriterMetrics);
+            this.fetching = false
           })
         } catch(e){
 
@@ -134,8 +133,6 @@ export default {
 
   mounted(){
     this.boot()
-    console.log('this')
-    console.log(this.getWriterMetrics)
   }
 }
 </script>

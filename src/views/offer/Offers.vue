@@ -256,7 +256,6 @@ export default {
     },
 
     mounted(){
-      console.log(this.getDashboadDetails)
       this.boot()
     }
 }

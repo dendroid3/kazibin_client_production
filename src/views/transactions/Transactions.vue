@@ -7,7 +7,7 @@
         <transaction-strip :transaction="transaction" v-for="transaction in getMyTransactions" :key="transaction.id" v-if=pagination_links_set />
 
         <v-row class="d-flex justify-center mt-4" v-if="pagination_links_set && getMyTransactions[0]">
-          <v-col class="col-1 white--text mt-4 primary-color text-center" v-for="(link, i) in pagination_links" 
+          <v-col class="col-1 white--text mt-4 primary-color pointer text-center" v-for="(link, i) in pagination_links" 
           :key="i" 
           :class="{
             'red': link.active,
@@ -42,7 +42,7 @@
         </div>
       </v-row>
 
-        <fetching-items :message="`getting transactions`"  v-else/>
+        <fetching-items :message="`getting transactions`"  v-if="!pagination_links_set"/>
 
     </div>
 </template>

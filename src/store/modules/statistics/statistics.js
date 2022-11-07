@@ -14,9 +14,7 @@ const actions = {
             const response = await
             axios.get('get_about_statistics')
             commit('SET_ABOUT_STATISTICS', response.data)
-            console.log(response.data)
         } catch(e){
-            console.log(e)
         }
     }
 }

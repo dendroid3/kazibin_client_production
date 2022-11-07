@@ -14,7 +14,6 @@ const actions = {
             const response = await
             axios.post('/search/from_home', data)
             commit('SET_SEARCH_FROM_HOME_RESULTS', response.data)
-            console.log(response)
             return response
         } catch(e){
             if(e.response){

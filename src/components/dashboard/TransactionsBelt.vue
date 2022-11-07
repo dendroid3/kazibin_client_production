@@ -213,7 +213,6 @@ export default {
       const data = {
         mpesa_transaction_id: this.mpesa_transaction_id
       }
-      console.log(data)
       this.claimTransaction(data).then((res) => (
         this.claiming = false,
         this.deposit_form = res
@@ -232,12 +231,6 @@ export default {
     let credit = this.getDashboadDetails.transactions.total_credit
     let debit = this.getDashboadDetails.transactions.total_debit
     let total = parseInt(credit) + parseInt(debit)
-    console.log('credit')
-    console.log(credit)
-    console.log('debit')
-    console.log(debit)
-    console.log('total')
-    console.log(total)
   },
 }
 </script>

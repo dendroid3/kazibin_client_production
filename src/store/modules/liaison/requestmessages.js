@@ -28,12 +28,27 @@ const actions = {
     try{
       const response = await
       axios.post('/liaison/request/send_message', data)
+
       if(response.data.status == 200){
-        const messages_array = [...getters.getRequestMessages]
-        const new_message = response.data.message
-        new_message.mine = true
-        messages_array.push(new_message)
-        commit('PUSH_REQUEST_MESSAGE', messages_array)
+        if(response.data.files) {
+
+          const messages_array = [...getters.getRequestMessages]
+          response.data.files.forEach(new_message => {
+            new_message.mine = true
+            messages_array.push(new_message)
+
+          });
+          commit('PUSH_REQUEST_MESSAGE', messages_array)
+
+        } else {
+
+          const messages_array = [...getters.getRequestMessages]
+          const new_message = response.data.message
+          new_message.mine = true
+          messages_array.push(new_message)
+          commit('PUSH_REQUEST_MESSAGE', messages_array)
+
+        }
       }
       return response.data
     }catch(e){
