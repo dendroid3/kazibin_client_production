@@ -312,10 +312,10 @@
         {{"Conversation closed. Offer Rejected."}}
       </span>
       <span v-if="getOfferChatHeader.status == 4">
-        {{"Conversation closed. Task already assigned to you. "}}
+        {{getUser.writer.id == getOfferChatHeader.writer_id ? "Conversation closed. Task already assigned to you. " : "Conversation closed. Task already assigned to " + getOfferChatHeader.writer.user.username}}
       </span>
       <span v-if="getOfferChatHeader.status == 5">
-        {{"Conversation closed.  Task accepted by another writer"}}
+        {{"Conversation closed. Task accepted by another writer"}}
       </span>
     </section>
     </v-toolbar>
@@ -368,7 +368,7 @@ import { mapActions, mapGetters } from 'vuex'
       },
     },
     computed:{
-      ...mapGetters(['getOfferChatHeader', 'getUser', 'getOfferMessages']),
+      ...mapGetters(['getOfferChatHeader', 'getUser', 'getOfferMessages', 'getUser']),
       options () {
         return {
           duration: 500,
@@ -495,7 +495,7 @@ import { mapActions, mapGetters } from 'vuex'
         }
         this.acceptOffer(data)
         this.accepting = false
-        this.$router.push('/dashboard')
+        // this.$router.push('/dashboard')
       },
       openFileSelect(){
         document.getElementById('files').click()
@@ -549,6 +549,10 @@ import { mapActions, mapGetters } from 'vuex'
       }
     },
     mounted(){
+      console.log('getUser.writer.id')
+      console.log(this.getUser.writer.id)
+      console.log('getOfferChatHeader')
+      console.log(this.getOfferChatHeader.writer_id)
       this.goBottom()
       this.boot()
     },

@@ -200,14 +200,13 @@ export default {
           this.fetchDashboardDetails(),
           this.fetchAllPostedByMe()
         ))
-        // alert("Hey! Incomplete >>> post/task ? figure out step to go to!")
       }
-      // if(this.task.writer){
-      // }
+     
     }
   },
   created(){
     dayjs.extend(relativeTime)
+    console.log(this.task)
   }
 }
 </script>

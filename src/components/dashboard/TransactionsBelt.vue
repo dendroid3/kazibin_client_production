@@ -198,7 +198,7 @@ export default {
           break;
 
           case 'transaction_not_found':
-            const answer_4 = 'We apologise for the inconvince. Ensure that the recieving organisation is Wazo Tank. If indeed it is, contact us immediately on 07000000'
+            const answer_4 = 'We apologise for the inconvince. Ensure that the recieving organisation is Wazo Tank. If indeed it is, contact us immediately on 0705 715 099'
             alert(answer_4)
           break;
       

@@ -66,6 +66,10 @@ const actions = {
     }
   },
 
+  setOfferMessages({commit}, messages){
+    commit('SET_OFFER_MESSAGES', messages)
+  },
+
   async sendTaskOfferMessage({commit, getters, dispatch}, data){
     try{
       const response = await

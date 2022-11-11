@@ -27,7 +27,7 @@ const actions = {
           const response = await
           axios.post('transaction/create_invoice', data)
           dispatch('openAlert', {message: response.data.message, code: 'success'}, {root: true})
-          router.push('/dashboard')
+          // router.push('/dashboard')
           return false
         }catch(e){
           if(e.response){

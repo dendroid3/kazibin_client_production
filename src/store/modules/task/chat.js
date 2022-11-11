@@ -13,7 +13,6 @@ const getters = {
 
 const actions = {
   setTaskChatHeader({commit}, task){
-    // commit('SET_JOBS_POSTED_BY_ME', jobs)
     commit('SET_TASK_HEADER', task)
   },
 
@@ -61,7 +60,11 @@ const actions = {
     }
   },
 
-  async markComplete({commit, dispatch}, data){
+  setTaskMessages({commit}, messages){
+    commit('SET_TASK_MESSAGES', messages)
+  },
+
+  async markComplete({dispatch}, data){
     try{
       const response = await
       axios.post('/task/mark_complete', data)

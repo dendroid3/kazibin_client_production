@@ -3,7 +3,7 @@
     <div class="primary-color white--text px-4 main-wrapper-local">
       <div class="d-flex">
         <div class="half col-6">
-          +254 700 000 000 <br>
+          +254 705 715 099 <br>
           SUPPORT@KAZIBIN.COM <br>
           TILL #: 000000
 

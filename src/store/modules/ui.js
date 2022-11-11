@@ -60,7 +60,7 @@ const actions = {
       }
     } else{
       let error_message = 'Something went wrong while performing this action ::> ' + data.action +
-      '. Help us serve you better by sending us a bug report. Explain to us what you were trying to do. Call us on 07000000 if it is an urgent action. Thank you.'
+      '. Help us serve you better by sending us a bug report. Explain to us what you were trying to do. Call us on 0705 715 099 if it is an urgent action. Thank you.'
 
       dispatch('openAlert', {message: error_message, code: 'error', timeout: 5000}, {root: true})
 
@@ -110,7 +110,7 @@ const actions = {
     commit('OPEN_ALERT', data)
     setTimeout(() => {
       dispatch('closeAlert', null, {root: true})
-    }, text.timeout ? text.timeout : 3000);
+    }, text.timeout ? text.timeout : 300000);
   },
 
   closeAlert({commit}){

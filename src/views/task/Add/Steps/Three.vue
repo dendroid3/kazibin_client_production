@@ -14,7 +14,7 @@
     ></v-select>
   </div>
   
-  <section v-if="(mode != '') && (mode != 'for the whole job')">
+  <section v-if="(mode != '') && (mode != 'for the whole task')">
     <div>
       <v-text-field 
       clearable
@@ -97,7 +97,7 @@ export default {
       lazy: false,
       task: {},
       mode: '',
-      payment_modes: ['per page', 'for the whole job'],
+      payment_modes: ['per page', 'for the whole task'],
       rules: {
         Required: [
           v => !!v || 'Field is required',
