@@ -26,7 +26,7 @@ const actions = {
       'TaskMessageSent', //done
       'TaskMarkedComplete', //done 
       'TaskEarmarkedForRevisionEvent', //???
-      'TaskRated',
+      'TaskRated', //not_done
       'InvoiceCreated' //done
     ]
     events.forEach(event => {
