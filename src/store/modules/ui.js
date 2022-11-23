@@ -110,7 +110,7 @@ const actions = {
     commit('OPEN_ALERT', data)
     setTimeout(() => {
       dispatch('closeAlert', null, {root: true})
-    }, text.timeout ? text.timeout : 300000);
+    }, text.timeout ? text.timeout : 3000);
   },
 
   closeAlert({commit}){
