@@ -12,13 +12,13 @@ const actions = {
       'BidMade', //done
       'BidPulled', //done
       'BidRejected', //done
-      'OtherBidAccepted',
+      'OtherBidAccepted', //done
       'MyBidAccepted', //done
       'BidMessageSent',  //done
 
       'OfferMade', //done
       'OfferAccepted', //done
-      'OtherOfferAccepted',
+      'OtherOfferAccepted', //done ?
       'OfferCancelled', //done
       'OfferRejected', //done
       'OfferMessageSent', //done
@@ -26,7 +26,7 @@ const actions = {
       'TaskMessageSent', //done
       'TaskMarkedComplete', //done 
       'TaskEarmarkedForRevisionEvent', //???
-      'TaskRated', //not_done
+      'TaskRated', 
       'InvoiceCreated' //done
     ]
     events.forEach(event => {
@@ -116,7 +116,7 @@ const actions = {
   },
 
   handleBidMade({getters, dispatch}, e){
-
+    console.log('is it in here?')
     dispatch('fetchAllPostedByMe', null, {root: true}).then(() => {
       if(getters.getTaskChatHeader.id == e.bid.task_id){
         const affected_task = getters.getAllTasksPostedByMe.filter((task) => (
@@ -160,8 +160,18 @@ const actions = {
       bid.status = 5
       dispatch('setBidChatHeader', bid, {root: true})
     } else {
-      dispatch('fetchAllDoneByMe', null, {root: true})
       dispatch('fetchMyBids', null, {root: true})
+    }
+  },
+
+  handleOtherOfferAccepted({getters, dispatch}, e){
+    dispatch('openAlert', {message: e.system_message, code: 'info', endpoint: 'Offers'}, {root: true})
+    if(getters.getOfferChatHeader.id == e.offer_id && (router.history.current.name == "OfferChat")){
+      const offer = getters.getOfferChatHeader
+      offer.status = 5
+      dispatch('setTaskOfferChatHeader', offer, {root: true})
+    } else {
+      dispatch('fetchTaskOffers', null, {root: true})
     }
   },
 

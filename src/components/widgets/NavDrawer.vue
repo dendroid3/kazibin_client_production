@@ -120,7 +120,7 @@ export default {
         {name: 'main', page: '/Dashboard'},
         {name: 'tasks posted', page: '/Tasks/Posted'},
         {name: 'tasks taken', page: '/Tasks/Taken'},
-        {name: 'tasks offers', page:'/Offers'},
+        {name: 'tasks offered', page:'/Offers'},
         {name: 'bids made', page: '/Bids'},
         {name: 'network', page: '/Network'},
         {name: 'requests', page: '/Requests'},

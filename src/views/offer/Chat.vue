@@ -250,7 +250,8 @@
           </v-col>
         </v-row>
       </section>
-      <section class="section" v-else>
+      <section class="section">
+      <!-- <section class="section" v-else> -->
         
         <div class="d-flex justify-space-between">
           <v-spacer />
@@ -495,7 +496,7 @@ import { mapActions, mapGetters } from 'vuex'
         }
         this.acceptOffer(data)
         this.accepting = false
-        // this.$router.push('/dashboard')
+        this.$router.push('/dashboard')
       },
       openFileSelect(){
         document.getElementById('files').click()
