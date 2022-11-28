@@ -104,15 +104,14 @@
           </v-btn>
         </div>
 
-        <div class="mx-2 mt-2 d-flex align-center text-center">
+        <div class="mx-2 mb-4 pb-4 mt-2 d-flex align-center text-center">
           <v-spacer />
-          Already have an account? 
-          <v-spacer />
-            <v-btn small @click="goLogin" class="success">
-              login
-            </v-btn>
+            <span  @click="goLogin" class="pointer blue--text">
+              Sign In
+            </span>
           <v-spacer />
         </div>
+
       </v-form>
     </div>
   </div>

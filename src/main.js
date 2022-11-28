@@ -16,7 +16,7 @@ window.Echo = new Echo({
   key:'local',
   wsHost: '192.168.0.101',
   authEndpoint : 'http://192.168.0.101:8000/api/broadcasting/auth',
-  wsPort: 6001,
+  wsPort: 6002,
   forceTLS: false,
   disableStats: true,
   auth: {
