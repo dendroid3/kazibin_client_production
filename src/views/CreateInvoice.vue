@@ -24,16 +24,16 @@
                 v-model="liaison_base"
                 ></v-select>
                 <v-select
-                v-if="toBroker && (brokersNames.length > 0)"
-                :items="brokersNames"
+                v-if="to_broker && (brokers_names.length > 0)"
+                :items="brokers_names"
                 label="select broker"
                 v-model="recipient"
                 @change="fetchTasks"
                 outlined
                 ></v-select>
                 <v-select
-                v-if="toWriter && (writersNames.length > 0)"
-                :items="writersNames"
+                v-if="to_writer && (writers_names.length > 0)"
+                :items="writers_names"
                 label="select writer"
                 v-model="recipient"
                 @change="fetchTasks"
@@ -42,13 +42,13 @@
             </v-form>
         </div>
 
-        <v-row class="padder" v-if="(toWriter && (writersNames.length < 1)) || (toBroker && (brokersNames.length < 1))">
+        <v-row class="padder" v-if="(to_writer && (writers_names.length < 1)) || (to_broker && (brokers_names.length < 1))">
             <div class="padded mb-4">
                 <v-row class="no-gutters d-flex align-center">
                     <v-col class="col-12">
                         <emptyHere />
                     </v-col>
-                    <v-col class="col-12 text-center" v-if="(toWriter && (writersNames.length < 1))">
+                    <v-col class="col-12 text-center" v-if="(to_writer && (writers_names.length < 1))">
                         You owe no writer. Make sure that the tasks you intend to pay are marked complete.
                     </v-col>
                     <v-col class="col-12 text-center" v-else>
@@ -59,7 +59,7 @@
         </v-row>
         
         <section v-if="recipient">
-            <section  v-if="toWriter">
+            <section  v-if="to_writer">
                 <div class="text-center bold">
                     {{"COMPLETED TASKS BY " + recipient}}
                 </div>
@@ -319,15 +319,16 @@
                     </v-row>
                                 
                 </div>
-                  <div class="d-flex justify-center">
-                        <v-btn 
-                        small 
-                        :loading="creating"
-                        @click="makeInvoice"
-                        class="mx-2 mt-3 success white--text">
-                            make invoice
-                        </v-btn>
-                    </div>
+
+                <div class="d-flex justify-center">
+                    <v-btn 
+                    small 
+                    :loading="creating"
+                    @click="makeInvoice"
+                    class="mx-2 mt-3 success white--text">
+                        make invoice
+                    </v-btn>
+                </div>
             </div>
         </section>
 
@@ -376,21 +377,21 @@ export default {
         date_today() {
             return dayjs(Date.now()).format("DD/MM/YYYY");
         },
-        writersNames() {
+        writers_names() {
             const names = [];
             this.getNetworkInDeficit.writers_i_owe.forEach(writer => {
                 names.push(writer.code + ": " + writer.username);
             });
             return names;
         },
-        brokersNames() {
+        brokers_names() {
             const names = [];
             this.getNetworkInDeficit.brokers_that_owe_me.forEach(broker => {
                 names.push(broker.code + ": " + broker.username);
             });
             return names;
         },
-        toBroker() {
+        to_broker() {
             if (this.liaison_base == "to be paid by a broker") {
                 return true;
             }
@@ -398,7 +399,7 @@ export default {
                 return false;
             }
         },
-        toWriter() {
+        to_writer() {
             if (this.liaison_base == "to pay a writer") {
                 return true;
             }
