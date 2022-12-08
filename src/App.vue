@@ -3,7 +3,7 @@
     <v-toolbar class="primary-color"
       v-if="show_nav_bar"
       :color="`rgb(15,14,56)`"
-      flat
+      text
       dense
       height="50"
       style="z-index: 1; position: fixed; left: 0; right: 0;"
@@ -38,7 +38,7 @@
         v-if="($vuetify.breakpoint.md || $vuetify.breakpoint.xl || $vuetify.breakpoint.lg) && logging_out">
           {{'logging out'}}
       </span>
-      <v-btn loading flat small class="white--text" style="background: rgb(15,14,56);" v-if="($vuetify.breakpoint.md || $vuetify.breakpoint.xl || $vuetify.breakpoint.lg) && logging_out"></v-btn>
+      <v-btn loading text small class="white--text" style="background: rgb(15,14,56);" v-if="($vuetify.breakpoint.md || $vuetify.breakpoint.xl || $vuetify.breakpoint.lg) && logging_out"></v-btn>
 
       <v-menu 
         v-if="($vuetify.breakpoint.md || $vuetify.breakpoint.xl || $vuetify.breakpoint.lg) && !logging_out"

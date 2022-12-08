@@ -2,7 +2,7 @@
   <div class="main grey lighten-3">
     <v-toolbar 
       class="pb-4 top-toolbar"
-      flat
+      text
       :class="{
         'full-width': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs,
         'medium-width':  $vuetify.breakpoint.md,
@@ -61,7 +61,7 @@
 
     <v-toolbar 
     :min-height="100"
-    flat
+    text
     class="bottom-toolbar"
     :class="{
       'full-width': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs,

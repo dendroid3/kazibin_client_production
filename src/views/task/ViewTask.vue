@@ -30,7 +30,7 @@
             <section v-if="getTaskForBidding.broker">
                 <v-toolbar 
                     class="pb-4 top-toolbar"
-                    flat
+                    text
                     :class="{
                         'full-width': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs,
                         'medium-width':  $vuetify.breakpoint.md,

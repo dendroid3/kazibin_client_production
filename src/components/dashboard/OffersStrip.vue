@@ -32,13 +32,6 @@
           <v-spacer />
           {{offer.task.expiry_time | diffForHumans}} {{" to go"}}
 
-          <!-- <span class="bold-2 mr-1  d-flex justify-end">
-            {{offer.task.pages}} {{' pages'}}
-            <v-icon x-small class="mx-1 green--text">
-              mdi-at
-            </v-icon>
-            {{offer.task.page_cost}} 
-          </span> -->
         </span>
         
         <span class="red--text" v-if="offer.status == 1">
