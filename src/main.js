@@ -16,7 +16,7 @@ window.Echo = new Echo({
   key:'local',
   wsHost: 'api.kazibin.adilirealestate.com',
   authEndpoint : 'https://api.kazibin.adilirealestate.com/api/broadcasting/auth',
-  wsPort: 6002,
+  wsPort: 6003,
   forceTLS: false,
   disableStats: true,
   auth: {
@@ -27,7 +27,6 @@ window.Echo = new Echo({
   },
   encrypted: false
 });
-
 
 import VueGeoLocation from 'vue-browser-geolocation'
 Vue.use(VueGeoLocation)
