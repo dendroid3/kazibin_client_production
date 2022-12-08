@@ -28,7 +28,7 @@ const actions = {
       commit('SET_USER_DETAILS', response.data.user)
       if(response.status == 201){return}
       dispatch('inputRegistrationStep', 2, {root: true})
-      window.location.href = process.env.VUE_APP_FRONT_END_URL + `register` 
+      window.location.href = process.env.VUE_APP_FRONT_END_URL + `/register` 
       return false
     } catch (e) {
       if(e.response){
@@ -165,12 +165,12 @@ const actions = {
         commit('SET_AUTH_DETAILS', response.data.token)
         commit('SET_USER_DETAILS', response.data.user)
         if(!response.data.user.email_verification){
-          window.location.href = process.env.VUE_APP_FRONT_END_URL + `dashboard`
+          window.location.href = process.env.VUE_APP_FRONT_END_URL + `/dashboard`
           return true 
         } else {
           dispatch('openAlert', {message: 'Email not verified. Verify email.', code: 'error'}, {root: true})
           dispatch('inputRegistrationStep', 2, {root: true})
-          window.location.href = process.env.VUE_APP_FRONT_END_URL + `register`
+          window.location.href = process.env.VUE_APP_FRONT_END_URL + `/register`
         }
       } else {
           dispatch('openAlert', {message: 'Email or password do not match any of our records. Please try again. In case you have forgotten your account`s credentials then click on the `forgot password` link to recover your account', code: 'error'}, {root: true})

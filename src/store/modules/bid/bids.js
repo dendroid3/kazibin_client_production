@@ -18,7 +18,7 @@ const getters = {
 }
 
 const actions = {
-  async createBid({dispatch,commit, getters}, data){
+  async createBid({dispatch, getters}, data){
     try{
       const balance = getters.getDashboadDetails.transactions.balance
 

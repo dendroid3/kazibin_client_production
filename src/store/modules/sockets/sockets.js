@@ -63,7 +63,6 @@ const actions = {
   },
 
   notify({}, notification_details){
-    console.log('in notify')
     if(window.Notification){
       Notification.requestPermission( permission => {
         let notification = new Notification(notification_details.title, {
