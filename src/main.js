@@ -17,6 +17,7 @@ window.Echo = new Echo({
   wsHost: 'api.kazibin.adilirealestate.com',
   authEndpoint : 'https://api.kazibin.adilirealestate.com/api/broadcasting/auth',
   wsPort: 6003,
+  wssPort: 6003,
   forceTLS: true,
   disableStats: true,
   auth: {
@@ -25,7 +26,8 @@ window.Echo = new Echo({
           Accept: "application/json",
       },
   },
-  encrypted: true
+  encrypted: true,
+  enabledTransports: ['ws', 'wss']
 });
 
 Vue.config.productionTip = false;
