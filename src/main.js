@@ -28,16 +28,6 @@ window.Echo = new Echo({
   encrypted: false
 });
 
-import VueGeoLocation from 'vue-browser-geolocation'
-Vue.use(VueGeoLocation)
-
-import * as VueGoogleMaps from 'vue2-google-maps'
-Vue.use(VueGoogleMaps, {
-  load: {
-    key: 'AIzaSyB3Kv-kQ2RrmK6qoycuJS-L3F1-M7WJUUk'
-  }
-})
-
 Vue.config.productionTip = false;
 
 new Vue({
