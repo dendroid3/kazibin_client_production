@@ -16,8 +16,8 @@ window.Echo = new Echo({
   key:'local',
   wsHost: 'api.kazibin.adilirealestate.com',
   authEndpoint : 'https://api.kazibin.adilirealestate.com/api/broadcasting/auth',
-  wsPort: null,
-  wssPort: null,
+  wsPort: '',
+  wssPort: '',
   forceTLS: true,
   disableStats: true,
   auth: {

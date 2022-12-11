@@ -36,7 +36,7 @@ const actions = {
         if(event == 'BidMessageSent' || event == 'OfferMessageSent' || event == 'TaskMessageSent'){
           let second_stub = e.message.type == 'text' ? 
           e.message.message : 
-          '<v-icon small class="blue--text">mdi-file</v-icon>'
+          '{file}'
           const alert_message = e.system_message + second_stub
     
           const notification_details = {
