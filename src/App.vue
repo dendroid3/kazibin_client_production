@@ -12,7 +12,7 @@
       <div class="d-flex rounded align-center white pointer pr-2" @click="goHome"> 
         <v-img class="icon" :src="require(`./assets/icon.svg`)" contain />
         <span class="bold">
-          kazibin
+          kazibini
         </span>
       </div>
       
