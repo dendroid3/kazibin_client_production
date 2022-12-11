@@ -98,6 +98,7 @@
         </span>
       </section>
     </v-toolbar>
+    
     <section v-if="fetching_messages">
 
       <div style="margin-top: 50px;" class="center">
