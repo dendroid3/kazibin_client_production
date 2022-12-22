@@ -25,12 +25,7 @@
     <v-toolbar 
     :min-height="100"
     text
-    class="bottom-toolbar"
-    :class="{
-      'full-width': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs,
-      'medium-width':  $vuetify.breakpoint.md,
-      'large-width':  $vuetify.breakpoint.lg,
-    }">
+    class="bottom-toolbar">
       <section class="section"  v-if="getBidChatHeader.status < 2">
         
         <div class="d-flex justify-center mb-2">
@@ -93,7 +88,6 @@
         </span>
       </section>
     </v-toolbar>
-
     
     <section v-if="fetching_messages">
 
@@ -118,46 +112,6 @@
 
     </section>
     <chat-box :messages="getBidMessages" v-if="!fetching_messages" :type='"bid"' />
-
-    <!-- <div class="d-flex align-end" style="min-height:calc(100vh - 300px);" v-if="!fetching_messages">
-      <div>
-
-        <div class="d-flex message"
-          v-for="message in getBidMessages" 
-          :key="message.created_at" 
-          :class="{ all_right: message.mine }">
-            <div style="min-height: 3rem; width:100vw;"  class="justify-end pa-2">
-              <div :class="{
-              'center d-flex': !message.mine  && message.user_id == 1, 
-              'right': message.mine && (message.type == 'text') && (message.type == 'text'), 
-              'file-right': message.mine && !(message.type == 'text'), 
-              'left': !message.mine  && message.user_id != 1 && (message.type == 'text'), 
-              'file-left': !message.mine  && message.user_id != 1 && !(message.type == 'text'), 
-              }">
-                <div v-if="message.type == 'text'" >
-                  {{message.message}}
-                </div>
-                <v-row v-else class="no-gutters grey lighten-3">
-                  <v-col class="col-2 d-flex align-center">
-                      <v-icon small class="pa-2 green--text" v-if="!isImage(message.message)">mdi-file</v-icon>
-                      <v-icon small class="pa-2 green--text" v-if="isImage(message.message)">mdi-image</v-icon>
-                  
-                  </v-col>
-                  
-                  <v-col class="col-8 align-center black--text d-flex justify-center">
-                    {{message.message | refineFileNameMessage}}
-                  </v-col>
-                  
-                  <v-col class="col-2 d-flex align-center justify-end">
-                    <v-icon x-small class="pa-1 white--text green rounded">mdi-arrow-collapse-down</v-icon>
-                  </v-col>
-                </v-row>
-              </div>
-            </div>
-        </div>
-
-      </div>
-    </div> -->
 
     <div class="transparent transparent--text bottom" id="bottom">kazibin</div>
     <v-file-input
@@ -334,11 +288,33 @@ export default {
     color: black;
     padding: 0.75rem;
   }
-  .bottom-toolbar{
-    padding-bottom: 5rem; 
-    position: fixed; 
-    bottom: 0; 
-    right: 0;
+
+  @media only screen and (max-width: 960px) {
+    .bottom-toolbar{
+      padding-bottom: 5rem; 
+      position: fixed; 
+      bottom: 0; 
+      right: 0;
+      width: 100%;
+    }
+  }
+  @media only screen and (min-width: 960px) and (max-width: 1264px) {
+    .bottom-toolbar{
+      padding-bottom: 5rem; 
+      position: fixed; 
+      bottom: 0; 
+      right: 0;
+      width: 83.33%;
+    }
+  }
+  @media only screen and (min-width: 1294px) {
+    .bottom-toolbar{
+      padding-bottom: 5rem; 
+      position: fixed; 
+      bottom: 0; 
+      right: 0;
+      width: 58.33%;
+    }
   }
   .top-toolbar{
     padding-bottom: 5rem; 

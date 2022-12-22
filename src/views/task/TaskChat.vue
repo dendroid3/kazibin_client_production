@@ -914,11 +914,32 @@ export default {
   .bottom{
     height: 3rem;
   }
-  .bottom-toolbar{
-    padding-bottom: 5rem; 
-    position: fixed; 
-    bottom: 0; 
-    right: 0;
+  @media only screen and (max-width: 960px) {
+    .bottom-toolbar{
+      padding-bottom: 5rem; 
+      position: fixed; 
+      bottom: 0; 
+      right: 0;
+      width: 100%;
+    }
+  }
+  @media only screen and (min-width: 960px) and (max-width: 1264px) {
+    .bottom-toolbar{
+      padding-bottom: 5rem; 
+      position: fixed; 
+      bottom: 0; 
+      right: 0;
+      width: 83.33%;
+    }
+  }
+  @media only screen and (min-width: 1294px) {
+    .bottom-toolbar{
+      padding-bottom: 5rem; 
+      position: fixed; 
+      bottom: 0; 
+      right: 0;
+      width: 58.33%;
+    }
   }
   .top-toolbar{
     padding-bottom: 5rem; 

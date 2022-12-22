@@ -38,12 +38,7 @@
     <v-toolbar 
     :min-height="100"
     text
-    class="bottom-toolbar"
-    :class="{
-      'full-width': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs,
-      'medium-width':  $vuetify.breakpoint.md,
-      'large-width':  $vuetify.breakpoint.lg,
-    }">
+    class="bottom-toolbar">
       <section class="section" v-if="getBidChatHeader.status < 2">
         <div class="d-flex justify-center mb-2">
           <v-btn 
@@ -417,15 +412,7 @@ export default {
    .section{
     width: 100%;
    }  
-  .full-width{
-    width: 100vw;
-  }
-  .large-width{
-    width: 58.3333vw;
-  }
-  .medium-width{
-    width: 83.333vw;
-  }
+  
   .all_right{
     display: flex;
     justify-content: flex-end;
@@ -453,11 +440,32 @@ export default {
     bottom: 1rem; 
     right: 5px;
   }
-  .bottom-toolbar{
-    padding-bottom: 5rem; 
-    position: fixed; 
-    bottom: 0; 
-    right: 0;
+  @media only screen and (max-width: 960px) {
+    .bottom-toolbar{
+      padding-bottom: 5rem; 
+      position: fixed; 
+      bottom: 0; 
+      right: 0;
+      width: 100%;
+    }
+  }
+  @media only screen and (min-width: 960px) and (max-width: 1264px) {
+    .bottom-toolbar{
+      padding-bottom: 5rem; 
+      position: fixed; 
+      bottom: 0; 
+      right: 0;
+      width: 83.33%;
+    }
+  }
+  @media only screen and (min-width: 1294px) {
+    .bottom-toolbar{
+      padding-bottom: 5rem; 
+      position: fixed; 
+      bottom: 0; 
+      right: 0;
+      width: 58.33%;
+    }
   }
   .top-toolbar{
     padding-bottom: 5rem; 
@@ -480,5 +488,6 @@ export default {
   .bg-image{
     background-image: url('~@/assets/c2.jpg');
     background-attachment: fixed;
+    background-repeat: no-repeat, repeat
   }
 </style>
