@@ -486,8 +486,8 @@ export default {
     right: 0.25rem;
   }
   .bg-image{
-    background-image: url('~@/assets/c2.jpg');
+    background-image: url('~@/assets/c21.jpg');
     background-attachment: fixed;
-    background-repeat: no-repeat, repeat
+    background-repeat: repeat-x;
   }
 </style>

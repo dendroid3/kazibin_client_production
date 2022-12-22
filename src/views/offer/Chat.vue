@@ -565,8 +565,9 @@ import { mapActions, mapGetters } from 'vuex'
 </script>
 <style lang="css">
   .bg-image{
-    background-image: url('~@/assets/c2.jpg');
+    background-image: url('~@/assets/c21.jpg');
     background-attachment: fixed;
+    background-repeat: repeat-x;
   }
   .section{
     width: 100%;

@@ -1,6 +1,6 @@
 <template>
     <div class="bg-fy">
-        <div style=" padding-top: 6rem; margin-bottom: 5rem; z-index: 1;">
+        <div style=" padding-top: 6rem; z-index: 1;">
             <iframe :src="download_url" frameborder="0" class="d-none" v-for="(download_url, i) in download_urls" ::key="i"></iframe>
             <v-row class="d-flex no-gutters" style="background-color: transparent; "
             v-for="message in messages" 
@@ -121,5 +121,4 @@ export default {
     .filemessage{
         width: 60vw;
     }
-  
 </style>

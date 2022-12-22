@@ -94,7 +94,7 @@
           <v-col class="col-md-4 grey lighten-2  px-4" v-if=" ($vuetify.breakpoint.lg && show_nav_bar)" style="height:100vh; overflow-y: auto;">
             <midleft-sidebar />
           </v-col>
-          <v-col style="width: 100; height:100vh; overflow-y: auto;" class="pa-0">
+          <v-col style="width: 100; height:100vh; overflow-y: auto; border-left: 1px white solid;" class="pa-0">
             <router-view />
           </v-col>
         </v-row>
