@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mb-1 pa-4 grey lighten-1 rounded" text>
+  <v-card class="mb-1 pa-4 grey lighten-1 rounded" flat>
     <v-row class="px-4 rounded">
       <v-col class=" col-10 primary-color"  style="border-top-left-radius: 10px; border-bottom-left-radius: 10px;">
         <span class="white--text action">

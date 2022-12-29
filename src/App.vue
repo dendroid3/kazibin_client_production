@@ -3,7 +3,7 @@
     <v-toolbar class="primary-color"
       v-if="show_nav_bar"
       :color="`rgb(15,14,56)`"
-      text
+      flat
       dense
       height="50"
       style="z-index: 1; position: fixed; left: 0; right: 0;"
@@ -94,7 +94,7 @@
           <v-col class="col-md-4 grey lighten-2  px-4" v-if=" ($vuetify.breakpoint.lg && show_nav_bar)" style="height:100vh; overflow-y: auto;">
             <midleft-sidebar />
           </v-col>
-          <v-col style="width: 100; height:100vh; overflow-y: auto; border-left: 1px white solid;" class="pa-0">
+          <v-col style="width: 100; height:100vh; overflow-y: auto; " class="pa-0 left-border">
             <router-view />
           </v-col>
         </v-row>
@@ -186,6 +186,11 @@ export default {
 };
 </script>
 <style lang="css">
+ @media only screen and (min-width: 960px) {
+    .left-border{
+      border-left: 1px white solid;
+    }
+  }
   .col-block{
     position: relative;
   }
