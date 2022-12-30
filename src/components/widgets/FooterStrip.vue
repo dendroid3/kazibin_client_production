@@ -2,16 +2,19 @@
   <div>
     <div class="primary-color white--text px-4 main-wrapper-local">
       <div class="d-flex">
-        <div class="half col-6">
-          +254 705 715 099 <br>
-          SUPPORT@KAZIBIN.COM <br>
-          TILL #: 000000
-
+        <div class="half col-6 d-flex justify-end">
+          <ul>
+            <li>+254 705 715 099</li>
+            <li>info@kazibin.com</li>
+            <li>TILL #: 000000</li>
+          </ul>
         </div>
         <div class="col-6">
-          328 GREENVILLE. <br>
-          NAIROBI <br>
-          P.O.BOX, 00-0000
+          <ul>
+            <li>00-10103</li>
+            <li>El Shaddai Building</li>
+            <li>Mukurwe-ini, Nyeri</li>
+          </ul>
         </div>
       </div>
       <div class="d-flex justify-center">
@@ -36,7 +39,7 @@
             mdi-heart
           </v-icon>
           by
-          <a class="white px-1 rounded bold" style="font-size: 0.8rem;" href="http://dehub.dkut.ac.ke">{{`WTNK`}}</a>
+          <a class="white px-1 rounded bold" style="font-size: 0.8rem;" href="http://dehub.dkut.ac.ke">{{`WAZO TANK`}}</a>
         </span>
       </div>
       <div class="d-flex align-center justify-center">

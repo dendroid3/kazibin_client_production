@@ -78,7 +78,7 @@
           3. Select Buy Goods and Services
         </span><br>
         <span style="color: #ffffff;">
-          4. Input the till number <strong class="red--text white rounded px-1">XXXXXX</strong>
+          4. Input the till number <strong class="red--text white rounded px-1">8131348 </strong>
         </span><br>
         <span style="color: #ffffff;">
           6. Input the amount you want to deposit and PIN
@@ -87,7 +87,7 @@
           7. Input the Mpesa Transaction code below here
         </span><br>
         <span style="color: #ffffff;">
-          *. The Mpesa Hakikisha name is; <strong class="red--text white rounded px-1">WAZO TANK 2</strong>
+          *. The Mpesa Hakikisha name is; <strong class="red--text white rounded px-1">WAZO TANK 7</strong>
         </span><br>
         <v-row class="no-gutters d-flex align-center">
           <v-col class="col-9 d-flex justify-center align-center pa-4">

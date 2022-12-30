@@ -133,8 +133,8 @@ export default {
     ...mapActions(['logout']),
     logoutUser(){
       let confirmation = "You are about to logout, you will be logged out in all other devices. Proceed?"
-      this.logging_out = true
       if(!confirm(confirmation  )) {return}
+      this.logging_out = true
       this.logout().then(() => (
         this.logging_out = false
       ))
