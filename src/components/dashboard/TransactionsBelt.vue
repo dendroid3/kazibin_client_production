@@ -78,7 +78,7 @@
           3. Select Buy Goods and Services
         </span><br>
         <span style="color: #ffffff;">
-          4. Input the till number <strong class="red--text white rounded px-1">8131348 </strong>
+          4. Input the till number <strong class="red--text white rounded px-1">81 313 48 </strong>
         </span><br>
         <span style="color: #ffffff;">
           6. Input the amount you want to deposit and PIN
