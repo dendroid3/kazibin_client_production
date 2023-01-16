@@ -9,7 +9,7 @@ import { register } from 'register-service-worker';
         'App is being served from cache by a service worker.\n'
         + 'For more details, visit https://goo.gl/AFskqB',
       );
-      // alterFunction()
+      askForPermmision()
     },
     registered() {
       console.log('Service worker has been registered.');
@@ -32,6 +32,18 @@ import { register } from 'register-service-worker';
   });
 // }
 
-var alterFunction = function(){
-  alert('inside')
+const askForPermmision = () => {
+  Notification.requestPermission((status) => {
+    if(status === 'denied'){
+      if(confirm('For real man! You do not want to be notified in realtime? Press OK to grant permmision, cancel to forget about it.')){
+        askForPermmisionAgain()
+      }
+    }
+  })
+}
+
+const askForPermmisionAgain = () => {
+  Notification.requestPermission((status) => {
+    console.log(status)
+  })
 }

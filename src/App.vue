@@ -24,7 +24,7 @@
           <router-link to="/login" class="text" style="text-decoration: none; color: white;"> login </router-link>
         </div>
 
-      <v-icon small class="white--text ml-2 rounded pa-1" @click="home_drawer = !home_drawer"
+      <v-icon class="white--text ml-2 rounded pa-1" @click="home_drawer = !home_drawer"
       v-if="($vuetify.breakpoint.sm || $vuetify.breakpoint.xs) && getUser.email">
         mdi-menu
       </v-icon>
@@ -38,7 +38,8 @@
         v-if="($vuetify.breakpoint.md || $vuetify.breakpoint.xl || $vuetify.breakpoint.lg) && logging_out">
           {{'logging out'}}
       </span>
-      <v-btn loading text small class="white--text" style="background: rgb(15,14,56);" v-if="($vuetify.breakpoint.md || $vuetify.breakpoint.xl || $vuetify.breakpoint.lg) && logging_out"></v-btn>
+      <v-btn loading text small class="white--text" style="background: rgb(15,14,56);" 
+      v-if="($vuetify.breakpoint.md || $vuetify.breakpoint.xl || $vuetify.breakpoint.lg) && logging_out"></v-btn>
 
       <v-menu 
         v-if="($vuetify.breakpoint.md || $vuetify.breakpoint.xl || $vuetify.breakpoint.lg) && !logging_out"

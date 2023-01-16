@@ -3,7 +3,6 @@
     <v-list
       class=" text-uppercase"
       nav
-     
     >
       <v-list-item-group
         class="row no-gutters"

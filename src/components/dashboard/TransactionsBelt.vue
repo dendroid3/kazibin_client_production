@@ -148,7 +148,7 @@ export default {
         let percentage = ( balance / debit ) * 100
         return percentage
       } else {
-        return 90
+        return 0
       }
     },
   },
