@@ -115,7 +115,7 @@ export default {
                 return task.full_pay + ' KES for whole task'
 
             } else {
-                return '( ' + task.pages + ' pages at ' + task.page_cost + ' )'
+                return '( ' + task.pages + ' X ' + task.page_cost + ' )'
             }
         },
 

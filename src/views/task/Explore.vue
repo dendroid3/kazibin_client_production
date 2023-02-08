@@ -116,26 +116,18 @@
       </v-col>
     </v-row>
     
-    <v-row class="no-gutters" v-if="!pagination_links_set">
-      <v-col class="col-4 offset-4">
-        <v-progress-linear
-          indeterminate
-          rounded
-          color="blue darken-2"
-          height="5"
-        ></v-progress-linear>
-      </v-col>
-    </v-row> 
+    <fetching-items :message="`Fetching Available Tasks`" v-if="!pagination_links_set" />
   </div>
 </template>
 <script>
 import TaskStrip from './../../components/home/TaskStrip.vue'
 import HeadingTab from './../../components/home/HeadingTab.vue'
+import FetchingItems from '../../components/widgets/FetchingItems.vue'
 
 import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Explore',
-  components:{TaskStrip, HeadingTab},
+  components:{TaskStrip, HeadingTab, FetchingItems},
   computed:{
     ...mapGetters(['getAllTasksAvailableForBidding', 'getAvailabilityDetails', 'getAllTasksAvailableForBiddingPaginationDetails']),
   pagination_links(){

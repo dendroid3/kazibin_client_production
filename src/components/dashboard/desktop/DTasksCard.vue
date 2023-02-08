@@ -42,11 +42,11 @@
                     <td>{{ task.status | status}}</td>
                     <td>
                         <span v-if="task.bids">
-                            {{ task.bids.length + " Bids Made" }}
+                            {{ task.bids.length + " Bids" }}
                             <br>
                         </span> 
                         <span v-if="task.offers">
-                            {{ task.offers.length + " Offers Made" }}
+                            {{ task.offers.length + " Offers" }}
                             <br>
                         </span> 
                         <span>
@@ -159,7 +159,7 @@ export default {
                 return  '( for whole task )'
 
             } else {
-                return ' ( ' + task.pages + ' pages at ' + task.page_cost + ' )'
+                return ' (' + task.pages + ' X ' + task.page_cost + ')'
             }
         },
 

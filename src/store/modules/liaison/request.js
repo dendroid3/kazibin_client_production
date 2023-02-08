@@ -17,6 +17,7 @@ const actions = {
     try{
       const response = await
       axios.post('/liaison/request/writer', data)
+      dispatch('fetchDashboardDetails', null, {root: true})
       dispatch('openAlert', {message: 'request sent succesfully', code: 'success'}, {root: true})
       router.push('/Requests')
       return response
@@ -34,6 +35,7 @@ const actions = {
       const response = await
       axios.post('/liaison/request/broker', data)
       dispatch('openAlert', {message: 'request sent succesfully', code: 'success'}, {root: true})
+      dispatch('fetchDashboardDetails', null, {root: true})
       router.push('/Requests')
       return response
     }catch(e){
