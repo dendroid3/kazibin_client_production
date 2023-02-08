@@ -9,7 +9,7 @@
                 class="row no-gutters d-flex justify-center"
                 active-class="deep-blue--text red--text"
             >
-                <div class="d-flex justify-center" style="width: 100%;">
+                <!-- <div class="d-flex justify-center" style="width: 100%;">
                     <v-list-item-avatar
                     class="elevation-20 tomato"
                     tile
@@ -30,7 +30,7 @@
                     </div>
                     </v-list-item-avatar>
                 </div>
-                
+                 -->
                 <v-list-item class="short-line-under" dark @click="goToSection('Verify')" v-if="!getUser.credential_verification">
                 {{'Verify AC'}}
                 </v-list-item>

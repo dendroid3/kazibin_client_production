@@ -11,7 +11,7 @@ const getters = {
   getAllWriters: (state) => (state.all_writers),
   getMyWriters: (state) => (state.my_writers),
   getViewWriter: (state) => (state.view),
-  getWriterPaginationDetails: (state) => (state.broker_pagination_details)
+  getWriterPaginationDetails: (state) => (state.writer_pagination_details)
 
 }
 
@@ -33,8 +33,7 @@ const actions = {
   
   async fetchAllWritersPaginated({commit, dispatch}, data){
     try{
-      let page_url = data.link ? data.link :'/task/get_all_writers_paginated'
-
+      let page_url = data.link ? data.link :'/liaison/get_all_writers_paginated'
       const response =  await
       axios.post(page_url, data)
       commit('SET_ALL_WRITERS', response.data.data)

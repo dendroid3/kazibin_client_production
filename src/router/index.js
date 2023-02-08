@@ -13,9 +13,6 @@ import middlewarePipeline from './middlewarePipeline'
 //the if statement checks whether the user is logged in in order to inject the "Authorization"/"Bearer" token to the HTTP request from the cookie
 axios.defaults.baseURL = process.env.VUE_APP_API;
 
-console.log('process.env.NODE_ENV')
-console.log(process.env.NODE_ENV)
-
 if(Cookies.get('KAZIBIN_TOKEN')){
     
   const datum = JSON.parse(Cookies.get('KAZIBIN_TOKEN')).auth.token;
@@ -254,9 +251,19 @@ const routes = [
     }
   },
   {
-    path: '/Explore/:user_type',
-    name: 'ExploreUsertype',
-    component: () => import('../views/explore/Users.vue'),
+    path: '/Explore/Brokers',
+    name: 'ExploreBrokers',
+    component: () => import('../views/explore/Brokers.vue'),
+    meta:{
+      middleware: [
+        auth, emailverified
+      ]
+    }
+  },
+  {
+    path: '/Explore/Writers',
+    name: 'ExploreWriters',
+    component: () => import('../views/explore/Writers.vue'),
     meta:{
       middleware: [
         auth, emailverified

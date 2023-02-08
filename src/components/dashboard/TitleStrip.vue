@@ -1,5 +1,5 @@
 <template>
-  <v-row class="d-flex grey lighten-2 px-2 py-4" >
+  <v-row class="d-flex grey lighten-2 px-2 py-4 no-gutters" >
     <v-col class="col-8 primary-color-text title d-flex justify-start pointer" @click="goPage()"> 
       {{title}}
     </v-col>

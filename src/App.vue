@@ -89,10 +89,10 @@
     <v-main class="main grey lighten-3">
       <v-container fluid class="pa-0">
         <v-row class="no-gutters"  style="padding-top: 50px;">
-          <v-col class="col-md-2 col-lg-1" v-if=" ($vuetify.breakpoint.lg || $vuetify.breakpoint.md) && show_nav_bar" style="height:100vh; overflow-y: auto;">
+          <v-col class="col-md-2 col-lg-1" v-if=" ($vuetify.breakpoint.lg || $vuetify.breakpoint.md) && show_nav_bar" style="calc(height:100vh - 50px); overflow-y: hidden;">
             <farleft-sidebar />
           </v-col>
-          <v-col class="col-md-4 grey lighten-2  px-4" v-if=" ($vuetify.breakpoint.lg && show_nav_bar)" style="height:100vh; overflow-y: auto;">
+          <v-col class="col-md-4 grey lighten-2  px-4" v-if=" ($vuetify.breakpoint.lg && show_nav_bar)" style="calc(height:100vh - 50px); overflow-y: hidden;">
             <midleft-sidebar />
           </v-col>
           <v-col style="width: 100; height:100vh; overflow-y: auto; " class="pa-0 left-border">
@@ -264,6 +264,10 @@ export default {
   .greentext{
     color: green;
   }
+  .link{
+    color: blue;
+    text-decoration: underline;
+  }
   .purplelist{
     background-color: rgb(231, 231, 231); 
     border-left: solid 5px rgb(161, 1, 161);
@@ -366,6 +370,10 @@ export default {
 
   .tomato-text{
     color: tomato;
+  }
+
+  .tomato{
+    background-color: tomato;
   }
 
   .pop{

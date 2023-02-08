@@ -1,11 +1,11 @@
 <template>
-  <v-col class="col-4 px-1 mb-1 ">
-        <div class="grey pointer lighten-2 rounded elevation-10" @click="go">
+  <v-col class="col-4 px-1 mb-1 white--text">
+        <div class="tomato pointer rounded elevation-10" @click="go">
           <div class="d-flex justify-center bold">
             {{title}}
           </div>
-          <v-divider inset />
-          <div class="d-flex justify-end align-center px-1 black--text">
+          <v-divider inset class="red--text dark" dark/>
+          <div class="d-flex justify-end align-center px-1">
             <v-icon x-small class="green--text" v-if="isGreen">
               mdi-circle
             </v-icon>
@@ -19,7 +19,7 @@
             v-if="loading"
             indeterminate
             rounded
-            color="grey darken-2"
+            color="red darken-2"
             height="1"
           ></v-progress-linear>
          </div>

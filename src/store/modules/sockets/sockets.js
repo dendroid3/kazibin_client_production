@@ -32,7 +32,6 @@ const actions = {
     events.forEach(event => {
       window.Echo.private('private_notification_' + store.state.auth.user.id)
       .listen(event, (e) => {
-        console.log(e)
         if(event == 'BidMessageSent' || event == 'OfferMessageSent' || event == 'TaskMessageSent'){
           let second_stub = e.message.type == 'text' ? 
           e.message.message : 
@@ -115,7 +114,6 @@ const actions = {
   },
 
   handleBidMade({getters, dispatch}, e){
-    console.log('is it in here?')
     dispatch('fetchAllPostedByMe', null, {root: true}).then(() => {
       if(getters.getTaskChatHeader.id == e.bid.task_id){
         const affected_task = getters.getAllTasksPostedByMe.filter((task) => (
@@ -289,7 +287,6 @@ const actions = {
         task_header.status = 3
         dispatch('setTaskChatHeader', task_header, {root: true})
 
-        console.log(task_header)
 
       } else {
         dispatch('openAlert', {message: e.system_message, code: 'info'}, {root: true})

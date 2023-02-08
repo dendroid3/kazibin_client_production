@@ -2,7 +2,7 @@
 
 import { register } from 'register-service-worker';
 
-// if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   register(`${process.env.BASE_URL}service-worker.js`, {
     ready() {
       console.log(
@@ -30,14 +30,14 @@ import { register } from 'register-service-worker';
       console.error('Error during service worker registration:', error);
     },
   });
-// }
+}
 
 const askForPermmision = () => {
   Notification.requestPermission((status) => {
     if(status === 'denied'){
-      if(confirm('For real man! You do not want to be notified in realtime? Press OK to grant permmision, cancel to forget about it.')){
-        askForPermmisionAgain()
-      }
+      // if(confirm('For real man! You do not want to be notified in realtime? Press OK to grant permmision, cancel to forget about it.')){
+      //   askForPermmisionAgain()
+      // }
     }
   })
 }

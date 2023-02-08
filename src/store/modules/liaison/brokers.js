@@ -49,7 +49,7 @@ const actions = {
 
   async fetchAllBrokersPaginated({commit, dispatch}, data){
     try{
-      let page_url = data.link ? data.link :'/task/get_all_brokers_paginated'
+      let page_url = data.link ? data.link :'/liaison/get_all_brokers_paginated'
 
       const response =  await
       axios.post(page_url, data)

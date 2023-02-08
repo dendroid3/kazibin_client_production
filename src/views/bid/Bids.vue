@@ -90,7 +90,8 @@
             </v-col>
         </v-row>
 
-        <bids-strip v-for="(bid, i) in bids" :key="i" :bid="bid" v-if="pagination_links_set"/>
+        <bids-strip v-for="(bid, i) in bids" :key="i" :bid="bid" v-if="pagination_links_set && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)"/>
+          <d-bids-card :bids="getMyBids" v-if="pagination_links_set && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)" />
         
         <v-row class="padder" v-if="!getMyBids[0]">
           <div class="padded mb-4">
@@ -144,13 +145,15 @@ import { mapGetters, mapActions } from 'vuex';
 import BidsStrip from '../../components/dashboard/BidsStrip.vue';
 import emptyHere from '../../components/svg/emptyHere.vue'
 import FetchingItems from '../../components/widgets/FetchingItems.vue';
+import DBidsCard from '../../components/dashboard/desktop/DBidsCard.vue';
 
 export default {
     name: 'Bids',
     components:{
         BidsStrip,
         emptyHere,
-        FetchingItems
+        FetchingItems,
+        DBidsCard
     },
     computed:{
         ...mapGetters(['getMyBids', 'getDashboadDetails', 'getMyBidsPaginationDetails']),

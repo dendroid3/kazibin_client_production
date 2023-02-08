@@ -550,10 +550,6 @@ import { mapActions, mapGetters } from 'vuex'
       }
     },
     mounted(){
-      console.log('getUser.writer.id')
-      console.log(this.getUser.writer.id)
-      console.log('getOfferChatHeader')
-      console.log(this.getOfferChatHeader.writer_id)
       this.goBottom()
       this.boot()
     },

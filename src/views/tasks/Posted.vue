@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <div class="main-wrapper grey lighten-3">
     <v-row class="d-flex grey lighten-2 align-center no-gutters">
       <v-col class="col-8 pl-4 backg"> posted tasks
@@ -126,8 +126,12 @@
       </v-row>
 
     </div>
-    <section v-if="pagination_links_set">
+    <section v-if="pagination_links_set && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
       <tasks-strip v-for="task in tasks" :key="task.id" :task="task" />
+    </section>
+
+    <section v-if="pagination_links_set && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+      <d-tasks-card :tasks="tasks" v-if="tasks.length > 1" />
     </section>
 
     <v-row class="padder d-flex justify-center" v-if="!getAllTasksPostedByMe[0] && pagination_links_set" >
@@ -185,12 +189,16 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import emptyHere from '../../components/svg/emptyHere.vue'
 import FetchingItems from '../../components/widgets/FetchingItems.vue'
 import TasksStrip from '../../components/dashboard/TasksStrip.vue'
+
+import DTasksCard from '../../components/dashboard/desktop/DTasksCard.vue'
+
 export default {
   name: 'Posted',
   components:{
     emptyHere,
     TasksStrip,
-    FetchingItems
+    FetchingItems,
+    DTasksCard
   },
   computed:{
     ...mapGetters(['getAllTasksPostedByMe', 'getAllTasksPostedByMePaginationDetails', 'getDashboadDetails']),

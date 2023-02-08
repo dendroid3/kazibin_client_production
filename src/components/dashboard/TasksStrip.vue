@@ -206,7 +206,6 @@ export default {
   },
   created(){
     dayjs.extend(relativeTime)
-    console.log(this.task)
   }
 }
 </script>

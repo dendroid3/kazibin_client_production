@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <div class="main-wrapper grey lighten-3">
     <user-card v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs" :user="getUser"/>
     <transactions-belt class="px-3 my-4" v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs || $vuetify.breakpoint.md"/>
@@ -30,14 +30,18 @@
 
       <section v-if="getAllTasksPostedByMe">
         <title-strip :title="`tasks posted`" :page="`Tasks/Posted`" :add_url="`/Task/Add`" v-if="getAllTasksPostedByMe[0]"/>
-        <div class="limiting_wrapper" v-if="getAllTasksPostedByMe[0]">
+        <div class="limiting_wrapper" v-if="getAllTasksPostedByMe[0] && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
           <tasks-strip v-for="task in getAllTasksPostedByMe" :key="task.id" :task="task" />
+        </div>
+
+        <div v-if="getAllTasksPostedByMe[0] && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+          <d-tasks-card :tasks="getAllTasksPostedByMe" />
         </div>
       </section>
 
       <section v-if="getAllTasksDoneByMe">
         <title-strip :title="`tasks done`" :page="`Tasks/Taken`" :add_url="`/Tasks/Done`" v-if="getAllTasksDoneByMe[0]"/>
-        <div class="limiting_wrapper" v-if="getAllTasksDoneByMe[0]">
+        <div class="limiting_wrapper" v-if="getAllTasksDoneByMe[0] && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
           <tasks-strip v-for="(task, i) in getAllTasksDoneByMe" :key="i" :task="task" />
         </div>
       </section>
@@ -51,8 +55,12 @@
     
       <section v-if="getMyBids">
         <title-strip :title="`bids made`" :page="`Bids`" :add_url="`/Bids`"  v-if="getMyBids[0]"/>
-        <div class="limiting_wrapper"  v-if="getMyBids[0]">
+        <div class="limiting_wrapper"  v-if="getMyBids[0]  && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
           <bids-strip v-for="(bid, i) in getMyBids" :key="i" :bid="bid" />
+        </div>
+        
+        <div v-if="getMyBids[0] && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+          <d-bids-card :bids="getMyBids" />
         </div>
       </section>
 
@@ -192,12 +200,22 @@ import BidsStrip from '../components/dashboard/BidsStrip.vue'
 import InvoiceStrip from '../components/dashboard/InvoiceStrip.vue'
 import emptyHere from '../components/svg/emptyHere.vue'
 
+//desktop
+
+import DTasksCard from '../components/dashboard/desktop/DTasksCard.vue'
+import DBidsCard from '../components/dashboard/desktop/DBidsCard.vue'
+
 import { mapActions, mapGetters } from 'vuex'
 import TransactionStrip from '../components/dashboard/TransactionStrip.vue'
 
 export default {
   name: 'Dashboard',
-  components: { UserCard, TransactionsBelt, TitleStrip, TabsStrip, TasksStrip, LogsStrip, RequestsCard, NetworkStrip, OffersStrip, BidsStrip, InvoiceStrip, emptyHere, TransactionStrip },
+  components: { 
+    UserCard, TransactionsBelt, TitleStrip, TabsStrip, TasksStrip, LogsStrip, RequestsCard, NetworkStrip, OffersStrip, BidsStrip, 
+    InvoiceStrip, emptyHere, TransactionStrip, 
+    //desktop
+    DTasksCard, DBidsCard
+  },
   data(){
     return {
       posted_fetched: false,
