@@ -90,10 +90,10 @@
         ">
           <div class="padded mb-4">
             <v-row class="no-gutters d-flex align-center">
-              <v-col class="col-12">
+              <v-col class="col-12 col-md-6">
                 <EmptyHere />
               </v-col>
-              <v-col class="col-12">
+              <v-col class="col-12 col-md-6">
                 You have {{invoice_model}} invoices yet. You will be able to create an invoice once you have a task that is completed. To create an invoice click on the plus sign above
                 and follow the process. You can create an invoice to either pay for a writer or get paid by a broker. Alternatively, you may go to the completed task's chat and click on 'create invoice',
                 this method however allows you to create an invoice for that single task. If you wish to create for several tasks for the same writer or broker then use the former method. 

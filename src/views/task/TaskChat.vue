@@ -285,7 +285,7 @@
     </div>
 
     <div
-    class="red lighten-4 mx-2 my-1 d-flelx pa-2 rounded" 
+    class="red lighten-4 mx-2 my-1 d-flelx pa-2 rounded pointer" 
     text
     @click="startBidChat(bid)"
     v-for="bid in getTaskChatHeader.bids" :key="bid.id">

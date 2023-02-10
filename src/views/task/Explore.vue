@@ -3,7 +3,7 @@
     <div>
       <div class="d-flex grey lighten-1">
         <span class="heading primary-color-text">
-          {{`available tasks page `}}
+          {{`available tasks `}}
         </span>
         <v-spacer />
         <p class="white rounded primary-color-text px-1">

@@ -31,12 +31,14 @@
 
         <v-row class="padder d-flex justify-center" v-if="!getMyTransactions[0] && pagination_links_set" >
         <div class="padded mb-4">
-          <v-row class="no-gutters " style="min-width: 80vw;">
-            <v-col class="col-12 d-flex align-center justify-center">
+          <v-row class="no-gutters " style="min-width: 80%;">
+            <v-col class="col-12 col-md-6 d-flex align-center justify-center">
               <emptyHere />
             </v-col>
-            <v-col class="col-12 text-center">
-              You have no transactions yet. Your transactions will appear here once you transact.
+            <v-col class="col-12 col-md-6 d-flex align-center text-center">
+              <p>
+                You have no transactions yet. Your transactions will appear here once you transact.
+              </p>
             </v-col>
           </v-row>
         </div>

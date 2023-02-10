@@ -83,12 +83,14 @@
     <v-row class="padder" v-if="!requests[0] && pagination_links_set && page == 'Requests'">
       <div class="padded mb-4">
         <v-row class="no-gutters ">
-          <v-col class="col-12 d-flex align-center justify-center">
+          <v-col class="col-12 col-md-6 d-flex align-center justify-center">
             <emptyHere />
           </v-col>
-          <v-col class="col-12 text-center">
-            {{" No requests " + filter_option + " yet. "}}
-            Learn about the process of adding writers and brokers to your network <span class="blue--text bold-tiny">here</span>
+          <v-col class="col-12 col-md-6 text-center d-flex align-center ">
+            <div>
+              {{" No requests " + filter_option + " yet. "}}
+              Learn about the process of adding writers and brokers to your network <span class="blue--text bold-tiny">here</span>
+            </div>
           </v-col>
         </v-row>
       </div>

@@ -126,10 +126,10 @@
     <v-row class="padder" v-if="!getAllTasksDoneByMe[0] && pagination_links_set">
       <div class="padded mb-4">
         <v-row class="no-gutters d-flex align-center">
-          <v-col class="col-12">
-          <emptyHere />
+          <v-col class="col-12 col-md-6">
+            <emptyHere />
           </v-col>
-          <v-col class="col-12 text-center" v-if="!filter_model">
+          <v-col class="col-12 col-md-6 text-center" v-if="!filter_model">
             You have not been assigned any task yet. Your assigned tasks will appear here once you get assigned any.
             You may bid on tasks <span @click="go('Explore/Task')" class="blue--text bold-tiny">here</span> 
             , we forward available tasks for bidding to our telegram group 
@@ -138,7 +138,7 @@
             You may view the top brokers <span @click="go('Explore/Brokers')" class="blue--text bold-tiny">here</span>
             To be added to their network click on their username, which will take you to their page then click on the 'liaise' button to send them a request.
           </v-col>
-          <v-col class="col-12 text-center" v-else-if="filter_model == 2">
+          <v-col class="col-12 col-md-6 text-center" v-else-if="filter_model == 2">
             You have no pending task at the moment. Pending tasks are those assigned to you but yet to be marked complete either by you or the task's broker. 
             To get assigned tasks, you may bid on tasks <span @click="go('Explore/Task')" class="blue--text bold-tiny">here</span> 
             , we forward available tasks for bidding to our telegram group 
@@ -147,15 +147,15 @@
             You may view the top brokers <span @click="go('Explore/Brokers')" class="blue--text bold-tiny">here</span>
             To be added to their network click on their username, which will take you to their page then click on the 'liaise' button to send them a request. 
           </v-col>
-          <v-col class="col-12 text-center" v-else-if="filter_model == 3">
+          <v-col class="col-12 col-md-6 text-center" v-else-if="filter_model == 3">
             You have no completed tasks at the moment. You may learn about the tasks workflow process
             <span @click="go('Explore/Task')" class="blue--text bold-tiny">here</span> 
           </v-col>
-          <v-col class="col-12 text-center" v-else-if="filter_model == 4">
+          <v-col class="col-12 col-md-6 text-center" v-else-if="filter_model == 4">
             You have no canceled tasks at the moment. You may learn about the tasks workflow process
             <span @click="go('Explore/Task')" class="blue--text bold-tiny">here</span> 
           </v-col>
-          <v-col class="col-12 text-center" v-else-if="filter_model == 5">
+          <v-col class="col-12 col-md-6 text-center" v-else-if="filter_model == 5">
             You have no invoiced tasks at the moment. These are the tasks that are invoiced but yet to be paid. You may learn about the tasks workflow process
             <span @click="go('Explore/Task')" class="blue--text bold-tiny">here</span> 
             You will be able to create an invoice once you have a task that is completed. To create an invoice go to the invoices page
@@ -169,7 +169,7 @@
             We currently do not support payments therefore you will have to manually mark the invoice as paid. If you are the broker and mark an invoice as paid, the writer will have to 
             confirm that indeed it is paid. However, confirmation will not be required if you are the writer and mark it as paid.
           </v-col>
-          <v-col class="col-12 text-center" v-else-if="filter_model == 6">
+          <v-col class="col-12 col-md-6 text-center" v-else-if="filter_model == 6">
             You have no paid tasks at the moment. These are the tasks that are invoiced and the invoices marked as paidand confirmed. You may learn about the tasks workflow process
             <span @click="go('Explore/Task')" class="blue--text bold-tiny">here</span> 
             Learn about the payment workflow 

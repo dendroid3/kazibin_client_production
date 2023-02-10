@@ -121,10 +121,10 @@
       <v-row class="padder" v-if="!getMyOffers[0]">
         <div class="padded mb-4">
           <v-row class="no-gutters d-flex align-center">
-          <v-col class="col-12">
+          <v-col class="col-12 col-md-6">
           <emptyHere />
           </v-col>
-          <v-col class="col-12">
+          <v-col class="col-12 col-md-6">
             You are yet to be recieve any task offer, your task offers will appear here once you get any. You need to have brokers on your network so they may be able to offer
             you tasks. You are at liberty to accept or turn the offer down as you well please.
             To get brokers start <span @click="go('Explore/Brokers')" class="blue--text bold-tiny">here</span>

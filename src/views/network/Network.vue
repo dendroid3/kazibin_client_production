@@ -27,10 +27,10 @@
         <v-row class="padder" v-if="!getMyWriters[0] && !getMyBrokers[0]">
             <div class="padded mb-4">
                 <v-row class="no-gutters d-flex align-center">
-                    <v-col class="col-12">
+                    <v-col class="col-12 col-md-6">
                       <emptyHere />
                     </v-col>
-                    <v-col class="col-12">
+                    <v-col class="col-12 col-md-6">
                         You are yet to build a network. Having brokers in your network allows them to offer you tasks directly without having to bid on them.
                         To have brokers on your network you have request them and them to accept. 
                         You may view the top brokers <span @click="go('Explore/Brokers')" class="blue--text bold-tiny">here</span>

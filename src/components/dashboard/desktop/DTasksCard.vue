@@ -159,7 +159,7 @@ export default {
                 return  '( for whole task )'
 
             } else {
-                return ' (' + task.pages + ' X ' + task.page_cost + ')'
+                return ' (' + task.pages + 'x' + task.page_cost + ')'
             }
         },
 

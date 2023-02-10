@@ -134,25 +134,27 @@
       <d-tasks-card :tasks="tasks" v-if="tasks.length > 1" />
     </section>
 
-    <v-row class="padder d-flex justify-center" v-if="!getAllTasksPostedByMe[0] && pagination_links_set" >
+    <v-row class="padder" v-if="!getAllTasksPostedByMe[0] && pagination_links_set">
       <div class="padded mb-4">
-        <v-row class="no-gutters " style="min-width: 80vw;">
-        <v-col class="col-12 d-flex align-center justify-center">
-        <emptyHere />
-        </v-col>
-        <v-col class="col-12 text-center" v-if="filter_model === 'all'">
-          You have not posted a task yet. Once you post a task, it will appear here. You can post a task
-          <span @click="go('Task/Add')" class="blue--text bold-tiny">here</span> and specify the option you decide. You may offer it to the public for writers to bid on it,
-          or you can offer it to all or some of the writers on your network. 
-          You may view the top writers <span @click="go('Explore/Writers')" class="blue--text bold-tiny">here</span>
-          To be add them to your network click on their username, which will take you to their page then click on the 'liaise' button to send them a request.
-        </v-col>
-        <v-col class="col-12 d-flex align-center justify-center" v-else>
-          {{"You have no " }} {{ filter_model | statusName}} {{" tasks. "}}
-        </v-col>
+        <v-row class="no-gutters d-flex align-center">
+          <v-col class="col-12 col-md-6">
+          <emptyHere />
+          </v-col>
+          <v-col class="col-12 col-md-6 text-center" v-if="filter_model === 'all'">
+            You have not posted a task yet. Once you post a task, it will appear here. You can post a task
+            <span @click="go('Task/Add')" class="blue--text bold-tiny">here</span> and specify the option you decide. You may offer it to the public for writers to bid on it,
+            or you can offer it to all or some of the writers on your network. 
+            You may view the top writers <span @click="go('Explore/Writers')" class="blue--text bold-tiny">here</span>
+            To be add them to your network click on their username, which will take you to their page then click on the 'liaise' button to send them a request.
+          </v-col>
+          <v-col class="col-12 col-md-6 d-flex align-center justify-center" v-else>
+            {{"You have no " }} {{ filter_model | statusName}} {{" tasks. "}}
+          </v-col>
+          
         </v-row>
       </div>
     </v-row>
+
 
     <v-row class="d-flex justify-center mt-4" v-if="pagination_links_set">
       <v-col class="col-1 white--text mt-4 primary-color text-center" v-for="(link, i) in pagination_links" 

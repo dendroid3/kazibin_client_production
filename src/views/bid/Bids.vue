@@ -90,25 +90,25 @@
             </v-col>
         </v-row>
 
-        <bids-strip v-for="(bid, i) in bids" :key="i" :bid="bid" v-if="pagination_links_set && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)"/>
-          <d-bids-card :bids="getMyBids" v-if="pagination_links_set && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)" />
+        <bids-strip v-for="(bid, i) in bids" :key="i" :bid="bid" v-if="pagination_links_set && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md) && getMyBids[0]"/>
+        <d-bids-card :bids="getMyBids" v-if="pagination_links_set && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md) && getMyBids[0]" />
         
         <v-row class="padder" v-if="!getMyBids[0]">
           <div class="padded mb-4">
             <v-row class="no-gutters d-flex align-center">
-            <v-col class="col-12">
-            <emptyHere />
-            </v-col>
-            <v-col class="col-12">
-              You have not bid on any task yet, they will appear here once you do. This is the most straight-forward way to get assigned tasks while you build your score 
-              on the platform.To bid on tasks start
-              <span @click="go('Explore/Tasks')" class="blue--text bold-tiny">here.</span>
-              This page displays all availble tasks up for bidding. Click on the task's topic to view more information on the task. If you are up to the task then you can 
-              click on the bid button to bid.
-              Bidding is time sensitive since the broker can go through only so many bids. To ensure that you are among the first bidders join our telegram group 
-              <a class="bold-tiny blue--text" href="https://t.me/writersplatform"> here.</a>
-              where we send tasks available for bidding as soon as they are posted.
-            </v-col>
+              <v-col class="col-12 col-md-6">
+                <emptyHere />
+              </v-col>
+              <v-col class="col-12 col-md-6">
+                You have not bid on any task yet, they will appear here once you do. This is the most straight-forward way to get assigned tasks while you build your score 
+                on the platform.To bid on tasks start
+                <span @click="go('Explore/Tasks')" class="blue--text bold-tiny">here.</span>
+                This page displays all availble tasks up for bidding. Click on the task's topic to view more information on the task. If you are up to the task then you can 
+                click on the bid button to bid.
+                Bidding is time sensitive since the broker can go through only so many bids. To ensure that you are among the first bidders join our telegram group 
+                <a class="bold-tiny blue--text" href="https://t.me/writersplatform"> here.</a>
+                where we send tasks available for bidding as soon as they are posted.
+              </v-col>
             </v-row>
           </div>
         </v-row>

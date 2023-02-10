@@ -162,10 +162,10 @@
       ">
         <div class="padded mb-4">
           <v-row class="no-gutters d-flex align-center">
-          <v-col class="col-12">
+          <v-col class="col-12 col-md-6">
           <emptyHere />
           </v-col>
-          <v-col class="col-12">
+          <v-col class="col-md-6 col-12">
             You have not done any activity yet. Your activities will appear here once you do. You can post a task
             <span @click="go('Task/Add')" class="blue--text bold-tiny">here</span> and specify the option you decide. You may offer it to the public for writers to bid on it,
             or you can offer it to all or some of the writers on your network. You can find writers to be working with consistently
