@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="grey lighten-3 wrapper pa-2">
+  <div class="grey lighten-3 wrapper pa-2 my-1 mx-2 rounded">
     <section>
       <span class="head" @click="goToView">
         {{task.code}}

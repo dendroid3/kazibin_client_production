@@ -1,9 +1,8 @@
 <template lang="html">
     <div>
-        <v-card class="grey lighten-1 my-1 mx-2 pointer" @click="view">
+        <v-card class="grey lighten-3 my-1 mx-2 pointer" @click="view">
             <v-row class="no-gutters">
                 <v-col class="col-12 px-4 username d-flex justify-center primary-color-text">
-                    <!-- {{broker.code}} {{": "}} {{bro}} -->
                     {{broker ? broker.code + ": " + upperCase(broker.username) : writer.code + ": " + upperCase(writer.username)}}
                 </v-col>
                 <v-col class="col-4 px-4">

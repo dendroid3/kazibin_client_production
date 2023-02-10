@@ -2,37 +2,65 @@
   <div class="grey lighten-1">
     <search-tab />
     <actions-block /> 
-    <section>
+    <section class="white">
       <heading-tab
         class="grey lighten-1"
         :heading="`top job brokers`"
         :route="`/Explore/Brokers`"
       />
-      <div class="d-flex no-gutters" style="overflow-x: scroll;">
-        <v-col class="col-5" v-for="(broker, i) in getAllBrokers" :key="i">
-          <user-card :user="broker" :broker="true"/>
+      <v-row class="no-gutters limiting_wrapper">
+        <v-col class="col-12 col-md-6" v-for="(broker, i) in getAllBrokers" :key="i" >
+          <user-strip :broker="broker"/>
         </v-col>
-      </div>
+        <v-col class="col-12 d-flex justify-center pa-3">
+          <v-btn 
+            @click="go(`/Explore/Brokers`)"
+            small 
+            class="rounded success submit-button">
+              Load More
+          </v-btn>
+        </v-col>
+      </v-row>
     </section>
-    <section>
+    <section class="white" style="border-top: 0.25rem solid white;">
       <heading-tab
         class="grey lighten-1"
         :heading="`top writers`"
         :route="`/Explore/Writers`"
       />
-      <div class="d-flex no-gutters" style="overflow-x: scroll;">
-        <v-col class="col-5" v-for="(writer, i) in getAllWriters" :key="i">
-          <user-card :user="writer" :writer="true"/>
+      <v-row class="no-gutters limiting_wrapper">
+        <v-col class="col-12 col-md-6"  v-for="(writer, i) in getAllWriters" :key="i">
+          <user-strip :writer="writer"/>
         </v-col>
-      </div>
+        <v-col class="col-12 d-flex justify-center pa-3">
+          <v-btn 
+            @click="go(`/Explore/Writers`)"
+            small 
+            class="rounded success submit-button">
+              Load More
+          </v-btn>
+        </v-col>
+      </v-row>
     </section>
-    <section v-if="getAllTasksAvailableForBidding[0]">
+    <section v-if="getAllTasksAvailableForBidding[0]"  style="border-top: 0.25rem solid white;" class="white">
       <heading-tab
         class="grey lighten-1"
         :heading="`available tasks`"
         :route="`/Explore/Task`"
       />
-      <task-strip v-for="(task, i) in getAllTasksAvailableForBidding" :key="i" :task="task"/>
+      <v-row class="no-gutters limiting_wrapper">
+        <v-col class="col-12 col-md-6"  v-for="(task, i) in getAllTasksAvailableForBidding" :key="i">
+          <task-strip :task="task"/>
+        </v-col>
+        <v-col class="col-12 d-flex justify-center pa-3">
+          <v-btn 
+            @click="go(`/Explore/Task`)"
+            small 
+            class="rounded success submit-button">
+              Load More
+          </v-btn>
+        </v-col>
+      </v-row>
     </section>
     <footer-strip />
   </div>
@@ -44,10 +72,12 @@ import ActionsBlock from '../components/home/ActionsBlock.vue'
 import FooterStrip from '../components/widgets/FooterStrip.vue'
 import TaskStrip from '../components/home/TaskStrip.vue'
 import UserCard from '../components/home/UserCard.vue'
+import UserStrip from '../components/home/UserStrip.vue';
+
 import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Home',
-  components: { SearchTab, HeadingTab, ActionsBlock, FooterStrip, TaskStrip, UserCard},
+  components: { SearchTab, HeadingTab, ActionsBlock, FooterStrip, TaskStrip, UserCard, UserStrip},
   computed: {
     ...mapGetters(['getAllTasksAvailableForBidding', 'getAllWriters', 'getAllBrokers']),
     env(){
@@ -71,6 +101,9 @@ export default {
         await this.fetchAllWriters(null).then(() => {this.fetched_writers = true})
       } catch(e){
       }
+    },
+    go(code){
+      this.$router.push(code)
     }
   },
   mounted(){
@@ -78,3 +111,10 @@ export default {
   }
 }
 </script>
+<style lang="css">
+  .limiting_wrapper{
+    max-height: 75vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+</style>

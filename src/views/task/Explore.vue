@@ -1,6 +1,6 @@
 <template>
-  <div class="main-wrapper">
-    <div>
+  <div class="main-wrapper white">
+    <div> 
       <div class="d-flex grey lighten-1">
         <span class="heading primary-color-text">
           {{`available tasks `}}
@@ -91,8 +91,12 @@
       </v-row>
     </section>
     
-    <task-strip v-for="(task, i) in getAllTasksAvailableForBidding" :key="i" :task="task" v-if="pagination_links_set"/>
-
+    <task-strip />
+    <v-row class="no-gutters">
+      <v-col class="col-12 col-md-6" v-for="(task, i) in getAllTasksAvailableForBidding" :key="i" v-if="pagination_links_set">
+        <task-strip :task="task"/>
+      </v-col>
+    </v-row>
     <v-row class="d-flex justify-center mt-4 n-gutters" v-if="pagination_links_set && getAllTasksAvailableForBidding[0]">
       <v-col class="col-1 white--text mt-4 primary-color text-center" v-for="(link, i) in pagination_links" 
       :key="i" 

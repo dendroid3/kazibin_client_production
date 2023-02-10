@@ -37,7 +37,7 @@
             </v-col>
             <v-col class="col-12 col-md-6 d-flex align-center text-center">
               <p>
-                You have no transactions yet. Your transactions will appear here once you transact.
+                You have no transactions yet. Your transactions will appear here once you transact. The recorded transactions are: Deposits from Mpesa, Money used to forward your task to our telegram group, money used to bid on tasks.
               </p>
             </v-col>
           </v-row>

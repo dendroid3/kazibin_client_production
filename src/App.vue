@@ -475,26 +475,35 @@ export default {
     }
     100% {transform: translate(-1rem, 0); background: red;}
   }
-  /* width */
-::-webkit-scrollbar {
-  width: 0px;
-  background: transparent;
-}
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: transparent;
-}
+  
+@media only screen and (min-width: 960px) {
+  ::-webkit-scrollbar {
+    width: 5px;
+    background: white;
+  }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #888;
-  display: none;
-}
+  ::-webkit-scrollbar:hover {
+    width: 5px;
+    background: white;
+  }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: rgb(15,14,56);
-  display: block;
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: rgb(15,14,56);
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    display: none;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(15,14,56);
+    display: block;
+  }
+
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="main-wrapper">
+    <div class="main-wrapper white">
       <div class="col-12 grey lighten-2">
         
           <span class="heading primary-color-text">
