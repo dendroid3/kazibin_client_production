@@ -148,7 +148,10 @@
             To be add them to your network click on their username, which will take you to their page then click on the 'liaise' button to send them a request.
           </v-col>
           <v-col class="col-12 col-md-6 d-flex align-center justify-center" v-else>
-            {{"You have no " }} {{ filter_model | statusName}} {{" tasks. "}}
+            <span>
+              {{"You have no " }} {{ filter_model | statusName}} {{" tasks. We categorise your tasks depending on the stage of the writing workfloe that it is in. You can change the status of you task in their respective chats. Click on the task and do that."}}
+
+            </span>
           </v-col>
           
         </v-row>

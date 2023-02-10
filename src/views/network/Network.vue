@@ -25,7 +25,7 @@
         </section>
 
         <v-row class="padder" v-if="!getMyWriters[0] && !getMyBrokers[0]">
-            <div class="padded mb-4">
+            <div class="padded mb-4 d-flex justify-center">
                 <v-row class="no-gutters d-flex align-center">
                     <v-col class="col-12 col-md-6">
                       <emptyHere />

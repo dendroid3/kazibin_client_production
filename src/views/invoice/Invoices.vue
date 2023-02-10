@@ -84,7 +84,7 @@
 
         
       <section>
-        <v-row class="padder" v-if="
+        <v-row class="padder  d-flex justify-center" v-if="
           (!getDebitedInvoices[0] && pagination_links_set && invoice_model == 'debited') ||
           (!getCreditedInvoices[0] && pagination_links_set && invoice_model == 'credited') 
         ">

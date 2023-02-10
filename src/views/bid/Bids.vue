@@ -94,7 +94,7 @@
         <d-bids-card :bids="getMyBids" v-if="pagination_links_set && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md) && getMyBids[0]" />
         
         <v-row class="padder" v-if="!getMyBids[0]">
-          <div class="padded mb-4">
+          <div class="padded mb-4 d-flex justify-center">
             <v-row class="no-gutters d-flex align-center">
               <v-col class="col-12 col-md-6">
                 <emptyHere />

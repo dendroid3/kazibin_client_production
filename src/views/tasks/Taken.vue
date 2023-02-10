@@ -123,7 +123,7 @@
 
     <tasks-strip v-for="(task, i) in getAllTasksDoneByMe" :key="i" :task="task" v-if="pagination_links_set"/>
   
-    <v-row class="padder" v-if="!getAllTasksDoneByMe[0] && pagination_links_set">
+    <v-row class="padder d-flex justify-center" v-if="!getAllTasksDoneByMe[0] && pagination_links_set">
       <div class="padded mb-4">
         <v-row class="no-gutters d-flex align-center">
           <v-col class="col-12 col-md-6">

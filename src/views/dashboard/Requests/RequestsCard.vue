@@ -81,7 +81,7 @@
     </div>
 
     <v-row class="padder" v-if="!requests[0] && pagination_links_set && page == 'Requests'">
-      <div class="padded mb-4">
+      <div class="padded mb-4 d-flex justify-center">
         <v-row class="no-gutters ">
           <v-col class="col-12 col-md-6 d-flex align-center justify-center">
             <emptyHere />
