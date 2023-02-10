@@ -105,7 +105,7 @@
       }
     },
   
-    mounted(){
+    created(){
         this.boot()
     },
 

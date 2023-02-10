@@ -86,6 +86,7 @@ const actions = {
     try{
       const response = await
       axios.get('/liaison/requests/get_all')
+      console.log(response)
       commit('SET_LIAISON_REQUESTS_TO_AND_FROM_BROKERS', response.data.requests.brokers_requests)
       commit('SET_LIAISON_REQUESTS_TO_AND_FROM_WRITERS', response.data.requests.writers_requests)
       return response

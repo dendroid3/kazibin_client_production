@@ -1,9 +1,19 @@
-<template lang="html">
+<template>
     <div>
         <v-card class="grey lighten-3 my-1 mx-2 pointer" @click="view">
             <v-row class="no-gutters">
                 <v-col class="col-12 px-4 username d-flex justify-center primary-color-text">
                     {{broker ? broker.code + ": " + upperCase(broker.username) : writer.code + ": " + upperCase(writer.username)}}
+                    <span class="ml-4" v-if="writer">
+                        <span v-if="writer.credential_verification">
+                            {{ "[verified]" }}
+                        </span>
+                    </span>
+                    <span v-else class="ml-4">
+                            <span v-if="broker.credential_verification">
+                                {{ "[verified]" }}
+                            </span>
+                        </span>
                 </v-col>
                 <v-col class="col-4 px-4">
                     <v-list-item-avatar

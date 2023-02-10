@@ -250,7 +250,7 @@ export default {
         await this.fetchMyBids().then((res) => {this.bids_fetched = true})
         await this.fetchMyWriters()
         await this.fetchMyBrokers().then(() => {this.liaisons_fetched = true})
-        await this.fetchAllRequests().then((res) => {this.requests_fetched = true})
+        await this.fetchAllRequests().then((res) => {this.requests_fetched = true, console.log(res);})
         await this.getInvoices().then((res) => {
           this.invoices_fetched = true
         })

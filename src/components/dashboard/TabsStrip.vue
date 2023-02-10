@@ -40,7 +40,7 @@
       :title="`requests`"
       :url="`Requests`"
       :count="getDashboadDetails.requests_count"
-      :loading="!requests_fetched"
+      :loading="!invoices_fetched"
     />
 
     <content-tab
@@ -54,7 +54,7 @@
       :title="`transactions`"
       :url="`Transactions`"
       :count="getDashboadDetails.transactions.count"
-      :loading="!transactions_fetched"
+      :loading="!chats_fetched"
     />
     
     <content-tab

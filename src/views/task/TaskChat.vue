@@ -218,153 +218,123 @@
     </div>
 
     <div class="padder" v-if="!getTaskChatHeader.bids.length">
-      <div class="padded">
-        <empty-here />
-        <!-- <emptyHere /> -->
-        You have no bid yet for this job. Get some leads by sharing the link to your network. Or offer it to some writers on your network.
-        <div class="d-flex justify-center mb-2">
-          <v-btn class="green submit-button white--text" small>
-            copy link
-          </v-btn>
-        </div>
-
-        <div class="d-flex justify-center mb-2">
-          <v-btn class="green submit-button white--text" small @click="reassigning = true" :disabled="reassigning">
-            offer to writer
-          </v-btn>
-        </div>
-
-        <div class="d-flex justify-center mb-2">
-          <v-btn class="red submit-button white--text" small @click="deleteIt" :loading="deleting">
-            <v-icon small class="white--text">
-              mdi-delete
-            </v-icon>
-            delete
-          </v-btn>
-        </div>
-        <section v-if="reassigning">
-        <div class="d-flex justify-end">
-          <v-icon class="red--text" @click="reassigning = false">
-            mdi-close
-          </v-icon>
-        </div>
-          <div class="grey d-flex lighten-3 align-center liaison" v-for="(writer, i) in getMyWriters" :key="i">
-            <div class="pa-2">
-              <v-icon small class="green--text" v-if="isSelected(writer.writer_id)">
-                mdi-check
-              </v-icon>
-              <span class="bold">
-                {{writer.code}}
-                {{": "}}
-                {{writer.username}}
-              </span>
+      <v-row class=" no-gutters padded">
+        <v-col class="col-12 col-md-6 d-flex align-center justify-center">
+          <empty-here />
+        </v-col>
+        <v-col class="col-12 col-md-6 d-flex align-center justify-center">
+          <div>
+            You have no bid yet for this job. Get some leads by sharing the link to your network. Or offer it to some writers on your network.
+            <div class="d-flex justify-center mb-2">
+              <v-btn class="green submit-button white--text" small>
+                copy link
+              </v-btn>
             </div>
-            <v-spacer />
-            <v-btn x-small class="white--text mr-2 success" @click="addWriter(writer.writer_id)" v-if="!isSelected(writer.writer_id)">
-              select
-            </v-btn>
-            <v-btn x-small class="white--text mr-2" style="background-color: tomato;" @click="removeWriter(writer.writer_id)" v-if="isSelected(writer.writer_id)">
-              remove
-            </v-btn>
-          </div>
-          <div class="d-flex justify-end">
-            <v-btn small class="success mt-2" v-if="selected_writers.length > 0" @click="selectWriters" :disabled="applied || (( selected_writers.length < 1 ) && ( getMyWriters.length > 1 ))">
-              {{applied ? 'applied' : 'apply'}}
-              <v-icon small class="green--text" v-if="applied">
-                mdi-check
+
+            <div class="d-flex justify-center mb-2">
+              <v-btn class="green submit-button white--text" small @click="reassigning = true" :disabled="reassigning">
+                offer to writer
+              </v-btn>
+            </div>
+
+            <div class="d-flex justify-center mb-2">
+              <v-btn class="red submit-button white--text" small @click="deleteIt" :loading="deleting">
+                <v-icon small class="white--text">
+                  mdi-delete
+                </v-icon>
+                delete
+              </v-btn>
+            </div>
+            <section v-if="reassigning">
+            <div class="d-flex justify-end">
+              <v-icon class="red--text" @click="reassigning = false">
+                mdi-close
               </v-icon>
-            </v-btn>
+            </div>
+              <div class="grey d-flex lighten-3 align-center liaison" v-for="(writer, i) in getMyWriters" :key="i">
+                <div class="pa-2">
+                  <v-icon small class="green--text" v-if="isSelected(writer.writer_id)">
+                    mdi-check
+                  </v-icon>
+                  <span class="bold">
+                    {{writer.code}}
+                    {{": "}}
+                    {{writer.username}}
+                  </span>
+                </div>
+                <v-spacer />
+                <v-btn x-small class="white--text mr-2 success" @click="addWriter(writer.writer_id)" v-if="!isSelected(writer.writer_id)">
+                  select
+                </v-btn>
+                <v-btn x-small class="white--text mr-2" style="background-color: tomato;" @click="removeWriter(writer.writer_id)" v-if="isSelected(writer.writer_id)">
+                  remove
+                </v-btn>
+              </div>
+              <div class="d-flex justify-end">
+                <v-btn small class="success mt-2" v-if="selected_writers.length > 0" @click="selectWriters" :disabled="applied || (( selected_writers.length < 1 ) && ( getMyWriters.length > 1 ))">
+                  {{applied ? 'applied' : 'apply'}}
+                  <v-icon small class="green--text" v-if="applied">
+                    mdi-check
+                  </v-icon>
+                </v-btn>
+              </div>
+              <div class="d-flex justify-end">
+                <v-btn small class="success mt-2" @click="reassign" :disabled="(!applied || (( selected_writers.length < 1 ) ))" :loading="submiting_reassign">
+                  {{'submit'}}
+                </v-btn>
+              </div>
+            </section>
           </div>
-          <div class="d-flex justify-end">
-            <v-btn small class="success mt-2" @click="reassign" :disabled="(!applied || (( selected_writers.length < 1 ) ))" :loading="submiting_reassign">
-              {{'submit'}}
-            </v-btn>
-          </div>
-        </section>
-      </div>
+        </v-col>
+      </v-row>
     </div>
 
-    <div
-    class="red lighten-4 mx-2 my-1 d-flelx pa-2 rounded pointer" 
-    text
-    @click="startBidChat(bid)"
-    v-for="bid in getTaskChatHeader.bids" :key="bid.id">
-    <div class="d-flex">
-      <v-list-item-avatar
-        tile
-        size="80"
-        color="tomato"
-        class="d-flex align-center justify-center"
-      >
-        <span style="font-size:3rem; font-weight: 900; color: white;" class="d-flex">
-          {{initials(bid.writer.user.username)}}
-        </span>
-      </v-list-item-avatar>
-      <div>
-        <div class="d-flex align-center mx-4" style="font-size:1rem; font-weight: 900;">
-          from: {{bid.writer.user.username}}
-          
-          <v-icon v-if="bid.unread_message"  small class="green--text ml-4">
-            mdi-message
-          </v-icon>
+    <section v-if="!($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+      <div
+      class="red lighten-4 mx-2 my-1 pa-2 rounded pointer" 
+      text
+      @click="startBidChat(bid)"
+      v-for="bid in getTaskChatHeader.bids" :key="bid.id">
+        <div class="d-flex">
+          <v-list-item-avatar
+            tile
+            size="80"
+            color="tomato"
+            class="d-flex align-center justify-center"
+          >
+            <span style="font-size:3rem; font-weight: 900; color: white;" class="d-flex">
+              {{initials(bid.writer.user.username)}}
+            </span>
+          </v-list-item-avatar>
+          <div>
+            <div class="d-flex align-center mx-4" style="font-size:1rem; font-weight: 900;">
+              from: {{bid.writer.user.username}}
+              
+              <v-icon v-if="bid.unread_message"  small class="green--text ml-4">
+                mdi-message
+              </v-icon>
+            </div>
+            <div class="px-4"> 
+              {{bid.last_message[0].message }}
+            </div>
+          </div>
         </div>
-        <div class="px-4"> 
-          {{bid.last_message[0].message }}
+        <div class="px-4 d-flex justify-end bold" v-if="bid.status == 2"> 
+          {{'bid pulled'}}
+        </div>
+        <div class="px-4 d-flex justify-end bold" v-if="bid.status == 3"> 
+          {{'bid rejected'}}
         </div>
       </div>
-    </div>
-    <div class="px-4 d-flex justify-end bold" v-if="bid.status == 2"> 
-      {{'bid pulled'}}
-    </div>
-    <div class="px-4 d-flex justify-end bold" v-if="bid.status == 3"> 
-      {{'bid rejected'}}
-    </div>
-    </div>
-  
+    </section>
+    <section v-else>
+      <d-bids-table :bids="getTaskChatHeader.bids"/>
+    </section>    
   </section>
   <div class="bg-image" style="min-height:calc(100vh - 30px); margin-top: 4rem;" v-if="!fetching_messages">
     <chat-box :messages="getTaskMessages" v-if="!fetching_messages" :type='"task_chat"'/>
   </div>
   
-  <!-- <div class="d-flex align-end" style="min-height:calc(100vh - 300px); margin-top: 4rem; margin-bottom: 100px;" v-if="!fetching_messages" >
-    <div>
-
-    <div class="d-flex message"
-      v-for="message in getTaskMessages" 
-      :key="message.created_at" 
-      :class="{ all_right: message.mine }">
-        <div style="min-height: 3rem; width:100vw;"  class="justify-end pa-2">
-          <div :class="{
-          'center d-flex': !message.mine  && message.user_id == 1, 
-          'right': message.mine && (message.type == 'text') && (message.type == 'text'), 
-          'file-right': message.mine && !(message.type == 'text'), 
-          'left': !message.mine  && message.user_id != 1 && (message.type == 'text'), 
-          'file-left': !message.mine  && message.user_id != 1 && !(message.type == 'text'), 
-          }">
-            <div v-if="message.type == 'text'" >
-              {{message.message}}
-            </div>
-            <v-row v-else class="no-gutters grey lighten-3">
-              <v-col class="col-2 d-flex align-center">
-                  <v-icon small class="pa-2 green--text" v-if="!isImage(message.message)">mdi-file</v-icon>
-                  <v-icon small class="pa-2 green--text" v-if="isImage(message.message)">mdi-image</v-icon>
-              
-              </v-col>
-              
-              <v-col class="col-8 align-center black--text d-flex justify-center">
-                {{message.message | refineFileNameMessage}}
-              </v-col>
-              
-              <v-col class="col-2 d-flex align-center justify-end">
-                <v-icon x-small class="pa-1 white--text green rounded">mdi-arrow-collapse-down</v-icon>
-              </v-col>
-            </v-row>
-          </div>
-        </div>
-    </div>
-
-    </div>
-  </div> -->
   
   <div style=" margin-bottom: 100px;">
     <create-invoice v-if="getTaskChatInvoice" />
@@ -528,8 +498,9 @@ import EmptyHere from '../../components/widgets/EmptyHere.vue'
 import CreateInvoice from './CreateInvoice.vue'
 import ViewInvoice from './ViewInvoice.vue'
 import ChatBox from '../../components/ChatBox.vue'
+import DBidsTable from './DBidsTable.vue'
 export default {
-  components: { EmptyHere, CreateInvoice, ViewInvoice, ChatBox },
+  components: { EmptyHere, CreateInvoice, ViewInvoice, ChatBox,DBidsTable },
   name: "TaskChat",
   filters:{
        

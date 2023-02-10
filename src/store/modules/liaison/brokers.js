@@ -1,4 +1,5 @@
 import axios from "axios";
+import router from "../../../router";
 
 const state = {
   view: {},
@@ -16,6 +17,8 @@ const getters = {
 
 const actions = {
   setViewBroker({commit}, broker){
+    console.log("broker")
+    console.log(broker)
     commit('SET_VIEW_BROKER', broker)
   },
 
@@ -61,6 +64,23 @@ const actions = {
         dispatch('handleError', {error: e, error_code: e.response.status, action: 'fetchAllBrokersPaginated'}, {root: true})
       } else {
         dispatch('handleError', {error: e, action: 'fetchAllBrokersPaginated'}, {root: true})
+      }
+    }
+  },
+
+  async fetchOneBroker({dispatch}, data){
+    try{
+      const response =  await
+      axios.post('/get_one_broker', data)
+      console.log(response)
+      dispatch('setViewBroker', response.data.broker, {root: true})
+      router.push('/Broker/' + data.code)
+      return true
+    } catch (e) {
+      if(e.response){
+        dispatch('handleError', {error: e, error_code: e.response.status, action: 'fetchOneBroker'}, {root: true})
+      } else {
+        dispatch('handleError', {error: e, action: 'fetchOneBroker'}, {root: true})
       }
     }
   },

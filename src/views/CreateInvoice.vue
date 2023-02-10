@@ -45,13 +45,13 @@
         <v-row class="padder" v-if="(to_writer && (writers_names.length < 1)) || (to_broker && (brokers_names.length < 1))">
             <div class="padded mb-4">
                 <v-row class="no-gutters d-flex align-center">
-                    <v-col class="col-12">
+                    <v-col class="col-12 col-md-6">
                         <emptyHere />
                     </v-col>
-                    <v-col class="col-12 text-center" v-if="(to_writer && (writers_names.length < 1))">
+                    <v-col class="col-12 col-md-6 text-center" v-if="(to_writer && (writers_names.length < 1))">
                         You owe no writer. Make sure that the tasks you intend to pay are marked complete.
                     </v-col>
-                    <v-col class="col-12 text-center" v-else>
+                    <v-col class="col-12 col-md-6 text-center" v-else>
                         No broker owes you a thing. Make sure that the tasks you intend to get paid are marked complete.
                     </v-col>
                 </v-row>

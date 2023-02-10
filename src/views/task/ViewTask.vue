@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div class="main-wrapper">
         
         <section v-if="fetching">
@@ -37,11 +37,22 @@
                         'large-width':  $vuetify.breakpoint.lg,
                     }">
                     
-                    <div class="d-flex bold">
+                    <div class="d-flex bold pointer" @click="viewBroker">
                         <v-toolbar-title>{{"Broker: " + getTaskForBidding.broker.user.code + ": "}}</v-toolbar-title>
                         <v-toolbar-title class="ml-1">{{getTaskForBidding.broker.user.username}}</v-toolbar-title>
+                        <span v-if="getTaskForBidding.broker.user.credential_verification">
+                            [verified]
+                        </span>
                     </div>
-
+                    <v-progress-circular
+                        v-if="loading_broker"
+                        :size="20"
+                        :width="3"
+                        color="rgb(15,14,56)"
+                        indeterminate
+                        class="ml-4"
+                    ></v-progress-circular>
+                        
                 </v-toolbar>
 
                 <section style="margin-top: 4rem;">
@@ -254,12 +265,21 @@ export default {
             bidding: false,
             time_left: null,
             bidded: false,
-            download_urls: []
+            download_urls: [],
+            loading_broker: false
         }
     },
     
     methods:{
-        ...mapActions(['fetchTaskForBidding', 'createBid', 'openAlert']),
+        ...mapActions(['fetchTaskForBidding', 'createBid', 'openAlert', 'fetchOneBroker']),
+        viewBroker(){
+            console.log(this.getTaskForBidding);
+            this.loading_broker = true
+            const data = {
+                code: this.getTaskForBidding.broker.user.code
+            }
+            this.fetchOneBroker(data)
+        },
 
         download(file){
             const text = {
@@ -346,14 +366,11 @@ export default {
     
     },
 
-    
     created(){
         dayjs.extend(relativeTime)
-    },
-
-    mounted(){
         this.fetch()
-    }
+
+    },
 }
 </script>
 <style lang="css" scoped>

@@ -1,7 +1,7 @@
-<template lang="html">
-  <div class="grey lighten-3 wrapper pa-2 my-1 mx-2 rounded">
+<template>
+  <div class="grey lighten-3 wrapper pa-2 my-1 mx-2 rounded ">
     <section>
-      <span class="head" @click="goToView">
+      <span class="head pointer" @click="goToView">
         {{task.code}}
         {{': '}}
         {{task.topic}}  
@@ -13,6 +13,7 @@
       <div class="d-flex align-center">
         {{"Broker: "}}
         {{task.broker.user.username}}
+        {{task.broker.user.credential_verification ? "[verifed]" : null }}
         <v-icon color="yellow"  small>
           mdi-star
         </v-icon>

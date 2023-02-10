@@ -19,8 +19,8 @@
             v-if="loading"
             indeterminate
             rounded
-            color="red darken-2"
-            height="1"
+            color="rgb(15,14,56)"
+            height="3"
           ></v-progress-linear>
          </div>
       </v-col>

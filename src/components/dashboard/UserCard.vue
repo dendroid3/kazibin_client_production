@@ -28,6 +28,9 @@
           <div class="d-flex align-center white--text text-h6" @click="goToProfile">
             {{user.username}} 
             <v-spacer />
+            <span v-if="user.credential_verification">
+              {{ "[verified]" }}
+            </span>
           </div>
           <div class="white--text text-h6" @click="goToProfile">
             {{user.code}} 
