@@ -162,7 +162,7 @@
           </v-col>
         </v-row>
         
-        <v-row class="no-gutters" v-else>
+        <v-row class="no-gutters" v-if="!pagination_links_set">
           <v-col class="col-4 offset-4">
             <v-progress-linear
               indeterminate
