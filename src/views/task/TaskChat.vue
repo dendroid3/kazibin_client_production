@@ -18,10 +18,10 @@
                   {{getTaskChatHeader.unit +" "+ getTaskChatHeader.type}}
                 </v-col>
                 <v-col class="col-4 d-flex justify-end">
-                  <span class="blue--text" @click="openMoreInfo" v-if="!more_info_open">
+                  <span class="blue--text pointer" @click="openMoreInfo" v-if="!more_info_open">
                     {{'more info'}}
                   </span>
-                  <span class="blue--text"  @click="closeMoreInfo" v-if="more_info_open">
+                  <span class="blue--text pointer"  @click="closeMoreInfo" v-if="more_info_open">
                     {{'close'}}
                   </span>
                 </v-col>
@@ -36,10 +36,10 @@
                     {{'Broker: '}} {{getTaskChatHeader.broker.user.username}}
                   </v-col>
                   <v-col class="d-flex justify-end col-4">
-                    <span class="blue--text" @click="closeMoreInfo" v-if="more_info_open">
+                    <span class="blue--text pointer" @click="closeMoreInfo" v-if="more_info_open">
                       {{'more info'}}
                     </span>
-                    <span class="blue--text" @click="openMoreInfo" v-if="!more_info_open">
+                    <span class="blue--text pointer" @click="openMoreInfo" v-if="!more_info_open">
                       {{'close'}}
                     </span>
                   </v-col>
@@ -52,10 +52,10 @@
                       {{'Writer: '}} {{getTaskChatHeader.writer.user.username}}
                   </v-col>
                   <v-col class="d-flex justify-end col-4">
-                    <span class="blue--text" @click="closeMoreInfo" v-if="more_info_open">
+                    <span class="blue--text pointer" @click="closeMoreInfo" v-if="more_info_open">
                       {{'close'}}
                     </span>
-                    <span class="blue--text" @click="openMoreInfo" v-if="!more_info_open">
+                    <span class="blue--text pointer" @click="openMoreInfo" v-if="!more_info_open">
                       {{'more info'}}
                     </span>
                   </v-col>
