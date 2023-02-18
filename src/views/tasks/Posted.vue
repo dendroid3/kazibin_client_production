@@ -131,7 +131,7 @@
     </section>
 
     <section v-if="pagination_links_set && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
-      <d-tasks-card :tasks="tasks" v-if="tasks.length > 1" />
+      <d-tasks-card :tasks="tasks" v-if="tasks.length > 0" />
     </section>
 
     <v-row class="padder" v-if="!getAllTasksPostedByMe[0] && pagination_links_set">

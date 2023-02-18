@@ -1,7 +1,7 @@
 <template>
-<div class="main grey lighten-3">
+<div class="main white">
   <v-toolbar 
-    class="pb-4 top-toolbar"
+    class="pb-4 grey lighten-3 mb-4 top-toolbar"
     text
     :class="{
       'full-width': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs,
@@ -53,10 +53,10 @@
                   </v-col>
                   <v-col class="d-flex justify-end col-4">
                     <span class="blue--text" @click="closeMoreInfo" v-if="more_info_open">
-                      {{'more info'}}
+                      {{'close'}}
                     </span>
                     <span class="blue--text" @click="openMoreInfo" v-if="!more_info_open">
-                      {{'close'}}
+                      {{'more info'}}
                     </span>
                   </v-col>
                 </v-row>
@@ -179,34 +179,39 @@
       {{getTaskChatHeader.offers.length}}
     </div>
     
-    <div
-    @click="startOfferChat(offer)"
-    class="red lighten-4 mx-2 my-1 d-flex pa-2 rounded" 
-    text
-    v-for="offer in getTaskChatHeader.offers" :key="offer.id">
-      <v-list-item-avatar
-        tile
-        size="80"
-        color="grey"
-        class="d-flex align-center justify-center"
-      >
-        <span style="font-size:3rem; font-weight: 900; color: white;" class="d-flex">
-          {{initials(offer.writer.user.username)}}
+    <section v-if="!($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+      <div
+      @click="startOfferChat(offer)"
+      class="red lighten-4 mx-2 my-1 d-flex pa-2 rounded" 
+      text
+      v-for="offer in getTaskChatHeader.offers" :key="offer.id">
+        <v-list-item-avatar
+          tile
+          size="80"
+          color="grey"
+          class="d-flex align-center justify-center"
+        >
+          <span style="font-size:3rem; font-weight: 900; color: white;" class="d-flex">
+            {{initials(offer.writer.user.username)}}
 
-        </span>
-      </v-list-item-avatar>
-      <div>
-        <div class="d-flex align-center mx-4" style="font-size:1rem; font-weight: 900;">
-          to: {{offer.writer.user.username}}
-          <v-icon v-if="offer.unread_message"  small class="green--text ml-4">
-            mdi-message
-          </v-icon>
-        </div>
-        <div class="px-4"> 
-          {{offer.last_message[0].message }}
+          </span>
+        </v-list-item-avatar>
+        <div>
+          <div class="d-flex align-center mx-4" style="font-size:1rem; font-weight: 900;">
+            to: {{offer.writer.user.username}}
+            <v-icon v-if="offer.unread_message"  small class="green--text ml-4">
+              mdi-message
+            </v-icon>
+          </div>
+          <div class="px-4"> 
+            {{offer.last_message[0].message }}
+          </div>
         </div>
       </div>
-    </div>
+    </section>
+    <section v-else>
+      <d-offers-card :offers="offers"/>
+    </section>
   
   </section>
 
@@ -327,7 +332,7 @@
         </div>
       </div>
     </section>
-    <section v-else>
+    <section v-else class="ma-4">
       <d-bids-table :bids="getTaskChatHeader.bids"/>
     </section>    
   </section>
@@ -483,10 +488,9 @@
   application/vnd.openxmlformats-officedocument.wordprocessingml.document,
   application/msword"
   ></v-file-input> 
-  <div class="transparent transparent--text bottom" id="bottom">
+  <!-- <div class="transparent transparent--text bottom" id="bottom">
     <a href="#bottom" id="bottom_button"></a>
-  </div>
-  <!-- <div class="transparent transparent--text bottom" id="bottom">kazibin</div> -->
+  </div> -->
 
 </div>
 </template>
@@ -499,8 +503,9 @@ import CreateInvoice from './CreateInvoice.vue'
 import ViewInvoice from './ViewInvoice.vue'
 import ChatBox from '../../components/ChatBox.vue'
 import DBidsTable from './DBidsTable.vue'
+import DOffersCard from '../../components/dashboard/desktop/DOffersCard.vue'
 export default {
-  components: { EmptyHere, CreateInvoice, ViewInvoice, ChatBox,DBidsTable },
+  components: { EmptyHere, CreateInvoice, ViewInvoice, ChatBox,DBidsTable, DOffersCard },
   name: "TaskChat",
   filters:{
        
@@ -621,6 +626,26 @@ export default {
         });
 
         return canrate
+      }
+    },
+
+    offers(){
+      if(!this.getTaskChatHeader.offers){
+        return 
+      } else {
+        console.log(this.getTaskChatHeader)
+        let offers = []
+        this.getTaskChatHeader.offers.forEach(offer => {
+          offer.task = {}
+          // offer.task = this.getTaskChatHeader writer_id
+          offer.task.code = this.getTaskChatHeader.code
+          offer.task.topic = this.getTaskChatHeader.topic
+          offer.task.unit = this.getTaskChatHeader.unit
+          offer.task.status = this.getTaskChatHeader.status
+          offer.writer_id = offer.writer_id
+          offers.push(offer)
+        })
+        return offers
       }
     }
   },
@@ -755,11 +780,16 @@ export default {
     },
 
     goBottom(){
-      document.getElementById('bottom_button').click()
+      // this.$nextTick(() => {
+      //   document.getElementById('bottom').scrollIntoView({
+      //     behavior: 'smooth'
+      //   })
+      // })
+      // console.log('go bottom called');
     },
     
     goTop(){
-      document.getElementById('top_button').click()
+      //document.getElementById('top_button').click()
     },
 
     send(){
@@ -883,7 +913,7 @@ export default {
     background: tomato;
   }  
   .bottom{
-    height: 3rem;
+    height: 0.1rem;
   }
   @media only screen and (max-width: 960px) {
     .bottom-toolbar{
@@ -903,7 +933,7 @@ export default {
       width: 83.33%;
     }
   }
-  @media only screen and (min-width: 1294px) {
+  @media only screen and (min-width: 1264px) {
     .bottom-toolbar{
       padding-bottom: 5rem; 
       position: fixed; 
@@ -969,9 +999,7 @@ export default {
   .main{
     height: 100%;
   }
-  .bottom{
-    height: 3rem;
-  }
+
   .send-bar{
     height: 3rem;
     position: fixed; 

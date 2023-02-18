@@ -346,11 +346,15 @@ export default {
     },
   
     goBottom(){
-      document.getElementById('bottom_button').click()
+      //   this.$nextTick(() => {
+    //     document.getElementById('bottom').scrollIntoView({
+    //       behavior: 'smooth'
+    //     })
+    //   })
     },
     
     goTop(){
-      document.getElementById('top_button').click()
+      //document.getElementById('top_button').click()
     },
     send(){
       this.sending = true
@@ -458,7 +462,7 @@ export default {
       width: 83.33%;
     }
   }
-  @media only screen and (min-width: 1294px) {
+  @media only screen and (min-width: 1264px) {
     .bottom-toolbar{
       padding-bottom: 5rem; 
       position: fixed; 

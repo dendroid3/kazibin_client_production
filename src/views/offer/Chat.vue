@@ -250,7 +250,7 @@
           </v-col>
         </v-row>
       </section>
-      <section class="section">
+      <section class="section" v-else>
       <!-- <section class="section" v-else> -->
         
         <div class="d-flex justify-space-between">
@@ -428,11 +428,15 @@ import { mapActions, mapGetters } from 'vuex'
         this.goBottom()
       },
       goBottom(){
-        document.getElementById('bottom_button').click()
+        //   this.$nextTick(() => {
+    //     document.getElementById('bottom').scrollIntoView({
+    //       behavior: 'smooth'
+    //     })
+    //   })
       },
       
       goTop(){
-        document.getElementById('top_button').click()
+        //document.getElementById('top_button').click()
       },
 
       registerFiles(event){
@@ -586,7 +590,7 @@ import { mapActions, mapGetters } from 'vuex'
       width: 83.33%;
     }
   }
-  @media only screen and (min-width: 1294px) {
+  @media only screen and (min-width: 1264px) {
     .bottom-toolbar{
       padding-bottom: 5rem; 
       position: fixed; 

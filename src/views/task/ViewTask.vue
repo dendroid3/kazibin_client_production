@@ -273,7 +273,6 @@ export default {
     methods:{
         ...mapActions(['fetchTaskForBidding', 'createBid', 'openAlert', 'fetchOneBroker']),
         viewBroker(){
-            console.log(this.getTaskForBidding);
             this.loading_broker = true
             const data = {
                 code: this.getTaskForBidding.broker.user.code

@@ -15,6 +15,7 @@
         {{"I am "}} {{getUser.username + '.'}} {{" I am interested in " + interests + "  " +  role + "."}} 
         <span>
           {{"I pay | Enter CPP | "}}
+          
         </span>
         <v-select
           v-if="interests.prepend !== 'other'"

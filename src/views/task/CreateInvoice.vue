@@ -316,7 +316,11 @@ export default {
 
         goBottom(){
             // this.$vuetify.goTo('#bottom', this.options)
-          document.getElementById('bottom_button').click()
+          //   this.$nextTick(() => {
+    //     document.getElementById('bottom').scrollIntoView({
+    //       behavior: 'smooth'
+    //     })
+    //   })
 
         },
 

@@ -29,6 +29,7 @@ const actions = {
       'TaskRated', 
       'InvoiceCreated' //done
     ]
+
     events.forEach(event => {
       window.Echo.private('private_notification_' + store.state.auth.user.id)
       .listen(event, (e) => {

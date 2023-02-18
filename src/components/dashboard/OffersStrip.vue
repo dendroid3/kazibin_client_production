@@ -80,20 +80,16 @@ export default {
     },
     statusName: (code) => {
       switch(code) {
-        case code = 1:
-          return 'unassigned'
-        case code = 2:
-          return 'incomplete'
-        case code = 3:
-          return 'complete'
-        case code = 4:
-          return 'invoiced'
-        case code = 5:
-          return 'processing pay'
-        case code = 6:
-          return 'paid'
+          case code = 1:
+              return 'unassigned'
+          case code = 2:
+              return 'cancelled'
+          case code = 3:
+              return 'rejected'
+          case code = 4:
+              return 'accepted'
           default:
-            return null
+              return null
       }
     }
   },

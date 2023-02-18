@@ -222,13 +222,6 @@ export default {
   },
   computed: {
     ...mapGetters(['getRequestChatView', 'getRequestMessages', 'getUser']),
-    options () {
-      return {
-        duration: 500,
-        offset: 0,
-        easing: 'easeInOutCubic',
-      }
-    }
   },
   data(){
     return {
@@ -258,7 +251,12 @@ export default {
     },
     
     goBottom(){
-      this.$vuetify.goTo('#bottom', this.options)
+      // this.$vuetify.goTo('#bottom', this.options)
+      //   this.$nextTick(() => {
+    //     document.getElementById('bottom').scrollIntoView({
+    //       behavior: 'smooth'
+    //     })
+    //   })
     },
     isImage(url){
       let base = url.substring((url.lastIndexOf('.') + 1), (url.lastIndexOf('.') + 4))
@@ -417,7 +415,7 @@ export default {
       width: 83.33%;
     }
   }
-  @media only screen and (min-width: 1294px) {
+  @media only screen and (min-width: 1264px) {
     .bottom-toolbar{
       padding-bottom: 5rem; 
       position: fixed; 

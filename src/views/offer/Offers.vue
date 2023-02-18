@@ -115,8 +115,13 @@
                 </div>
             </v-col>
         </v-row>
+        <section v-if="pagination_links_set && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+          <offers-strip v-for="(offer, i) in getMyOffers" :key="i" :offer="offer"/>
+        </section>
 
-      <offers-strip v-for="(offer, i) in getMyOffers" :key="i" :offer="offer"  v-if="pagination_links_set"/>
+        <section v-if="pagination_links_set && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+          <d-offers-card :offers="getMyOffers"/>
+        </section>
 
       <v-row class="padder" v-if="!getMyOffers[0]">
         <div class="padded mb-4 d-flex justify-center">
@@ -134,8 +139,6 @@
         </div>
       </v-row>
 
-      
-            
       <v-row class="d-flex justify-center mt-4" v-if="pagination_links_set">
           <v-col class="col-1 white--text mt-4 primary-color text-center" v-for="(link, i) in pagination_links" 
           :key="i" 
@@ -175,10 +178,11 @@
 import { mapActions, mapGetters } from 'vuex';
 import OffersStrip from '../../components/dashboard/OffersStrip.vue';
 import EmptyHere from '../../components/widgets/EmptyHere.vue';
+import DOffersCard from '../../components/dashboard/desktop/DOffersCard.vue';
 export default {
     name: 'Offers',
     components:{
-        OffersStrip, EmptyHere
+        OffersStrip, EmptyHere, DOffersCard
     },
 
     computed:{

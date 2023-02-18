@@ -4,7 +4,14 @@
             <v-col class="col-8 pl-4 backg"> transactions
             </v-col>
         </v-row> 
-        <transaction-strip :transaction="transaction" v-for="transaction in getMyTransactions" :key="transaction.id" v-if=pagination_links_set />
+        <!-- <transaction-strip :transaction="transaction" v-for="transaction in getMyTransactions" :key="transaction.id" v-if=pagination_links_set /> -->
+        <div v-if="getMyTransactions[0] && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md) && pagination_links_set">
+          <transaction-strip :transaction="transaction" v-for="transaction in getMyTransactions" :key="transaction.id" />
+        </div>
+
+        <div v-if="getMyTransactions[0] && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md) && pagination_links_set">
+          <d-transactions-card :transactions="getMyTransactions" />
+        </div>
 
         <v-row class="d-flex justify-center mt-4" v-if="pagination_links_set && getMyTransactions[0]">
           <v-col class="col-1 white--text mt-4 primary-color pointer text-center" v-for="(link, i) in pagination_links" 
@@ -53,11 +60,12 @@ import { mapActions, mapGetters } from 'vuex';
 import TransactionStrip from '../../components/dashboard/TransactionStrip.vue';
 import FetchingItems from '../../components/widgets/FetchingItems.vue';
 import emptyHere from '../../components/svg/emptyHere.vue';
+import DTransactionsCard from '../../components/dashboard/desktop/DTransactionsCard.vue';
 
 export default {
     name: 'Transactions',
 
-    components:{TransactionStrip, FetchingItems, emptyHere},
+    components:{TransactionStrip, FetchingItems, emptyHere, DTransactionsCard},
 
     computed: {
         ...mapGetters(['getMyTransactions', 'getMyTransactionsPaginationDetails', ]),

@@ -17,8 +17,6 @@ const getters = {
 
 const actions = {
   setViewBroker({commit}, broker){
-    console.log("broker")
-    console.log(broker)
     commit('SET_VIEW_BROKER', broker)
   },
 
@@ -72,7 +70,6 @@ const actions = {
     try{
       const response =  await
       axios.post('/get_one_broker', data)
-      console.log(response)
       dispatch('setViewBroker', response.data.broker, {root: true})
       router.push('/Broker/' + data.code)
       return true

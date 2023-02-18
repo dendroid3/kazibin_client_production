@@ -111,7 +111,7 @@ export default {
       lazy: false,
       applied: false,
       task: {
-        difficulty: 0
+        difficulty: 5
       },
       due_time: null,
       rules: {

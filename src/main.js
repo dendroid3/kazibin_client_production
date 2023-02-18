@@ -21,18 +21,23 @@ window.Echo = new Echo({
   wsHost: '6001',
   authEndpoint : 'http://localhost:8000/api/broadcasting/auth',
 
-  wssPort: '',
-  forceTLS: true,
+  
+  forceTLS: false,
   disableStats: true,
+  
   auth: {
       headers: {
           Authorization: 'Bearer ' + store.state.auth.token,
           Accept: "application/json",
       },
   },
-  encrypted: true,
-  enabledTransports: ['ws', 'wss']
+
+  enabledTransports: ['ws']
 });
+// wssPort: '',
+// encrypted: true,
+// enabledTransports: ['ws', 'wss']
+
 
 Vue.config.productionTip = false;
 

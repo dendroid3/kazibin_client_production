@@ -341,6 +341,16 @@ const routes = [
     }
   },
   {
+    path: '/m/writer/:code',
+    name: 'ViewMyWriter',
+    component: () => import('../views/network/ViewMyWriter.vue'),
+    meta:{
+      middleware: [
+        auth, emailverified
+      ]
+    }
+  },
+  {
     path: '/Logs',
     name: 'Logs',
     component: () => import('../views/log/Logs.vue'),

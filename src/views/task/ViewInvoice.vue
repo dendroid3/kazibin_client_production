@@ -233,7 +233,11 @@ export default {
 
             this.getInvoice(data).then(res => {
                 this.fetching = false
-                document.getElementById('bottom_button').click()
+                //   this.$nextTick(() => {
+    //     document.getElementById('bottom').scrollIntoView({
+    //       behavior: 'smooth'
+    //     })
+    //   })
             })
         },
 

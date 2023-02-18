@@ -27,6 +27,16 @@ const actions = {
         return false
       }
 
+      let prompt_message = "Write a quick proposal to accompany your bid"
+      let proposal = prompt(prompt_message)
+
+      if(!proposal){
+        dispatch('openAlert', {message: 'You must write a proposal to go with your bid!', code: 'error'}, {root: true})
+        return false
+      }
+
+      data.proposal = proposal
+
       const response = await
       axios.post('/bid/create', data)
       

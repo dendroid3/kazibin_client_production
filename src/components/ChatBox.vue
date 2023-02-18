@@ -2,6 +2,8 @@
     <div class="bg-fy">
         <div style=" padding-top: 6rem; z-index: 1;">
             <iframe :src="download_url" frameborder="0" class="d-none" v-for="(download_url, i) in download_urls" ::key="i"></iframe>
+            <!-- <div class="transparent transparent--text bottom" id="bottom">kazibin</div> -->
+
             <v-row class="d-flex no-gutters" style="background-color: transparent; "
             v-for="message in messages" 
             :key="message.created_at" 
@@ -82,6 +84,14 @@ export default {
             const download_url = process.env.VUE_APP_API + "download?type=" + this.type + "&message_id=" + message.id + "&user_id=" + this.getUser.id
             this.download_urls.push(download_url)
         }
+    },
+
+    mounted(){
+      //   this.$nextTick(() => {
+    //     document.getElementById('bottom').scrollIntoView({
+    //       behavior: 'smooth'
+    //     })
+    //   })
     }
 }
 </script>

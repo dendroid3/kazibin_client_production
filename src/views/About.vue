@@ -3,6 +3,9 @@
     <v-row class="no-gutters d-flex align-center">
       <v-col class="col-12 d-flex justify-center">
         <h3 class="ml-2 active">ABOUT </h3>
+        <v-btn @click="tofaqs">
+          FAQ
+        </v-btn>
       </v-col>
     </v-row>
     <div class="container d-flex justify-center">
@@ -13,7 +16,7 @@
     </div>
     <v-row class="no-gutters d-flex align-center">
       <v-col class="col-12 d-flex justify-center">
-        <h3 class="ml-2 active" id="faqs">FAQs</h3>
+        <h3 class="ml-2 active">FAQs</h3>
       </v-col>
     </v-row>
     <div class="container  pa-0" v-for="(faq, i) in faqs" :key="i">
@@ -30,11 +33,11 @@
         </v-icon>
       </div>
     </div>
-    <!-- <div class="d-flex justify-center">
-      <h3 class="bold active" id="testimonials">
+    <div class="d-flex justify-center">
+      <h3 class="bold active" id="faqs">
         WHAT PEOPLE SAY ABOUT US
       </h3>
-    </div> -->
+    </div>
     <div class="d-flex justify-center" style="font-size: 3rem;">
       {{getAboutStatistics.words_written | formatToReadable}}
     </div>
@@ -120,10 +123,14 @@ export default {
     methods: {
       ...mapActions(['fetchAboutStatistics']),
         tofaqs() {
-            this.$vuetify.goTo("#faqs", this.options);
+          this.$nextTick(() => {
+            document.getElementById('faqs').scrollIntoView({
+              behavior: 'smooth'
+            })
+          })
         },
         testimonials() {
-            this.$vuetify.goTo("#testimonials", this.options);
+          this.$vuetify.goTo("#testimonials", this.options);
         },
         openFaq(i){
           if(this.open_faq == i){

@@ -3,9 +3,8 @@
         <table class="table table-striped table-bordered table-hover">
             <thead>
                 <tr class="grey white--text">
-                    <th>Task Code</th>
-                    <th>Topic</th>
-                    <th>Unit </th>
+                    <th>Task</th>
+                    <th>Broker</th>
                     <th>Deadline</th>
                     <th>Payment</th>
                     <th>Status</th>
@@ -21,9 +20,15 @@
                 blacklist: task.status == 5,
                 orangelist: task.status == 6 || task.status == 8,
                 }">
-                    <td class="text-center">{{ task.code }}</td>
-                    <td class="text-center">{{ task.topic }}</td>
-                    <td class="text-center">{{ task.unit }}</td>
+                    <td class="text-center">
+                        {{ "code: " + task.code }} <br>
+                        {{ "topic: " + task.topic }} <br>
+                        {{ "unit: " + task.unit }} 
+                    </td>
+                    <td class="text-center">
+                        {{ task.broker.user.code + ": " + task.broker.user.username  }} 
+                    </td>
+                    
                     <td class="text-center">{{ task.expiry_time | diffForHumans}}</td>
                     <td class="text-center">
                         <span class="text-center">
@@ -50,7 +55,7 @@
                             <br>
                         </span> 
                         <span>
-                            {{ task | unread_message }}
+                            {{ task.unread_message ? "New Message" : "No New Message" }}
                         </span> 
                     </td>
 
@@ -60,14 +65,15 @@
     </div>
 </template>
 <script>
-
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { mapActions } from 'vuex'
 
 export default {
-    name: "DTasksCard",
-    
+    name: 'DTakenCard',
+
+    props: ['tasks'],
+
     created(){
         dayjs.extend(relativeTime)
     },
@@ -90,10 +96,6 @@ export default {
                     unread = "New Message"
                 }
             });
-        } else {
-          if(task.unread_message){
-            unread = "New Message"
-          }
         }
         return unread
         },
@@ -171,29 +173,7 @@ export default {
 
     
   computed:{
-    unread_bid_message(){
-      let unread = false
-      if(task.status == 1){
-        task.bids.forEach(bid => {
-          if(bid.unread_message){
-            unread = true
-          }
-        });
-      }
-      return unread
-    },
-
-    unread_offer_message(){
-      let unread = false
-      if(task.status == 1){
-        task.offers.forEach(offer => {
-          if(offer.unread_message){
-            unread = true
-          }
-        });
-      }
-      return unread
-    }
+   
   },
 
   methods: {
@@ -219,6 +199,6 @@ export default {
 
 }
 </script>
-<style lang="">
+<style lang="css" scoped>
     
 </style>

@@ -534,7 +534,11 @@ export default {
             this.goBottom()
         },
         goBottom(){
-            document.getElementById('bottom_button').click()
+            //   this.$nextTick(() => {
+    //     document.getElementById('bottom').scrollIntoView({
+    //       behavior: 'smooth'
+    //     })
+    //   })
         },
         isSelected(task_id) {
             if (this.selected_tasks_id.length > 0) {

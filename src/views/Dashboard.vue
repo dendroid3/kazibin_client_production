@@ -1,7 +1,7 @@
 <template>
   <div class="main-wrapper grey lighten-3">
     <user-card v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs" :user="getUser"/>
-    <transactions-belt class="px-3 my-4" v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs || $vuetify.breakpoint.md"/>
+    <!-- <transactions-belt class="px-3 my-4" v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs || $vuetify.breakpoint.md"/>
     <tabs-strip 
     v-if=" $vuetify.breakpoint.md || $vuetify.breakpoint.sm || $vuetify.breakpoint.xs"
     :posted_fetched="posted_fetched" 
@@ -13,7 +13,7 @@
     :chats_fetched="chats_fetched" 
     :requests_fetched="requests_fetched"
     :transactions_fetched="transactions_fetched"
-    />
+    /> -->
     <section v-if="
         getAllTasksPostedByMe && 
         getAllTasksDoneByMe &&
@@ -40,19 +40,27 @@
       </section>
 
       <section v-if="getAllTasksDoneByMe">
-        <title-strip :title="`tasks done`" :page="`Tasks/Taken`" :add_url="`/Tasks/Done`" v-if="getAllTasksDoneByMe[0]"/>
+        <title-strip :title="`tasks taken`" :page="`Tasks/Taken`" :add_url="`/Tasks/Done`" v-if="getAllTasksDoneByMe[0]"/>
         <div class="limiting_wrapper" v-if="getAllTasksDoneByMe[0] && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
           <tasks-strip v-for="(task, i) in getAllTasksDoneByMe" :key="i" :task="task" />
         </div>
-      </section>
+
+        <div v-if="getAllTasksDoneByMe[0] && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+          <d-taken-card :tasks="getAllTasksDoneByMe" />
+        </div>
+      </section> 
 
       <section v-if="getMyOffers" >
         <title-strip :title="`tasks offered`" :page="`Offers`" :add_url="`/Brokers/Explore`" v-if="getMyOffers[0]"/>
-        <div class="limiting_wrapper" v-if="getMyOffers[0]">
+        <div class="limiting_wrapper" v-if="getMyOffers[0] && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
           <offers-strip v-for="(offer, i) in getMyOffers" :key="i" :offer="offer" />
         </div>
+
+        <div class="limiting_wrapper" v-if="getMyOffers[0] && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+          <d-offers-card :offers="getMyOffers"/>
+        </div>
       </section>
-    
+
       <section v-if="getMyBids">
         <title-strip :title="`bids made`" :page="`Bids`" :add_url="`/Bids`"  v-if="getMyBids[0]"/>
         <div class="limiting_wrapper"  v-if="getMyBids[0]  && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
@@ -66,29 +74,45 @@
 
       <section v-if="getMyBrokers">
         <title-strip :title="`brokers`" :add_url="`/Explore/Brokers`" :page="`/Network`"  v-if="getMyBrokers[0]"/>
-        <div class="limiting_wrapper" v-if="getMyBrokers[0]">
-          <network-strip :network_option="'brokers'" />
+        <div class="limiting_wrapper" v-if="getMyBrokers[0] && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+          <network-strip :network_option="'broker'" :networks="getMyBrokers"/>
+        </div>
+        
+        <div class="limiting_wrapper" v-if="getMyBrokers[0] && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+          <d-network-card :network_option="'brokers'" :networks="getMyBrokers"/>
         </div>
       </section>
 
       <section v-if="getMyWriters">
         <title-strip :title="`writers`" :add_url="`/Explore/Writers`" :page="`/Network`" v-if="getMyWriters[0]"/>
-        <div class="limiting_wrapper" v-if="getMyWriters[0]">
-          <network-strip :network_option="'writers'" />
+        <div class="limiting_wrapper" v-if="getMyWriters[0] && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+          <network-strip :network_option="'writer'" :networks="getMyWriters"/>
+        </div>
+        
+        <div class="limiting_wrapper" v-if="getMyWriters[0] && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+          <d-network-card :network_option="'writers'" :networks="getMyWriters"/>
         </div>
       </section>
 
       <section v-if="getDebitedInvoices">
         <title-strip :title="`invoices debited`" :add_url="`/Invoice/Create`" :page="`/Invoices`" v-if="getDebitedInvoices[0]"/>
-        <div class="limiting_wrapper" v-if="getDebitedInvoices[0]">
+        <div class="limiting_wrapper" v-if="getDebitedInvoices[0] && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
           <invoice-strip v-for="invoice in getDebitedInvoices" :key="invoice.id" :invoice="invoice"/>
+        </div>
+
+        <div v-if="getDebitedInvoices[0] && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+          <d-invoice-card :invoices="getDebitedInvoices" :debited="true"/>
         </div>
       </section>
 
       <section v-if="getCreditedInvoices">
         <title-strip :title="`invoices credited`" :add_url="`/Invoice/Create`" :page="`/Invoices`"  v-if="getCreditedInvoices[0]"/>
-        <div class="limiting_wrapper"  v-if="getCreditedInvoices[0]">
+        <div class="limiting_wrapper" v-if="getCreditedInvoices[0] && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
           <invoice-strip v-for="invoice in getCreditedInvoices" :key="invoice.id" :invoice="invoice"/>
+        </div>
+
+        <div v-if="getCreditedInvoices[0] && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+          <d-invoice-card :invoices="getCreditedInvoices" :debited="false"/>
         </div>
       </section>
       
@@ -101,10 +125,14 @@
 
       <section v-if="getMyTransactions">
         <title-strip :title="`transactions`" :page="`/Transactions`"  v-if="getMyTransactions[0]"/> 
-        <div class="limiting_wrapper"  v-if="getMyTransactions[0]">
-          <!-- {{getMyTransactions}} -->
+        <div class="limiting_wrapper" v-if="getMyTransactions[0] && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
           <transaction-strip :transaction="transaction" v-for="transaction in getMyTransactions" :key="transaction.id" />
         </div>
+
+        <div v-if="getMyTransactions[0] && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+          <d-transactions-card :transactions="getMyTransactions" />
+        </div>
+
       </section>
 
       <section v-if="getLogMessages &&  ($vuetify.breakpoint.md || $vuetify.breakpoint.sm || $vuetify.breakpoint.xs)">
@@ -199,14 +227,19 @@ import RequestsCard from './dashboard/Requests/RequestsCard.vue'
 import BidsStrip from '../components/dashboard/BidsStrip.vue'
 import InvoiceStrip from '../components/dashboard/InvoiceStrip.vue'
 import emptyHere from '../components/svg/emptyHere.vue'
+import TransactionStrip from '../components/dashboard/TransactionStrip.vue'
 
 //desktop
 
 import DTasksCard from '../components/dashboard/desktop/DTasksCard.vue'
 import DBidsCard from '../components/dashboard/desktop/DBidsCard.vue'
+import DNetworkCard from '../components/dashboard/desktop/DNetworkCard.vue'
+import DTakenCard from '../components/dashboard/desktop/DTakenCard.vue'
+import DInvoiceCard from '../components/dashboard/desktop/DInvoiceCard.vue'
+import DTransactionsCard from '../components/dashboard/desktop/DTransactionsCard.vue'
+import DOffersCard from '../components/dashboard/desktop/DOffersCard.vue'
 
 import { mapActions, mapGetters } from 'vuex'
-import TransactionStrip from '../components/dashboard/TransactionStrip.vue'
 
 export default {
   name: 'Dashboard',
@@ -214,7 +247,7 @@ export default {
     UserCard, TransactionsBelt, TitleStrip, TabsStrip, TasksStrip, LogsStrip, RequestsCard, NetworkStrip, OffersStrip, BidsStrip, 
     InvoiceStrip, emptyHere, TransactionStrip, 
     //desktop
-    DTasksCard, DBidsCard
+    DTasksCard, DBidsCard, DNetworkCard, DTakenCard, DInvoiceCard, DTransactionsCard, DOffersCard
   },
   data(){
     return {
@@ -250,7 +283,7 @@ export default {
         await this.fetchMyBids().then((res) => {this.bids_fetched = true})
         await this.fetchMyWriters()
         await this.fetchMyBrokers().then(() => {this.liaisons_fetched = true})
-        await this.fetchAllRequests().then((res) => {this.requests_fetched = true, console.log(res);})
+        await this.fetchAllRequests().then((res) => {this.requests_fetched = true;})
         await this.getInvoices().then((res) => {
           this.invoices_fetched = true
         })

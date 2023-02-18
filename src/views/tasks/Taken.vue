@@ -121,7 +121,15 @@
         </v-col>
       </v-row>
 
-    <tasks-strip v-for="(task, i) in getAllTasksDoneByMe" :key="i" :task="task" v-if="pagination_links_set"/>
+    <section v-if="pagination_links_set">
+        <div class="limiting_wrapper" v-if="getAllTasksDoneByMe[0] && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+          <tasks-strip v-for="(task, i) in getAllTasksDoneByMe" :key="i" :task="task" />
+        </div>
+
+        <div v-if="getAllTasksDoneByMe[0] && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+          <d-taken-card :tasks="getAllTasksDoneByMe" />
+        </div>
+      </section>
   
     <v-row class="padder d-flex justify-center" v-if="!getAllTasksDoneByMe[0] && pagination_links_set">
       <div class="padded mb-4">
@@ -213,10 +221,12 @@ import { mapActions, mapGetters } from 'vuex';
 import EmptyHere from '../../components/widgets/EmptyHere.vue';
 import TasksStrip from '../../components/dashboard/TasksStrip.vue';
 import FetchingItems from '../../components/widgets/FetchingItems.vue';
+import DTakenCard from '../../components/dashboard/desktop/DTakenCard.vue';
+
 export default {
     name: 'Taken',
     components: {
-        TasksStrip,EmptyHere,FetchingItems
+        TasksStrip,EmptyHere,FetchingItems, DTakenCard
     },
     computed:{
       ...mapGetters(['getAllTasksDoneByMe', 'getDashboadDetails', 'getAllTasksDoneByMePaginationDetails']),

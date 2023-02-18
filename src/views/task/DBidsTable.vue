@@ -3,9 +3,9 @@
         <table class="table table-striped table-bordered table-hover" v-if="bids.length > 0">
             <thead>
                 <tr>
-                    <th>Writer Code</th>
+                    <th>ID</th>
                     <th>Name</th>
-                    <th>Writer Score</th>
+                    <th>Score</th>
                     <th>Time </th>
                     <th>Status</th>
                     <th>Info</th>
@@ -18,12 +18,12 @@
                     'blacklist': bid.status === 2 || bid.status === 5
                 }"
                 @click="startBidChat(bid)">
-                    <td>{{ bid.writer.user.code }}</td>
-                    <td>{{ bid.writer.user.username }}</td>
-                    <td>{{ bid.writer.user.writer_score }}</td>
-                    <td>{{ bid.created_at | diffForHumans }}</td>
-                    <td>{{ bid.status | status}}</td> 
-                    <td>{{ bid.last_message[0].read_at ? "No New Message" : "New Message"}}</td> 
+                    <td class="text-center">{{ bid.writer.user.code }}</td>
+                    <td class="text-center">{{ bid.writer.user.username }}</td>
+                    <td class="text-center">{{ bid.writer.user.writer_score }}</td>
+                    <td class="text-center">{{ bid.created_at | diffForHumans }}</td>
+                    <td class="text-center">{{ bid.status | status}}</td> 
+                    <td class="text-center">{{ bid.last_message[0].read_at ? "No New Message" : "New Message"}}</td> 
                 </tr>
             </tbody>
         </table>

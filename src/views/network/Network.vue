@@ -17,11 +17,22 @@
           </v-col>
         </v-row>
         <section v-if="getMyBrokers[0] && network_model === `brokers`">
-          <network-strip :network_option="'brokers'" />
+          <div v-if="!($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+            <network-strip :network_option="'broker'" :networks="getMyBrokers"/>
+          </div> 
+          <div v-else>
+            <d-network-card :network_option="'brokers'" :networks="getMyBrokers"/>
+          </div>
         </section>
 
         <section v-if="getMyWriters[0] && network_model === `writers`">
-          <network-strip :network_option="'writers'" />
+          <!-- <network-strip :network_option="'writer'" /> -->
+          <div v-if="!($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+            <network-strip :network_option="'writer'" :networks="getMyWriters"/>
+          </div> 
+          <div v-else>
+            <d-network-card :network_option="'writers'" :networks="getMyWriters"/>
+          </div>
         </section>
 
         <v-row class="padder" v-if="!getMyWriters[0] && !getMyBrokers[0]">
@@ -48,11 +59,12 @@ import { mapGetters } from 'vuex';
 import TitleStrip from '../../components/dashboard/TitleStrip.vue';
 import NetworkStrip from '../../components/dashboard/NetworkStrip.vue';
 import EmptyHere from '../../components/widgets/EmptyHere.vue';
+import DNetworkCard from '../../components/dashboard/desktop/DNetworkCard.vue';
 
 export default {
     name: "Network",
 
-    components: { TitleStrip, NetworkStrip, EmptyHere },
+    components: { TitleStrip, NetworkStrip, EmptyHere,DNetworkCard },
 
     computed: {
         ...mapGetters(["getMyBrokers", "getMyWriters"])

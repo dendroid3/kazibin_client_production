@@ -34,7 +34,8 @@
         </div>
       </v-col>
     </v-row>
-    <div v-if="pagination_links_set || page == 'Dashboard'" class="d-flex message wrapper" v-for="request in requests" :key="request.created_at" :class="{
+    
+    <div v-if="(pagination_links_set || page == 'Dashboard') && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)" class="d-flex message wrapper" v-for="request in requests" :key="request.created_at" :class="{
       'greenlist': request.status < 2,
       'blacklist': request.status > 2
     }">
@@ -78,10 +79,15 @@
           </b>
         </v-col>
       </v-row>
+
     </div>
 
-    <v-row class="padder" v-if="!requests[0] && pagination_links_set && page == 'Requests'">
-      <div class="padded mb-4 d-flex justify-center">
+    <div v-if="(requests.length > 0 && pagination_links_set) && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+      <d-requests-card :requests="requests" :option="filter_option"/>
+    </div>
+
+    <v-row class="padder d-flex justify-center" v-if="!requests[0] && pagination_links_set && page == 'Requests'">
+      <div class="padded mb-4">
         <v-row class="no-gutters ">
           <v-col class="col-12 col-md-6 d-flex align-center justify-center">
             <emptyHere />
@@ -129,6 +135,7 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import emptyHere from '../../../components/svg/emptyHere.vue'
 import FetchingItems from '../../../components/widgets/FetchingItems.vue'
+import DRequestsCard from '../../../components/dashboard/desktop/DRequestsCard.vue'
 
 export default {
   name: 'RequestsCard',
@@ -188,7 +195,7 @@ export default {
   },
 
   components:{
-    emptyHere, FetchingItems
+    emptyHere, FetchingItems, DRequestsCard
   },
 
   data(){
@@ -280,10 +287,8 @@ export default {
   },
   created(){
     dayjs.extend(relativeTime)
-  },
-  mounted(){
     this.boot()
-  }
+  },
 }
 </script>
 <style scoped lang="css">

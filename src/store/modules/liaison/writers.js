@@ -1,17 +1,19 @@
 import axios from "axios"
+import router from "../../../router"
 
 const state = {
   all_writers: null,
   view: null,
   my_writers: null,
-  writer_pagination_details: null
+  writers_pagination_details: null
 }
 
 const getters = {
   getAllWriters: (state) => (state.all_writers),
   getMyWriters: (state) => (state.my_writers),
   getViewWriter: (state) => (state.view),
-  getWriterPaginationDetails: (state) => (state.writer_pagination_details)
+  getWriterPaginationDetails: (state) => (state.writers_pagination_details),
+  getViewMyWriter: (state) => (state.my_writer)
 
 }
 
@@ -65,15 +67,39 @@ const actions = {
         dispatch('handleError', {error: e, action: 'setCostPerPage'}, {root: true})
       }
     }
+  },
+
+  async getMyWriter({commit,dispatch}, network){
+    try {
+      const data = {
+        writer_id: network.writer_id
+      }
+      const response = await
+      axios.post('/liaison/get_my_writer', data)
+      const my_writer = {
+        details: network,
+        data: response.data
+      }
+      commit('SET_VIEW_MY_WRITER', my_writer)
+      router.push('/m/writer/' + network.code)
+      console.log(response)
+    } catch (e) {
+      if(e.response){
+        dispatch('handleError', {error: e, error_code: e.response.status, action: 'setCostPerPage'}, {root: true})
+      } else {
+        dispatch('handleError', {error: e, action: 'setCostPerPage'}, {root: true})
+      }
+    }
   }
 }
 
 const mutations = {
   SET_ALL_WRITERS: (state, writers) => (state.all_writers = writers),
   SET_MY_WRITERS: (state, writers) => (state.my_writers = writers),
+  SET_VIEW_MY_WRITER: (state, writer) => (state.my_writer = writer),
   SET_VIEW_WRITER: (state, writer) => (state.view = writer),
-  SET_WRITERS_PAGINATION_DETAILS: (state, writer_pagination_details) => (
-    state.writer_pagination_details = writer_pagination_details
+  SET_WRITERS_PAGINATION_DETAILS: (state, writers_pagination_details) => (
+    state.writers_pagination_details = writers_pagination_details
   )
 }
 

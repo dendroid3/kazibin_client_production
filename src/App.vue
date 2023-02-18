@@ -178,7 +178,7 @@ export default {
   updated(){
     this.show_nav_bar = this.showNavBar()
   },
-  mounted(){
+  created(){
     this.show_nav_bar = this.showNavBar()
     if(JSON.parse(Cookies.get('KAZIBIN_TOKEN')).auth.token){
       this.bootAllSockets()

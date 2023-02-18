@@ -46,10 +46,10 @@
         </div>
 
         <v-row class="no-gutters d-flex align-center">
-          <v-col class="col-9">
+          <v-col class="col-10">
             <textarea v-model="draft" class="send-bar pa-1" placeholder="message" label="message" />
           </v-col>
-          <v-col class="col-4 d-flex justify-space-between send-buttons">
+          <v-col class="col-2 d-flex justify-space-between send-buttons">
             <v-btn class="blue" @click="openFileSelect"
             :loading="uploading"
             small>
@@ -201,7 +201,12 @@ export default {
     },
   
     goBottom(){
-      document.getElementById('bottom_button').click()
+    
+      //   this.$nextTick(() => {
+    //     document.getElementById('bottom').scrollIntoView({
+    //       behavior: 'smooth'
+    //     })
+    //   })
     },
 
     send(){
@@ -307,7 +312,7 @@ export default {
       width: 83.33%;
     }
   }
-  @media only screen and (min-width: 1294px) {
+  @media only screen and (min-width: 1264px) {
     .bottom-toolbar{
       padding-bottom: 5rem; 
       position: fixed; 

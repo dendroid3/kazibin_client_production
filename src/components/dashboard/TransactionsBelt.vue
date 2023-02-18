@@ -223,7 +223,7 @@ export default {
     },
   },
 
-  mounted() {
+  created() {
     
     let credit = this.getDashboadDetails.transactions.total_credit
     let debit = this.getDashboadDetails.transactions.total_debit

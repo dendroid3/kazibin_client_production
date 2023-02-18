@@ -2,7 +2,7 @@
     <div class="pa-2">
         <table class="table table-striped table-bordered table-hover">
             <thead>
-                <tr>
+                <tr class="grey white--text">
                     <th>Task Code</th>
                     <th>Topic</th>
                     <th>Broker </th>
@@ -19,10 +19,10 @@
                     'blacklist': bid.status === 2 || bid.status === 5
                 }"
                 @click="startBidChat(bid)">
-                    <td>{{ bid.task.code }}</td>
-                    <td>{{ bid.task.topic }}</td>
-                    <td>{{ bid.task.broker.user.username }}</td>
-                    <td>{{ bid.task.expiry_time | diffForHumans }}</td>
+                    <td class="text-center">{{ bid.task.code }}</td>
+                    <td class="text-center">{{ bid.task.topic }}</td>
+                    <td class="text-center">{{ bid.task.broker.user.username }}</td>
+                    <td class="text-center">{{ bid.task.expiry_time | diffForHumans }}</td>
                     <td class="text-center">
                         <span>
                             {{ bid.task.full_pay + " KES"}} 
@@ -37,8 +37,8 @@
 
                         </span>
                     </td>
-                    <td>{{ bid.status | status}}</td> 
-                    <td>{{ bid.unread_message ? "New Message" : "No New Message"}}</td> 
+                    <td class="text-center">{{ bid.status | status}}</td> 
+                    <td class="text-center">{{ bid.unread_message ? "New Message" : "No New Message"}}</td> 
                 </tr>
             </tbody>
         </table>
@@ -124,9 +124,13 @@ export default {
     props: ["bids"],
     
     methods: {
-        ...mapActions(['setBidChatHeader']),
+        ...mapActions(['setBidChatHeader', 'setCurrentBidTask']),
         startBidChat(bid){
         this.setBidChatHeader(bid)
+        this.setCurrentBidTask({
+            topic: bid.task.topic,
+            code: bid.task.code
+        })
         this.$router.push('/Bid/Chat')
         }
     },
