@@ -119,7 +119,7 @@
           <offers-strip v-for="(offer, i) in getMyOffers" :key="i" :offer="offer"/>
         </section>
 
-        <section v-if="pagination_links_set && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+        <section v-if="pagination_links_set && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md) && getMyOffers[0]">
           <d-offers-card :offers="getMyOffers"/>
         </section>
 
