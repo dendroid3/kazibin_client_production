@@ -159,7 +159,7 @@
     </v-row>
 
 
-    <v-row class="d-flex justify-center mt-4" v-if="pagination_links_set">
+    <v-row class="d-flex justify-center mt-4" v-if="pagination_links_set && getAllTasksPostedByMe[0]">
       <v-col class="col-1 white--text mt-4 primary-color text-center" v-for="(link, i) in pagination_links" 
       :key="i" 
       :class="{
