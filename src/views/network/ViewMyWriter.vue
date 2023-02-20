@@ -13,7 +13,9 @@
                 <v-toolbar-title>{{"Writer: " + getViewMyWriter.details.code + ": "}}</v-toolbar-title>
                 <v-toolbar-title class="ml-1">{{getViewMyWriter.details.username}}</v-toolbar-title>
                 <span v-if="getViewMyWriter.details.credential_verification">
-                    [verified]
+                  <v-icon class="rounded ml-4 white primary-color--text">
+                      mdi-check
+                  </v-icon>
                 </span>
             </div>
         </v-toolbar>

@@ -41,7 +41,9 @@
                         <v-toolbar-title>{{"Broker: " + getTaskForBidding.broker.user.code + ": "}}</v-toolbar-title>
                         <v-toolbar-title class="ml-1">{{getTaskForBidding.broker.user.username}}</v-toolbar-title>
                         <span v-if="getTaskForBidding.broker.user.credential_verification">
-                            [verified]
+                            <v-icon class="rounded ml-4 white primary-color--text">
+                                mdi-check
+                            </v-icon>
                         </span>
                     </div>
                     <v-progress-circular
@@ -100,7 +102,7 @@
                         </v-card> 
                     </div>
                     
-                    <v-row class="d-flex mx-4 no-gutters bold">
+                    <v-row class="d-flex mx-4 no-gutters bold" v-if="getTaskForBidding.files.length > 0">
                         <v-col class="col-2 d-flex align-center">
                             {{"Files: "}}
                         </v-col>
@@ -355,7 +357,8 @@ export default {
             this.bidding = true
             const data = {
                 bid_cost: bid_cost,
-                task_id: this.getTaskForBidding.id
+                task_id: this.getTaskForBidding.id,
+                broker_id: this.getTaskForBidding.broker_id
             }
             this.createBid(data).then((res) => {
                 this.bidding = false,

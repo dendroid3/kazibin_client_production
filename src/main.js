@@ -13,17 +13,17 @@ window.Echo = new Echo({
   key: 'local',
   secret: 'local',
   cluster:'mt1',
-  key:'local',
   
   // wsHost: 'api.kazibin.adilirealestate.com',
   // authEndpoint : 'https://api.kazibin.adilirealestate.com/api/broadcasting/auth',
   
-  wsHost: '6001',
+  wsHost: '127.0.0.1',
+  wsPort: '6001',
   authEndpoint : 'http://localhost:8000/api/broadcasting/auth',
 
   
   forceTLS: false,
-  disableStats: true,
+  disableStats: false,
   
   auth: {
       headers: {

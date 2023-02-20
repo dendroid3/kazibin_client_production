@@ -26,7 +26,7 @@
 
       <v-row class="pa-2 bold no-gutters">
         <v-col class="mb-1 col-4 px-1">
-          <div class="grey lighten-2 rounded elevation-1 pointer  elevation-10" @click="filterModel(1)" :class="{
+          <div class="tomato white--text rounded elevation-1 pointer  elevation-10" @click="filterModel(1)" :class="{
             'redtext': filter_model == 1
           }">
               <div class="d-flex justify-center bold" >
@@ -41,7 +41,7 @@
           </div>
         </v-col>
         <v-col class="mb-1 col-4 px-1">
-          <div class="grey lighten-2 rounded elevation-1 pointer elevation-10" @click="filterModel(2)" :class="{
+          <div class="tomato white--text rounded elevation-1 pointer elevation-10" @click="filterModel(2)" :class="{
             'purpletext': filter_model == 2
           }">
               <div class="d-flex justify-center bold" >
@@ -56,7 +56,7 @@
           </div>
         </v-col>
         <v-col class="mb-1 col-4 px-1">
-          <div class="grey lighten-2 rounded elevation-1 pointer elevation-10" @click="filterModel(3)" :class="{
+          <div class="tomato white--text rounded elevation-1 pointer elevation-10" @click="filterModel(3)" :class="{
             'greentext': filter_model == 3
           }">
               <div class="d-flex justify-center bold" >

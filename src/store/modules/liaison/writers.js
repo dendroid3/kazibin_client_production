@@ -85,9 +85,9 @@ const actions = {
       console.log(response)
     } catch (e) {
       if(e.response){
-        dispatch('handleError', {error: e, error_code: e.response.status, action: 'setCostPerPage'}, {root: true})
+        dispatch('handleError', {error: e, error_code: e.response.status, action: 'getMyWriter'}, {root: true})
       } else {
-        dispatch('handleError', {error: e, action: 'setCostPerPage'}, {root: true})
+        dispatch('handleError', {error: e, action: 'getMyWriter'}, {root: true})
       }
     }
   }

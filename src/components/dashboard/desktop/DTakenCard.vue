@@ -76,6 +76,8 @@ export default {
 
     created(){
         dayjs.extend(relativeTime)
+        console.log('this.tasks')
+        console.log(this.tasks)
     },
 
     props: [

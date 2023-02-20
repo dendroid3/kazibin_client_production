@@ -12,7 +12,7 @@
 
         <v-row class="pa-2 bold no-gutters">
             <v-col class="col-4 pa-1">
-                <div class="grey lighten-2 rounded elevation-1 pointer" @click="filterModel(null)">
+                <div class="tomato white--text  rounded elevation-1 pointer" @click="filterModel(null)">
                     <div class="d-flex justify-center bold">
                         all
                     </div>
@@ -23,7 +23,7 @@
                 </div>
             </v-col>
             <v-col class="col-4 pa-1">
-                <div class="grey lighten-2 rounded elevation-1 pointer" @click="filterModel(1)" :class="{
+                <div class="tomato white--text  rounded elevation-1 pointer" @click="filterModel(1)" :class="{
                   'red--text': filter_model == 1
                 }">
                     <div class="d-flex justify-center bold">
@@ -36,7 +36,7 @@
                 </div>
             </v-col>
             <v-col class="col-4 pa-1">
-                <div class="grey lighten-2 rounded elevation-1 pointer"  @click="filterModel(4)" :class="{
+                <div class="tomato white--text rounded elevation-1 pointer"  @click="filterModel(4)" :class="{
                   'green--text': filter_model == 4
                 }">
                     <div class="d-flex justify-center bold">
@@ -50,7 +50,7 @@
             </v-col>
             
             <v-col class="col-4 pa-1">
-                <div class="grey lighten-2 rounded elevation-1 pointer" @click="filterModel(3)" :class="{
+                <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(3)" :class="{
                   'red--text': filter_model == 3
                 }">
                     <div class="d-flex justify-center bold">
@@ -64,7 +64,7 @@
             </v-col>
 
             <v-col class="col-4 pa-1">
-                <div class="grey lighten-2 rounded elevation-1 pointer" @click="filterModel(2)" :class="{
+                <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(2)" :class="{
                   'red--text': filter_model == 2
                 }">
                     <div class="d-flex justify-center bold">

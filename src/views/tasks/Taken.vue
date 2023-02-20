@@ -37,7 +37,7 @@
          
       <v-row class="pa-2 bold no-gutters">
         <v-col class="mb-1 col-4 px-1">
-          <div class="grey lighten-2 rounded elevation-1 pointer"  @click="filterModel(null)">
+          <div class="tomato white--text rounded elevation-1 pointer"  @click="filterModel(null)">
               <div class="d-flex justify-center bold">
                 all
               </div>
@@ -49,7 +49,7 @@
         </v-col>
         
         <v-col class="mb-1 col-4 px-1">
-          <div class="grey lighten-2 rounded elevation-1 pointer"  @click="filterModel(2)"
+          <div class="tomato white--text rounded elevation-1 pointer"  @click="filterModel(2)"
           :class="{
               'red--text': filter_model == 2
             }">
@@ -64,7 +64,7 @@
         </v-col>
         
         <v-col class="mb-1 col-4 px-1" >
-          <div class="grey lighten-2 rounded elevation-1 pointer" @click="filterModel(3)"
+          <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(3)"
             :class="{
               'green--text': filter_model == 3
             }">
@@ -79,7 +79,7 @@
         </v-col>
 
         <v-col class="mb-1 col-4 px-1">
-          <div class="grey lighten-2 rounded elevation-1 pointer" @click="filterModel(4)"
+          <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(4)"
             :class="{
               'yellow--text': filter_model == 4
             }">
@@ -94,7 +94,7 @@
         </v-col>
 
         <v-col class="mb-1 col-4 px-1">
-          <div class="grey lighten-2 rounded elevation-1 pointer" @click="filterModel(5)">
+          <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(5)">
               <div class="d-flex justify-center bold">
                 invoiced
               </div>
@@ -106,7 +106,7 @@
         </v-col>
 
         <v-col class="mb-1 col-4 px-1">
-          <div class="grey lighten-2 rounded elevation-1 pointer" @click="filterModel(6)"
+          <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(6)"
             :class="{
               orangeredtext: filter_model == 6
             }">

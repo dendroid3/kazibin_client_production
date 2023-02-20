@@ -38,19 +38,19 @@
       
       <v-row class="pa-2 bold no-gutters">
         <v-col class="mb-1 col-4 px-1">
-          <div class="grey lighten-2 rounded elevation-1 pointer" @click="filterModel('all')">
-              <div class="d-flex justify-center black--text bold" >
+        <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel('all')">
+              <div class="d-flex justify-center bold" >
                 posted
               </div>
               <v-divider inset/>
-              <div class="d-flex justify-end align-center px-1 black--text">
+              <div class="d-flex justify-end align-center px-1">
                 <span> {{getDashboadDetails.posted.posted_all}} </span>
               </div>
           </div>
         </v-col>
         
         <v-col class="mb-1 col-4 px-1">
-          <div class="grey lighten-2 rounded elevation-1 pointer" @click="filterModel(1)" 
+        <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(1)" 
             :class="{
               redtext: filter_model == 1
             }">
@@ -65,7 +65,7 @@
         </v-col>
         
         <v-col class="mb-1 col-4 px-1">
-          <div class="grey lighten-2 rounded elevation-1 pointer" @click="filterModel(2)"
+        <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(2)"
             :class="{
               purpletext: filter_model == 2
             }">
@@ -80,7 +80,7 @@
         </v-col>
         
         <v-col class="mb-1 col-4 px-1">
-          <div class="grey lighten-2 rounded elevation-1 pointer" @click="filterModel(3)"
+        <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(3)"
             :class="{
               greentext: filter_model == 3
             }">
@@ -95,21 +95,21 @@
         </v-col>
 
         <v-col class="mb-1 col-4 px-1">
-          <div class="grey lighten-2 rounded elevation-1 pointer" @click="filterModel(4)" :class="{
+        <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(4)" :class="{
               'yellow--text': filter_model == 3
             }">
-              <div class="d-flex justify-center black--text bold">
+              <div class="d-flex justify-center bold">
                 cancelled
               </div>
               <v-divider inset/>
-              <div class="d-flex justify-end align-center px-1 black--text">
+              <div class="d-flex justify-end align-center px-1">
                 <span> {{getDashboadDetails.posted.posted_canceled}} </span>
               </div>
           </div>
         </v-col>
 
         <v-col class="mb-1 col-4 px-1">
-          <div class="grey lighten-2 rounded elevation-1 pointer" @click="filterModel(6)"
+        <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(6)"
             :class="{
               orangeredtext: filter_model == 6
             }">

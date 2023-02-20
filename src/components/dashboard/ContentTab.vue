@@ -1,5 +1,5 @@
 <template>
-  <v-col class="col-4 px-1 mb-1 white--text">
+      <v-col class="col-4 px-1 mb-1 white--text">
         <div class="tomato pointer rounded elevation-10" @click="go">
           <div class="d-flex justify-center bold">
             {{title}}

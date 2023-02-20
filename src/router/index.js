@@ -351,6 +351,16 @@ const routes = [
     }
   },
   {
+    path: '/m/broker/:code',
+    name: 'ViewMyBroker',
+    component: () => import('../views/network/ViewMyBroker.vue'),
+    meta:{
+      middleware: [
+        auth, emailverified
+      ]
+    }
+  },
+  {
     path: '/Logs',
     name: 'Logs',
     component: () => import('../views/log/Logs.vue'),

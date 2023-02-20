@@ -4,12 +4,12 @@
         <v-row class="no-gutters">
             <v-col class="col-12 px-4 username d-flex justify-center primary-color-text">
                 {{network.code + ": " + upperCase(network.username)}}
-                <span class="ml-4">
-                    <span v-if="network.credential_verification">
-                        {{ "[verified]" }}
-                    </span>
+                
+                <span v-if="network.credential_verification">
+                  <v-icon class="rounded ml-4 white primary-color--text">
+                    mdi-check
+                  </v-icon>
                 </span>
-            
             </v-col>
             <v-col class="col-4 px-4">
                 <v-list-item-avatar

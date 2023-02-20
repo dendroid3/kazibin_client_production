@@ -112,7 +112,8 @@ export default {
       this.bidding = true
       const data = {
         bid_cost: bid_cost,
-        task_id: this.task.id
+        task_id: this.task.id,
+        broker_id: this.task.broker_id
       }
       this.createBid(data).then((res) => {
         this.bidding = false

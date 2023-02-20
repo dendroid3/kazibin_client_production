@@ -6,12 +6,16 @@
                     {{broker ? broker.code + ": " + upperCase(broker.username) : writer.code + ": " + upperCase(writer.username)}}
                     <span class="ml-4" v-if="writer">
                         <span v-if="writer.credential_verification">
-                            {{ "[verified]" }}
+                            <v-icon class="rounded ml-4 white primary-color--text">
+                                mdi-check
+                            </v-icon>
                         </span>
                     </span>
                     <span v-else class="ml-4">
                             <span v-if="broker.credential_verification">
-                                {{ "[verified]" }}
+                                <v-icon class="rounded ml-4 white primary-color--text">
+                                    mdi-check
+                                </v-icon>
                             </span>
                         </span>
                 </v-col>

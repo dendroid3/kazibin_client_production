@@ -11,7 +11,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="network in networks" :key="network.id" class="odd text-center gradeX pa-2 wrapper pointer" @click="getWriter(network)">
+                <tr v-for="network in networks" :key="network.id" class="odd text-center gradeX pa-2 wrapper pointer" @click="getNetwork(network)">
                     <td class="text-center">
                         <v-progress-circular
                         v-if="loading_writer"
@@ -35,7 +35,7 @@
                         </ul>
                     </td>
                     <td class="text-center">{{ network.tasks_done ? network.tasks_done : 0 }}</td>
-                    <td class="text-center"> <strong>{{ network.total_amount ? network.total_amount : 0 }}</strong></td>
+                    <td class="text-center"> <strong>{{ network.total_amount ? network.total_amount + ' KES': 0 }}</strong></td>
                     
                 </tr>
             </tbody>
@@ -75,13 +75,21 @@ export default {
     },
     
     methods: {
-        ...mapActions(['getMyWriter']),
-        getWriter(network){
+        ...mapActions(['setViewMyBrokerDetails', 'getMyBroker']),
+        getNetwork(network){
             this.loading_writer = true
 
-            this.getMyWriter(network).then((res) => {
+            if(this.network_option == 'writers'){
+                this.getMyWriter(network).then((res) => {
+                    this.loading_writer = false
+                })
+            } else if(this.network_option == 'brokers') {
+                this.setViewMyBrokerDetails(network)
+                this.$router.push('/m/broker/' + network.code)
+            } else {
                 this.loading_writer = false
-            })
+            }
+
        }
     },
 }

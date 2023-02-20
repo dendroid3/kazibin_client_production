@@ -27,9 +27,10 @@
         <v-list-item-content>
           <div class="d-flex align-center white--text text-h6" @click="goToProfile">
             {{user.username}} 
-            <v-spacer />
             <span v-if="user.credential_verification">
-              {{ "[verified]" }}
+              <v-icon class="rounded ml-4 white primary-color--text">
+                mdi-check
+              </v-icon>
             </span>
           </div>
           <div class="white--text text-h6" @click="goToProfile">

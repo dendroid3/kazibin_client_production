@@ -26,7 +26,6 @@
         </section>
 
         <section v-if="getMyWriters[0] && network_model === `writers`">
-          <!-- <network-strip :network_option="'writer'" /> -->
           <div v-if="!($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
             <network-strip :network_option="'writer'" :networks="getMyWriters"/>
           </div> 
@@ -35,14 +34,16 @@
           </div>
         </section>
 
-        <v-row class="padder" v-if="!getMyWriters[0] && !getMyBrokers[0]">
+        <v-row class="padder" v-if="(network_model === `writers` && !getMyWriters[0]) || (network_model === `brokers` && !getMyBrokers[0])">
             <div class="padded mb-4 d-flex justify-center">
                 <v-row class="no-gutters d-flex align-center">
                     <v-col class="col-12 col-md-6">
                       <emptyHere />
                     </v-col>
                     <v-col class="col-12 col-md-6">
-                        You are yet to build a network. Having brokers in your network allows them to offer you tasks directly without having to bid on them.
+                        You are yet to build a 
+                        {{ network_model === `writers`? ' writers ' : ' brokers ' }}
+                        network. Having brokers in your network allows them to offer you tasks directly without having to bid on them.
                         To have brokers on your network you have request them and them to accept. 
                         You may view the top brokers <span @click="go('Explore/Brokers')" class="blue--text bold-tiny">here</span>
                         If you are a broker, having writers on your network allows you to get your tasks done without having to display them to the public for bidding.
