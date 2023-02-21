@@ -12,7 +12,7 @@
         <section>
           <v-row class="no-gutters grey lighten-3 mt-2">
             <v-col class="col-4 px-1 mb-1 white--text">
-              <div class="tomato pointer rounded elevation-10" @click="alert">
+              <div class="tomato pointer rounded elevation-10">
                 <div class="d-flex justify-center bold">
                     {{'total'}}
                 </div>
@@ -25,7 +25,7 @@
             </v-col>
             
             <v-col class="col-4 px-1 mb-1 white--text">
-              <div class="tomato pointer rounded elevation-10" @click="alert">
+              <div class="tomato pointer rounded elevation-10">
                 <div class="d-flex justify-center bold">
                     {{'available'}}
                 </div>
@@ -38,7 +38,7 @@
             </v-col>
             
             <v-col class="col-4 px-1 mb-1 white--text">
-              <div class="tomato pointer rounded elevation-10" @click="alert">
+              <div class="tomato pointer rounded elevation-10">
                 <div class="d-flex justify-center bold">
                     {{'underway'}}
                 </div>
@@ -51,7 +51,7 @@
             </v-col>
 
             <v-col class="col-4 px-1 mb-1 white--text">
-              <div class="tomato pointer rounded elevation-10" @click="alert">
+              <div class="tomato pointer rounded elevation-10">
                 <div class="d-flex justify-center bold">
                     {{'complete'}}
                 </div>
@@ -64,7 +64,7 @@
             </v-col>
             
             <v-col class="col-4 px-1 mb-1 white--text">
-              <div class="tomato pointer rounded elevation-10" @click="alert">
+              <div class="tomato pointer rounded elevation-10">
                 <div class="d-flex justify-center bold">
                     {{'cancelled'}}
                 </div>
@@ -77,7 +77,7 @@
             </v-col>
             
             <v-col class="col-4 px-1 mb-1 white--text">
-              <div class="tomato pointer rounded elevation-10" @click="alert">
+              <div class="tomato pointer rounded elevation-10">
                 <div class="d-flex justify-center bold">
                     {{'paid'}}
                 </div>
@@ -100,7 +100,7 @@
                 <d-tasks-card :tasks="tasks" />
             </div>
             
-            <v-row class="d-flex justify-center mb-4" v-if="tasks_pagination_links.length > 3">
+            <!-- <v-row class="d-flex justify-center mb-4" v-if="tasks_pagination_links.length > 3">
               <v-col class="col-1 white--text mb-4 primary-color text-center" v-for="(link, i) in tasks_pagination_links" 
               :key="i" 
               :class="{
@@ -108,7 +108,6 @@
                   'grey': ((getViewMyWriterTasksPaginationDetails.current_page === getViewMyWriterTasksPaginationDetails.last_page) && link.next) ||
                           (getViewMyWriterTasksPaginationDetails.current_page === 1) && link.previous
                   }">
-                  <!-- @click="getTasksFromPage(link.url)"> -->
                   <span>
                   <span v-if="link.previous">
                   {{"<<"}}
@@ -121,7 +120,7 @@
                   </span>
                   </span>
               </v-col>
-            </v-row>
+            </v-row> -->
           </section> 
 
         </section>
@@ -146,15 +145,15 @@ export default {
     },
 
     computed: {
-      ...mapGetters(['getViewMyWriterDetails', 'getViewMyWriter']),
+      ...mapGetters(['getViewMyWriterDetails', 'getViewMyWriter', 'getViewMyWriterTasksPaginationDetails']),
 
       tasks(){
           let tasks = this.getViewMyWriterTasksPaginationDetails.data
           tasks.forEach(task => {
-              task.broker = {}
-              task.broker.user = {}
-              task.broker.user.code = this.getViewMyBrokerDetails.code
-              task.broker.user.username = this.getViewMyBrokerDetails.username
+              task.writer = {}
+              task.writer.user = {}
+              task.writer.user.code = this.getViewMyWriterDetails.code
+              task.writer.user.username = this.getViewMyWriterDetails.username
           });
           return tasks
       },
