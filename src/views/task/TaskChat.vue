@@ -37,10 +37,10 @@
                   </v-col>
                   <v-col class="d-flex justify-end col-4">
                     <span class="blue--text pointer" @click="closeMoreInfo" v-if="more_info_open">
-                      {{'more info'}}
+                      {{'close'}}
                     </span>
                     <span class="blue--text pointer" @click="openMoreInfo" v-if="!more_info_open">
-                      {{'close'}}
+                      {{ "more info" }}
                     </span>
                   </v-col>
                 </v-row>
@@ -428,7 +428,7 @@
         </v-btn>
         
         <v-btn 
-          v-if="getTaskChatHeader.status == 5 || getTaskChatHeader.status == 8"
+          v-if="getTaskChatHeader.status == 5 || getTaskChatHeader.status == 8 || getTaskChatHeader.status == 6"
           small 
           :disabled="getTaskChatViewInvoice"
           @click="openInvoiceView"
@@ -919,6 +919,7 @@ export default {
     .bottom-toolbar{
       padding-bottom: 5rem; 
       position: fixed; 
+      overflow-y: hidden;
       bottom: 0; 
       right: 0;
       width: 100%;
@@ -928,6 +929,7 @@ export default {
     .bottom-toolbar{
       padding-bottom: 5rem; 
       position: fixed; 
+      overflow-y: hidden;
       bottom: 0; 
       right: 0;
       width: 83.33%;
@@ -937,6 +939,7 @@ export default {
     .bottom-toolbar{
       padding-bottom: 5rem; 
       position: fixed; 
+      overflow-y: hidden;
       bottom: 0; 
       right: 0;
       width: 58.33%;

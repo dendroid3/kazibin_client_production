@@ -113,8 +113,6 @@ const actions = {
       axios.post('/liaison/get_my_broker', data)
       commit('SET_VIEW_MY_BROKER', response.data)
       commit('SET_MY_BROKER_TASKS_PAGINATION_DETAILS', response.data.data.tasks)
-      console.log('get_my_broker')
-      console.log(response)
       return true
     } catch (e) {
       if(e.response){

@@ -75,19 +75,24 @@ export default {
     },
     
     methods: {
-        ...mapActions(['setViewMyBrokerDetails', 'getMyBroker']),
+        ...mapActions(['setViewMyBrokerDetails', 'getMyBroker', 'setViewMyWriterDetails']),
         getNetwork(network){
             this.loading_writer = true
 
             if(this.network_option == 'writers'){
-                this.getMyWriter(network).then((res) => {
-                    this.loading_writer = false
-                })
+
+                this.setViewMyWriterDetails(network)
+                this.$router.push('/m/writer/' + network.code)
+
             } else if(this.network_option == 'brokers') {
+
                 this.setViewMyBrokerDetails(network)
                 this.$router.push('/m/broker/' + network.code)
+
             } else {
+
                 this.loading_writer = false
+
             }
 
        }

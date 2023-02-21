@@ -5,7 +5,10 @@ const state = {
   all_writers: null,
   view: null,
   my_writers: null,
-  writers_pagination_details: null
+  writers_pagination_details: null,
+  my_writer_details: {},
+  my_writer: null,
+  my_writer_tasks_pagination_details: {}
 }
 
 const getters = {
@@ -13,7 +16,9 @@ const getters = {
   getMyWriters: (state) => (state.my_writers),
   getViewWriter: (state) => (state.view),
   getWriterPaginationDetails: (state) => (state.writers_pagination_details),
-  getViewMyWriter: (state) => (state.my_writer)
+  getViewMyWriter: (state) => (state.my_writer),
+  getViewMyWriterDetails: (state) => (state.my_writer_details),
+  getViewMyWriterTasksPaginationDetails: (state) => (state.my_writer_tasks_pagination_details),
 
 }
 
@@ -69,19 +74,21 @@ const actions = {
     }
   },
 
-  async getMyWriter({commit,dispatch}, network){
+  
+  setViewMyWriterDetails({commit}, writer){
+    commit('SET_VIEW_MY_WRITER_DETAILS', writer)
+  },
+
+  async fetchMyWriter({commit,dispatch}, network){
     try {
       const data = {
         writer_id: network.writer_id
       }
       const response = await
       axios.post('/liaison/get_my_writer', data)
-      const my_writer = {
-        details: network,
-        data: response.data
-      }
-      commit('SET_VIEW_MY_WRITER', my_writer)
-      router.push('/m/writer/' + network.code)
+      commit('SET_VIEW_MY_WRITER', response.data)
+      commit('SET_MY_WRITER_TASKS_PAGINATION_DETAILS', response.data.data.tasks)
+      return true
       console.log(response)
     } catch (e) {
       if(e.response){
@@ -97,10 +104,14 @@ const mutations = {
   SET_ALL_WRITERS: (state, writers) => (state.all_writers = writers),
   SET_MY_WRITERS: (state, writers) => (state.my_writers = writers),
   SET_VIEW_MY_WRITER: (state, writer) => (state.my_writer = writer),
+  SET_MY_WRITER_TASKS_PAGINATION_DETAILS: (state, my_writer_tasks_pagination_details) => (state.my_writer_tasks_pagination_details = my_writer_tasks_pagination_details),
+
+
   SET_VIEW_WRITER: (state, writer) => (state.view = writer),
   SET_WRITERS_PAGINATION_DETAILS: (state, writers_pagination_details) => (
     state.writers_pagination_details = writers_pagination_details
-  )
+  ),
+  SET_VIEW_MY_WRITER_DETAILS: (state, my_writer_details) => (state.my_writer_details = my_writer_details)
 }
 
 export default {

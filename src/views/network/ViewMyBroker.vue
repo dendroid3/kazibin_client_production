@@ -142,7 +142,7 @@
                         <d-taken-card :tasks="tasks" />
                     </div>
                     
-                    <v-row class="d-flex justify-center mb-4">
+                    <v-row class="d-flex justify-center mb-4" v-if="tasks_pagination_links.length > 3">
                         <v-col class="col-1 white--text mb-4 primary-color text-center" v-for="(link, i) in tasks_pagination_links" 
                         :key="i" 
                         :class="{
@@ -361,7 +361,7 @@
                             <d-bids-card :bids="bids" />
                         </div>
 
-                        <v-row class="d-flex justify-center mb-4" v-if="bids[0]">
+                        <v-row class="d-flex justify-center mb-4" v-if="bids_pagination_links.length > 3">
                             <v-col class="col-1 white--text mb-4 primary-color text-center" v-for="(link, i) in bids_pagination_links" 
                             :key="i" 
                             :class="{
@@ -468,7 +468,7 @@
                             <d-invoice-card :invoices="invoices" :debited="true"/>
                         </div>
                         
-                        <v-row class="d-flex justify-center mb-4" v-if="bids[0]">
+                        <v-row class="d-flex justify-center mb-4" v-if="invoices_pagination_links.length > 3">
                             <v-col class="col-1 white--text mb-4 primary-color text-center" v-for="(link, i) in invoices_pagination_links" 
                             :key="i" 
                             :class="{

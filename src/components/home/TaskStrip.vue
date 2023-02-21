@@ -2,7 +2,7 @@
   <div class="grey lighten-3 wrapper pa-2 my-1 mx-2 rounded ">
     <section>
       <span class="head pointer" @click="goToView">
-        {{task.code}}
+        <!-- {{task.code}} -->
         {{': '}}
         {{task.topic}}  
       </span>

@@ -1,73 +1,195 @@
 <template>
     <div>
-        <v-toolbar 
-            class="pb-4"
-            text
-            :class="{
-                'full-width': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs,
-                'medium-width':  $vuetify.breakpoint.md,
-                'large-width':  $vuetify.breakpoint.lg,
-            }">
-            
-            <div class="d-flex bold pointer">
-                <v-toolbar-title>{{"Writer: " + getViewMyWriter.details.code + ": "}}</v-toolbar-title>
-                <v-toolbar-title class="ml-1">{{getViewMyWriter.details.username}}</v-toolbar-title>
-                <span v-if="getViewMyWriter.details.credential_verification">
-                  <v-icon class="rounded ml-4 white primary-color--text">
-                      mdi-check
-                  </v-icon>
-                </span>
-            </div>
-        </v-toolbar>
-        I am ViewMyWriter
+      <user-card :user="getViewMyWriterDetails"/>
+
+      <section>
+        <v-row class="d-flex grey lighten-2 px-2 py-4" >
+            <v-col class="col-7 primary-color-text title d-flex justify-start pointer"> 
+            {{'Mutual Tasks'}}
+            </v-col>
+        </v-row>
 
         <section>
-          <v-row class="d-flex justify-center mt-4">
-            <v-col class="col-1 white--text mt-4 primary-color text-center" v-for="(link, i) in pagination_links" 
-            :key="i" 
-            :class="{
-              'red': link.active,
-              'grey': ((getViewMyWriter.data.writer_tasks.current_page === getViewMyWriter.data.writer_tasks.last_page) && link.next) ||
-                      (getViewMyWriter.data.writer_tasks.current_page === 1) && link.previous
-              }" 
-            @click="goToPage(link.url)">
-              <span>
-                <span v-if="link.previous">
-                {{"<<"}}
-                </span>
-                <span v-if="!link.previous && !link.next">
-                  {{link.label}}
-                </span>
-                <span v-if="(link.next)">
-                  {{">>"}}
-                </span>
-              </span>
+          <v-row class="no-gutters grey lighten-3 mt-2">
+            <v-col class="col-4 px-1 mb-1 white--text">
+              <div class="tomato pointer rounded elevation-10" @click="alert">
+                <div class="d-flex justify-center bold">
+                    {{'total'}}
+                </div>
+                <v-divider inset class="red--text dark" dark/>
+                <div class="d-flex justify-end align-center px-1">
+                  <v-spacer />
+                  <span> {{getViewMyWriter.data.broker_writer_metrics['total']}} </span>
+                </div>
+              </div>
+            </v-col>
+            
+            <v-col class="col-4 px-1 mb-1 white--text">
+              <div class="tomato pointer rounded elevation-10" @click="alert">
+                <div class="d-flex justify-center bold">
+                    {{'available'}}
+                </div>
+                <v-divider inset class="red--text dark" dark/>
+                <div class="d-flex justify-end align-center px-1">
+                    <v-spacer />
+                    <span> {{getViewMyWriter.data.broker_writer_metrics['available']}} </span>
+                </div>
+                </div>
+            </v-col>
+            
+            <v-col class="col-4 px-1 mb-1 white--text">
+              <div class="tomato pointer rounded elevation-10" @click="alert">
+                <div class="d-flex justify-center bold">
+                    {{'underway'}}
+                </div>
+                <v-divider inset class="red--text dark" dark/>
+                <div class="d-flex justify-end align-center px-1">
+                    <v-spacer />
+                    <span> {{getViewMyWriter.data.broker_writer_metrics['underway']}} </span>
+                </div>
+                </div>
+            </v-col>
+
+            <v-col class="col-4 px-1 mb-1 white--text">
+              <div class="tomato pointer rounded elevation-10" @click="alert">
+                <div class="d-flex justify-center bold">
+                    {{'complete'}}
+                </div>
+                <v-divider inset class="red--text dark" dark/>
+                <div class="d-flex justify-end align-center px-1">
+                    <v-spacer />
+                    <span> {{getViewMyWriter.data.broker_writer_metrics['complete']}} </span>
+                </div>
+              </div>
+            </v-col>
+            
+            <v-col class="col-4 px-1 mb-1 white--text">
+              <div class="tomato pointer rounded elevation-10" @click="alert">
+                <div class="d-flex justify-center bold">
+                    {{'cancelled'}}
+                </div>
+                <v-divider inset class="red--text dark" dark/>
+                <div class="d-flex justify-end align-center px-1">
+                    <v-spacer />
+                    <span> {{getViewMyWriter.data.broker_writer_metrics['cancelled']}} </span>
+                </div>
+              </div>
+            </v-col>
+            
+            <v-col class="col-4 px-1 mb-1 white--text">
+              <div class="tomato pointer rounded elevation-10" @click="alert">
+                <div class="d-flex justify-center bold">
+                    {{'paid'}}
+                </div>
+                <v-divider inset class="red--text dark" dark/>
+                <div class="d-flex justify-end align-center px-1">
+                  <v-spacer />
+                  <span> {{getViewMyWriter.data.broker_writer_metrics['paid']}} </span>
+                </div>
+              </div>
             </v-col>
           </v-row>
+
+          
+          <section v-if="tasks[0]">
+            <div class="limiting_wrapper" v-if="!($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+                <tasks-strip v-for="(task, i) in tasks" :key="i" :task="task" />
+            </div>
+
+            <div v-if="($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+                <d-tasks-card :tasks="tasks" />
+            </div>
+            
+            <v-row class="d-flex justify-center mb-4" v-if="tasks_pagination_links.length > 3">
+              <v-col class="col-1 white--text mb-4 primary-color text-center" v-for="(link, i) in tasks_pagination_links" 
+              :key="i" 
+              :class="{
+                  'red': link.active,
+                  'grey': ((getViewMyWriterTasksPaginationDetails.current_page === getViewMyWriterTasksPaginationDetails.last_page) && link.next) ||
+                          (getViewMyWriterTasksPaginationDetails.current_page === 1) && link.previous
+                  }">
+                  <!-- @click="getTasksFromPage(link.url)"> -->
+                  <span>
+                  <span v-if="link.previous">
+                  {{"<<"}}
+                  </span>
+                  <span v-if="!link.previous && !link.next">
+                      {{link.label}}
+                  </span>
+                  <span v-if="(link.next)">
+                      {{">>"}}
+                  </span>
+                  </span>
+              </v-col>
+            </v-row>
+          </section> 
+
+        </section>
       </section>
+
+        I am ViewMyWriter
+
     </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import UserCard from '../../components/dashboard/UserCard.vue';
+import DTasksCard from '../../components/dashboard/desktop/DTasksCard.vue';
+import TasksStrip from '../../components/dashboard/TasksStrip.vue';
+
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
     name: 'ViewMyWriter',
 
+    components:{
+      UserCard, DTasksCard, TasksStrip
+    },
+
     computed: {
-        ...mapGetters(['getViewMyWriter']),
-        pagination_links(){
-            if(this.getViewMyWriter.data.writer_tasks) {
-            let links = []
-            this.getViewMyWriter.data.writer_tasks.links.forEach(link => {
-                link.previous = link.label == "&laquo; Previous"
-                link.next = link.label == "Next &raquo;"
-                links.push(link)
-            });
-            return links
-            }
-        },
+      ...mapGetters(['getViewMyWriterDetails', 'getViewMyWriter']),
+
+      tasks(){
+          let tasks = this.getViewMyWriterTasksPaginationDetails.data
+          tasks.forEach(task => {
+              task.broker = {}
+              task.broker.user = {}
+              task.broker.user.code = this.getViewMyBrokerDetails.code
+              task.broker.user.username = this.getViewMyBrokerDetails.username
+          });
+          return tasks
+      },
+
+      tasks_pagination_links(){
+          let links = []
+          this.getViewMyWriterTasksPaginationDetails.links.forEach(link => {
+          link.previous = link.label == "&laquo; Previous"
+          link.next = link.label == "Next &raquo;"
+          links.push(link)
+          });
+          return links
+      },
+    },
+
+    data: () => {
+      return {
+        fetching_tasks: true
+      }
+    },
+
+    methods:{
+      ...mapActions(['fetchMyWriter'])
+    },
+
+    created() {
+      this.fetchMyWriter(this.getViewMyWriterDetails).then((res) => {
+
+        this.fetching_tasks = false
+
+        console.log('this.getViewMyWriter')
+        console.log(this.getViewMyWriter)
+
+      })
+      console.log(this.getViewMyWriterDetails)
     }
 }
 </script>
-<style lang="">
-    
-</style>
