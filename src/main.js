@@ -27,12 +27,19 @@ window.Echo = new Echo({
   encrypted: true,
   forceTLS: true,
   disableStats: false,
+  wsHost: 'api.kazibin.com',
+  wsPort: ''
+
 
   //local setting
   // wsHost: '127.0.0.1',
   // wsPort: '6001',
   // enabledTransports: ['ws'],
-  // authEndpoint : 'http://localhost:8000/api/broadcasting/auth',
+  // authEndpoint : 'http://127.0.0.1:8000/api/broadcasting/auth',
+  // disableStats: false,
+  // forceTLS: false,
+
+
 
 });
 
