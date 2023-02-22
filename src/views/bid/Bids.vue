@@ -136,7 +136,7 @@
           </v-col>
         </v-row>
 
-        <fetching-items :message="`getting bids`"  v-if="pagination_links_set"/>
+        <fetching-items :message="`getting bids`"  v-if="!pagination_links_set"/>
 
     </div>
 </template>
