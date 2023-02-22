@@ -28,8 +28,7 @@ window.Echo = new Echo({
   forceTLS: true,
   disableStats: false,
   wsHost: 'api.kazibin.com',
-  wsPort: ''
-
+  wsPort: '',
 
   //local setting
   // wsHost: '127.0.0.1',
@@ -38,8 +37,6 @@ window.Echo = new Echo({
   // authEndpoint : 'http://127.0.0.1:8000/api/broadcasting/auth',
   // disableStats: false,
   // forceTLS: false,
-
-
 
 });
 
