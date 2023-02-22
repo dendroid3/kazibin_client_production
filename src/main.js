@@ -23,12 +23,14 @@ window.Echo = new Echo({
 
   // production setting
   authEndpoint : 'https://api.kazibin.com/api/broadcasting/auth',
-  enabledTransports: ['wss'],
+  enabledTransports: ['ws', 'wss'],
   encrypted: true,
-  forceTLS: true,
-  disableStats: false,
+  forceTLS: false,
+  disableStats: true,
   wsHost: 'api.kazibin.com',
   wsPort: '',
+  wssHost: 'api.kazibin.com',
+  wssPort: '',
 
   //local setting
   // wsHost: '127.0.0.1',
