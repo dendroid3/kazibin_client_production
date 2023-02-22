@@ -14,17 +14,6 @@ window.Echo = new Echo({
   secret: 'local',
   cluster:'mt1',
   
-  // wsHost: 'api.kazibin.adilirealestate.com',
-  // authEndpoint : 'https://api.kazibin.adilirealestate.com/api/broadcasting/auth',
-  
-  wsHost: '127.0.0.1',
-  wsPort: '6001',
-  authEndpoint : 'http://localhost:8000/api/broadcasting/auth',
-
-  
-  forceTLS: false,
-  disableStats: false,
-  
   auth: {
       headers: {
           Authorization: 'Bearer ' + store.state.auth.token,
@@ -32,11 +21,20 @@ window.Echo = new Echo({
       },
   },
 
-  enabledTransports: ['ws']
+  // production setting
+  authEndpoint : 'https://api.kazibin.com/api/broadcasting/auth',
+  enabledTransports: ['wss'],
+  encrypted: true,
+  forceTLS: true,
+  disableStats: false,
+
+  //local setting
+  // wsHost: '127.0.0.1',
+  // wsPort: '6001',
+  // enabledTransports: ['ws'],
+  // authEndpoint : 'http://localhost:8000/api/broadcasting/auth',
+
 });
-// wssPort: '',
-// encrypted: true,
-// enabledTransports: ['ws', 'wss']
 
 
 Vue.config.productionTip = false;
