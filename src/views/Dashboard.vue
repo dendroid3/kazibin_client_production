@@ -1,7 +1,7 @@
 <template>
   <div class="main-wrapper grey lighten-3">
     <user-card v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs" :user="getUser"/>
-    <!-- <transactions-belt class="px-3 my-4" v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs || $vuetify.breakpoint.md"/>
+    <transactions-belt class="px-3 my-4" v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs || $vuetify.breakpoint.md"/>
     <tabs-strip 
     v-if=" $vuetify.breakpoint.md || $vuetify.breakpoint.sm || $vuetify.breakpoint.xs"
     :posted_fetched="posted_fetched" 
@@ -13,7 +13,7 @@
     :chats_fetched="chats_fetched" 
     :requests_fetched="requests_fetched"
     :transactions_fetched="transactions_fetched"
-    /> -->
+    />
     <section v-if="
         getAllTasksPostedByMe && 
         getAllTasksDoneByMe &&

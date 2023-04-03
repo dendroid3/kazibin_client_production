@@ -1,5 +1,6 @@
 import axios from 'axios'
 import router from '../../../router'
+import Cookies from 'js-cookie'
 
 const state = {
   my_bids: null,
@@ -20,6 +21,13 @@ const getters = {
 const actions = {
   async createBid({dispatch, getters}, data){
     try{
+      if(Cookies.get('KAZIBIN_TOKEN')){
+        if(!JSON.parse(Cookies.get('KAZIBIN_TOKEN')).auth.token){
+          dispatch('openAlert', {message: 'You are logged out. You need to log in to perform this action, please log in.', code: 'error'}, {root: true})
+          router.push('/login')
+          return
+        }
+      }
       const balance = getters.getDashboadDetails.transactions.balance
 
       if(data.bid_cost > balance){

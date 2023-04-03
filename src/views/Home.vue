@@ -89,7 +89,8 @@ export default {
       fetched_tasks: false,
       fetched_writers: false,
       fetched_brokers: false,
-      counter: 8
+      counter: 8,
+      current_j: 0
     }
   },
   methods:{
@@ -102,12 +103,43 @@ export default {
       } catch(e){
       }
     },
+    alert(i, j, message){
+      switch (i) {
+        case 1:
+          window.alert("Sunday of week " + j + ". " + message)
+          break;
+        case 2:
+          window.alert("Monday of week " + j + ". " + message)
+          break;
+        case 3:
+          window.alert("Tuesday of week " + j + ". " + message)
+          break;
+        case 4:
+          window.alert("Wednesday of week " + j + ". " + message)
+          break;
+        case 5:
+          window.alert("Thursday of week " + j + ". " + message)
+          break;
+        case 6:
+          window.alert("Friday of week " + j + ". " + message)
+          break;
+      
+        default:
+          window.alert("Saturday of week " + j + ". " + message)
+          break;
+      }
+    },
     go(code){
       this.$router.push(code)
     }
   },
   mounted(){
     this.boot()
+    setInterval(() => {
+      if(this.current_j < 30){
+        this.current_j++
+      }
+    }, 60);
   }
 }
 </script>
@@ -116,5 +148,8 @@ export default {
     max-height: 75vh;
     overflow-y: auto;
     overflow-x: hidden;
+  }
+  .gb{
+    color: rgb(12, 93, 12);
   }
 </style>
