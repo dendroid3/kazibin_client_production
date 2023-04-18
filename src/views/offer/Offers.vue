@@ -1,6 +1,6 @@
 <template lang="">
     <div class="main-wrapper">
-        <v-row class="d-flex  align-center no-gutters">
+        <v-row class="d-flex grey lighten-2 align-center no-gutters">
             <v-col class="col-8 pl-4 backg"> tasks offered
             </v-col>
             <v-col class="col-4 d-flex align-center justify-end px-4">

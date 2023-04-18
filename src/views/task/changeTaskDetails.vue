@@ -53,8 +53,6 @@
                 v-model="valid"
                 :lazy-validation="lazy"
                 ref="form">
-                
-                <section v-if="task.pages">
                     <div>
                         <v-text-field 
                         clearable
@@ -78,14 +76,9 @@
                         required
                         > </v-text-field>  
                     </div>
-                    
                     <div class="mb-4 bold">
                         {{(page_cost && pages) ? 'Full Amount Payable: ' + page_cost * pages + ' KES': null}}
                     </div>
-
-                </section>
-                
-                
                 </v-form>
             </section>
 
@@ -147,7 +140,7 @@ import {mapActions} from 'vuex'
                 ){
                     if(
                         this.task.pages &&
-                        this.pages &&
+                        this.task.pages &&
                         this.page_cost
                     ){
                         return true
@@ -170,7 +163,7 @@ import {mapActions} from 'vuex'
         },
 
         methods: {
-            ...mapActions(['changeDeadline']),
+            ...mapActions(['changeDeadline', 'changePayment']),
             
             clearEntries(){
                 this.due_date = null
@@ -181,8 +174,8 @@ import {mapActions} from 'vuex'
 
             submit(){
                 this.loading = true
-                if(this.why_is_pop_up_open = 'extend_deadline'){
-                    const prompt_message = "You are about to change the deadline to " + this.due_time + " - " + this.due_refined + '\nProcced?'
+                if(this.why_is_pop_up_open == 'extend_deadline'){
+                    const prompt_message = "You are about to change the deadline to " + this.due_time + " - " + this.due_refined + ',\nProcced?'
                     if(!confirm(prompt_message)) {
                         this.loading = false
                         this.clearEntries()
@@ -196,13 +189,35 @@ import {mapActions} from 'vuex'
                         this.loading = false,
                         this.$emit('closePopUp')
                     })
-                }                
+                } else if(this.why_is_pop_up_open == 'change_payment'){
+                    if(this.task.pages){
+                        const prompt_message = "You are about to change the the payment terms to " + this.pages + " pages at " + this.page_cost + "KES. Totaling " 
+                        + (this.pages * this.page_cost) + "KES, \nProcced?'"
+                        if(!confirm(prompt_message)) {
+                            this.loading = false
+                            this.clearEntries()
+                            return
+                        }   
+                        const data = {
+                            pages: this.pages,
+                            page_cost: this.page_cost,
+                            task_id: this.task.id
+                        }
+                        this.changePayment(data).then((res) => {
+                            this.loading = false,
+                            this.$emit('closePopUp')
+                        })
+                        console.log(data);
+                    }
+                }
+
             },
             
         },
   
         created(){
             dayjs.extend(relativeTime)
+            console.log(this.task);
         }
 
     }

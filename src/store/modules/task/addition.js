@@ -178,11 +178,15 @@ const actions = {
       const response = await
       axios.post('create_task/change_deadline', data)
       dispatch('openAlert', {message: response.data.message, code: 'success'})
+      const task = getters.getTaskChatHeader
+      task.expiry_time = response.data.task.expiry_time
+      dispatch('setTaskChatHeader', task)
+
       if((router.history.current.name == "TaskChat")){
 
         if(getters.getTaskChatHeader.id == response.data.task_id){
           const messages_array = [...getters.getTaskMessages]
-          messages_array.push(response.data)
+          messages_array.push(response.data.message)
           dispatch('setTaskMessages', messages_array, { root: true })
         } 
   
@@ -198,17 +202,32 @@ const actions = {
     }
   },
   
-  async changePayment({commit, dispatch}, data){
+  async changePayment({dispatch, getters}, data){
     try{
       const response = await
-      dispatch('openAlert', {message: response.data.message, code: 'success'})
+      axios.post('create_task/change_payment', data)
+      console.log(response)
+      dispatch('openAlert', {message: response.data.message.message, code: 'success'})
+      const task = getters.getTaskChatHeader
+      task.pages = response.data.task.pages
+      task.page_cost = response.data.task.page_cost
+      task.full_pay = response.data.task.full_pay
+      dispatch('setTaskChatHeader', task)
+      if((router.history.current.name == "TaskChat")){
 
+        if(getters.getTaskChatHeader.id == response.data.task_id){
+          const messages_array = [...getters.getTaskMessages]
+          messages_array.push(response.data.message)
+          dispatch('setTaskMessages', messages_array, { root: true })
+        } 
+  
+      } 
       return false
     }catch(e){
       if(e.response){
-          dispatch('handleError', {error: e, error_code: e.response.status, action: 'stepThree'}, {root: true})
+          dispatch('handleError', {error: e, error_code: e.response.status, action: 'changePayment'}, {root: true})
       } else {
-          dispatch('handleError', {error: e, action: 'stepThree'}, {root: true})
+          dispatch('handleError', {error: e, action: 'changePayment'}, {root: true})
       }
       return false
     }

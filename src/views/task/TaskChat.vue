@@ -547,7 +547,7 @@
   v-on:closePopUp="popup_is_open = false" 
   v-if="popup_is_open" 
   :why_is_pop_up_open='why_is_pop_up_open'
-  :task_id=getTaskChatHeader.id
+  :task=getTaskChatHeader
   />
   
   <!-- <changeTaskDetails 
