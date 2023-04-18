@@ -542,12 +542,20 @@
   application/msword"
   ></v-file-input> 
 
+  
   <changeTaskDetails 
   v-on:closePopUp="popup_is_open = false" 
   v-if="popup_is_open" 
-  :why_is_pop_up_open=why_is_pop_up_open
+  :why_is_pop_up_open='why_is_pop_up_open'
   :task_id=getTaskChatHeader.id
   />
+  
+  <!-- <changeTaskDetails 
+  v-on:closePopUp="popup_is_open = false" 
+  v-if="1==1" 
+  :why_is_pop_up_open='`change_payment`'
+  :task=getTaskChatHeader
+  /> -->
 
 </div>
 </template>

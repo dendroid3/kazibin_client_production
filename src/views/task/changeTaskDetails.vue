@@ -48,6 +48,47 @@
                 </div>
             </section>
 
+            <section v-if="why_is_pop_up_open == 'change_payment'">
+                <v-form class="mt-4 px-4"
+                v-model="valid"
+                :lazy-validation="lazy"
+                ref="form">
+                
+                <section v-if="task.pages">
+                    <div>
+                        <v-text-field 
+                        clearable
+                        :placeholder="task.pages"
+                        outlined
+                        type="number"
+                        v-model="pages"
+                        :label="`number of pages`"
+                        required
+                        > </v-text-field>  
+                    </div>
+                    <div>
+                        <v-text-field 
+                        v-if="task.pages"
+                        clearable
+                        outlined
+                        :placeholder="task.page_cost"
+                        type="number"
+                        v-model="page_cost"
+                        :label="`Amount Per Page`"
+                        required
+                        > </v-text-field>  
+                    </div>
+                    
+                    <div class="mb-4 bold">
+                        {{(page_cost && pages) ? 'Full Amount Payable: ' + page_cost * pages + ' KES': null}}
+                    </div>
+
+                </section>
+                
+                
+                </v-form>
+            </section>
+
             <div class="d-flex justify-end">
                 <v-btn 
                 class="success"
@@ -71,7 +112,7 @@ import {mapActions} from 'vuex'
         name: 'changeTaskDetails',
 
         props: [
-            'why_is_pop_up_open', 'task_id'
+            'why_is_pop_up_open', 'task'
         ],
 
         computed:{
@@ -101,6 +142,17 @@ import {mapActions} from 'vuex'
                 ){
                     return true
                 }
+                if(
+                    this.why_is_pop_up_open == 'change_payment'
+                ){
+                    if(
+                        this.task.pages &&
+                        this.pages &&
+                        this.page_cost
+                    ){
+                        return true
+                    }
+                }
                 return false
             }
         },
@@ -109,7 +161,11 @@ import {mapActions} from 'vuex'
             return {
                 due_date: null,
                 due_time: null,
-                loading: false
+                pages: null,
+                page_cost: null,
+
+                loading: false,
+                valid: false
             }
         },
 
@@ -119,6 +175,8 @@ import {mapActions} from 'vuex'
             clearEntries(){
                 this.due_date = null
                 this.due_time = null
+                this.pages = null
+                this.page_cost = null
             },
 
             submit(){
@@ -132,7 +190,7 @@ import {mapActions} from 'vuex'
                     }
                     const data = {
                         expiry_time: this.due_date + ' ' + this.due_time,
-                        task_id: this.task_id
+                        task_id: this.task.id
                     }
                     this.changeDeadline(data).then((res) => {
                         this.loading = false,

@@ -7,6 +7,12 @@
         <v-icon class="mx-2" @click="go('Task/Add')">
           mdi-plus  
         </v-icon>
+        <v-icon class="mx-2" v-if="!is_options_open" @click="is_options_open = true">
+          mdi-arrow-down  
+        </v-icon>
+        <v-icon class="mx-2" v-if="is_options_open" @click="is_options_open = false">
+          mdi-arrow-up  
+        </v-icon>
         <!-- <v-icon class="mx-2">
           mdi-magnify  
         </v-icon> -->
@@ -34,7 +40,7 @@
         </v-menu> -->
       </v-col>
     </v-row>
-    <div class="pa-1">
+    <div class="pa-1" v-if="is_options_open">
       
       <v-row class="pa-2 bold no-gutters">
         <v-col class="mb-1 col-4 px-1">
@@ -205,7 +211,6 @@
       </div>
     </v-row>
 
-
     <v-row class="d-flex justify-center mt-4" v-if="pagination_links_set && getAllTasksPostedByMe[0]">
       <v-col class="col-1 white--text mt-4 primary-color text-center" v-for="(link, i) in pagination_links" 
       :key="i" 
@@ -306,6 +311,7 @@ export default {
     return {
       filter_model: 'all',
       pagination_links_set: false,
+      is_options_open: false
     }
   },
   methods:{

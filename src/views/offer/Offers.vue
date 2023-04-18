@@ -4,7 +4,13 @@
             <v-col class="col-8 pl-4 backg"> tasks offered
             </v-col>
             <v-col class="col-4 d-flex align-center justify-end px-4">
-                <!-- <v-icon class="mx-2" @click="go('Explore/Task')">
+              <v-icon class="mx-2" v-if="!is_options_open" @click="is_options_open = true">
+                  mdi-arrow-down  
+                </v-icon>
+                <v-icon class="mx-2" v-if="is_options_open" @click="is_options_open = false">
+                  mdi-arrow-up  
+                </v-icon> 
+              <!-- <v-icon class="mx-2" @click="go('Explore/Task')">
                     mdi-plus  
                 </v-icon> -->
                 <!-- <v-icon class="mx-2">
@@ -34,7 +40,7 @@
                 </v-menu> -->
             </v-col>
         </v-row> 
-        <v-row class="pa-2 bold no-gutters mb-4 ">
+        <v-row class="pa-2 bold no-gutters mb-4" v-if="is_options_open">
             <v-col class="col-4 pa-1">
                 <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(null)" :class="{
                   'yellow--text': !filter_model
@@ -196,7 +202,8 @@ export default {
     data(){
       return {
         filter_model: null,
-        pagination_links_set: true
+        pagination_links_set: true,
+        is_options_open: false
       }
     },
 

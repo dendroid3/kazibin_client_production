@@ -196,7 +196,23 @@ const actions = {
       }
       return false
     }
-  }
+  },
+  
+  async changePayment({commit, dispatch}, data){
+    try{
+      const response = await
+      dispatch('openAlert', {message: response.data.message, code: 'success'})
+
+      return false
+    }catch(e){
+      if(e.response){
+          dispatch('handleError', {error: e, error_code: e.response.status, action: 'stepThree'}, {root: true})
+      } else {
+          dispatch('handleError', {error: e, action: 'stepThree'}, {root: true})
+      }
+      return false
+    }
+  },
 }
 
 const mutations = {
