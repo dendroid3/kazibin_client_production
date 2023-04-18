@@ -27,7 +27,7 @@
       <v-row class="pa-2 bold no-gutters">
         <v-col class="mb-1 col-4 px-1">
           <div class="tomato white--text rounded elevation-1 pointer  elevation-10" @click="filterModel(1)" :class="{
-            'redtext': filter_model == 1
+            'yellow--text': filter_model == 1
           }">
               <div class="d-flex justify-center bold" >
                 {{'pending'}}
@@ -41,23 +41,8 @@
           </div>
         </v-col>
         <v-col class="mb-1 col-4 px-1">
-          <div class="tomato white--text rounded elevation-1 pointer elevation-10" @click="filterModel(2)" :class="{
-            'purpletext': filter_model == 2
-          }">
-              <div class="d-flex justify-center bold" >
-                {{'paid (u)'}}
-              </div>
-              <v-divider inset/>
-              <div class="d-flex justify-end align-center px-1">
-                <span>
-                  {{invoice_model == 'credited' ? getDashboadDetails.invoices.credited.unconfirmed : getDashboadDetails.invoices.debited.unconfirmed }}
-                </span>
-              </div>
-          </div>
-        </v-col>
-        <v-col class="mb-1 col-4 px-1">
           <div class="tomato white--text rounded elevation-1 pointer elevation-10" @click="filterModel(3)" :class="{
-            'greentext': filter_model == 3
+            'yellow--text': filter_model == 3
           }">
               <div class="d-flex justify-center bold" >
                 {{'paid'}}
@@ -66,6 +51,19 @@
               <div class="d-flex justify-end align-center px-1">
                 <span>
                   {{invoice_model == 'credited' ? getDashboadDetails.invoices.credited.paid : getDashboadDetails.invoices.debited.paid }}
+                </span>
+              </div>
+          </div>
+        </v-col>
+        <v-col class="mb-1 col-4 px-1">
+          <div class="grey grey--text rounded elevation-1 pointer elevation-10"">
+              <div class="d-flex justify-center bold" >
+                {{'paid'}}
+              </div>
+              <v-divider inset/>
+              <div class="d-flex justify-end align-center px-1">
+                <span>
+                  {{invoice_model == 'credited' ? getDashboadDetails.invoices.credited.unconfirmed : getDashboadDetails.invoices.debited.unconfirmed }}
                 </span>
               </div>
           </div>

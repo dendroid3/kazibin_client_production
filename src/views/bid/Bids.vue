@@ -13,8 +13,10 @@
         <v-row class="pa-2 bold no-gutters">
             <v-col class="col-4 pa-1">
                 <div class="tomato white--text  rounded elevation-1 pointer" @click="filterModel(null)">
-                    <div class="d-flex justify-center bold">
-                        all
+                    <div class="d-flex justify-center bold":class="{
+                      'yellow--text': !filter_model
+                    }">
+                        all bids
                     </div>
                     <v-divider inset/>
                     <div class="d-flex justify-end align-center px-1">
@@ -24,7 +26,7 @@
             </v-col>
             <v-col class="col-4 pa-1">
                 <div class="tomato white--text  rounded elevation-1 pointer" @click="filterModel(1)" :class="{
-                  'red--text': filter_model == 1
+                  'yellow--text': filter_model == 1
                 }">
                     <div class="d-flex justify-center bold">
                         pending
@@ -37,7 +39,7 @@
             </v-col>
             <v-col class="col-4 pa-1">
                 <div class="tomato white--text rounded elevation-1 pointer"  @click="filterModel(4)" :class="{
-                  'green--text': filter_model == 4
+                  'yellow--text': filter_model == 4
                 }">
                     <div class="d-flex justify-center bold">
                         won
@@ -51,7 +53,7 @@
             
             <v-col class="col-4 pa-1">
                 <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(3)" :class="{
-                  'red--text': filter_model == 3
+                  'yellow--text': filter_model == 3
                 }">
                     <div class="d-flex justify-center bold">
                         lost
@@ -65,7 +67,7 @@
 
             <v-col class="col-4 pa-1">
                 <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(2)" :class="{
-                  'red--text': filter_model == 2
+                  'yellow--text': filter_model == 2
                 }">
                     <div class="d-flex justify-center bold">
                         pulled
