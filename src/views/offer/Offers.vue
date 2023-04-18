@@ -125,7 +125,7 @@
           <d-offers-card :offers="getMyOffers"/>
         </section>
 
-      <v-row class="padder" v-if="!getMyOffers[0]">
+      <v-row class="padder" v-if="!getMyOffers[0] && pagination_links_set">
         <div class="padded mb-4 d-flex justify-center">
           <v-row class="no-gutters d-flex align-center">
             <v-col class="col-12 col-md-6">
@@ -164,16 +164,7 @@
           </v-col>
         </v-row>
         
-        <v-row class="no-gutters" v-if="!pagination_links_set">
-          <v-col class="col-4 offset-4">
-            <v-progress-linear
-              indeterminate
-              rounded
-              color="blue darken-2"
-              height="5"
-            ></v-progress-linear>
-          </v-col>
-        </v-row>  
+        <fetching-items :message="`getting offers`"  v-if="!pagination_links_set"/>
     </div>
 </template>
 <script>
@@ -181,10 +172,12 @@ import { mapActions, mapGetters } from 'vuex';
 import OffersStrip from '../../components/dashboard/OffersStrip.vue';
 import EmptyHere from '../../components/widgets/EmptyHere.vue';
 import DOffersCard from '../../components/dashboard/desktop/DOffersCard.vue';
+import FetchingItems from '../../components/widgets/FetchingItems.vue';
+
 export default {
     name: 'Offers',
     components:{
-        OffersStrip, EmptyHere, DOffersCard
+        OffersStrip, EmptyHere, DOffersCard, FetchingItems
     },
 
     computed:{
