@@ -34,14 +34,16 @@ const actions = {
       window.Echo.private('private_notification_' + store.state.auth.user.id)
       .listen(event, (e) => {
         if(event == 'BidMessageSent' || event == 'OfferMessageSent' || event == 'TaskMessageSent'){
-          let second_stub = e.message.type == 'text' ? 
-          e.message.message : 
-          '{file}'
-          const alert_message = e.system_message + second_stub
-    
+          let second_stub = e.message.type == 'text' 
+          ? e.message.message 
+          :'{file}'
+          const alert_message = e.system_message +"\n\n" + second_stub + "\n\n"
+          console.log(e)
           const notification_details = {
             message: alert_message,
-            title: e.title
+            title: e.title,
+            id: e.id,
+            type: event
           }
           dispatch('notify', notification_details, { root: true })
         } else if(event == 'OfferMade' || event == 'OfferAccepted' || event == 'OfferRejected' || event == 'OfferCancelled') {
@@ -67,10 +69,13 @@ const actions = {
       Notification.requestPermission( permission => {
         let notification = new Notification(notification_details.title, {
           body: notification_details.message, 
-          icon: "https://api.kazibin.adilirealestate.com/icon.svg"
+          icon: "http://localhost:8000/icon.svg",
+          requireInteraction: true
         });
         notification.onclick = () => {
-          window.open(process.env.VUE_APP_FRONT_END_URL);
+          if(notification_details.type = 'TaskMessageSent'){
+            window.open(process.env.VUE_APP_FRONT_END_URL + '/t/' + notification_details.id);
+          }
         };
       })
     }

@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-fy">
+    <div>
         <div style=" padding-top: 6rem; z-index: 1;">
             <iframe :src="download_url" frameborder="0" class="d-none" v-for="(download_url, i) in download_urls" ::key="i"></iframe>
             <!-- <div class="transparent transparent--text bottom" id="bottom">kazibin</div> -->

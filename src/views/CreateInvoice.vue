@@ -42,7 +42,7 @@
             </v-form>
         </div>
 
-        <v-row class="padder" v-if="(to_writer && (writers_names.length < 1)) || (to_broker && (brokers_names.length < 1))">
+        <v-row class="padder d-flex justify-center" v-if="(to_writer && (writers_names.length < 1)) || (to_broker && (brokers_names.length < 1))">
             <div class="padded mb-4">
                 <v-row class="no-gutters d-flex align-center">
                     <v-col class="col-12 col-md-6">

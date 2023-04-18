@@ -39,7 +39,7 @@
         </span>
 
         <span class="red--text" v-if="offer.status == 2">
-          {{"Offer Canceled"}}
+          {{"Offer cancelled"}}
         </span>
 
         <span class="red--text" v-if="offer.status == 3">

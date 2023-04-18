@@ -171,6 +171,31 @@ const actions = {
   },
   flashAdditionResponses({commit}){
     commit('FLASH_RESPONSES')
+  },
+
+  async changeDeadline({dispatch, getters}, data){
+    try{
+      const response = await
+      axios.post('create_task/change_deadline', data)
+      dispatch('openAlert', {message: response.data.message, code: 'success'})
+      if((router.history.current.name == "TaskChat")){
+
+        if(getters.getTaskChatHeader.id == response.data.task_id){
+          const messages_array = [...getters.getTaskMessages]
+          messages_array.push(response.data)
+          dispatch('setTaskMessages', messages_array, { root: true })
+        } 
+  
+      } 
+      return false
+    }catch(e){
+      if(e.response){
+          dispatch('handleError', {error: e, error_code: e.response.status, action: 'changeDeadline'}, {root: true})
+      } else {
+          dispatch('handleError', {error: e, action: 'changeDeadline'}, {root: true})
+      }
+      return false
+    }
   }
 }
 

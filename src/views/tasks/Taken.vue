@@ -38,8 +38,11 @@
       <v-row class="pa-2 bold no-gutters">
         <v-col class="mb-1 col-4 px-1">
           <div class="tomato white--text rounded elevation-1 pointer"  @click="filterModel(null)">
-              <div class="d-flex justify-center bold">
-                all
+              <div class="d-flex justify-center bold"
+              :class="{
+              'yellow--text': !filter_model
+            }">
+                all taken
               </div>
               <v-divider inset/>
               <div class="d-flex justify-end align-center px-1 ">
@@ -51,7 +54,7 @@
         <v-col class="mb-1 col-4 px-1">
           <div class="tomato white--text rounded elevation-1 pointer"  @click="filterModel(2)"
           :class="{
-              'red--text': filter_model == 2
+              'yellow--text': filter_model == 2
             }">
               <div class="d-flex justify-center bold">
                 underway
@@ -66,14 +69,29 @@
         <v-col class="mb-1 col-4 px-1" >
           <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(3)"
             :class="{
-              'green--text': filter_model == 3
+              'yellow--text': filter_model == 3
             }">
               <div class="d-flex justify-center bold">
-                completed
+                complete / editing
               </div>
               <v-divider inset/>
               <div class="d-flex justify-end align-center px-1">
                 <span> {{getDashboadDetails.taken.taken_completed}} </span>
+              </div>
+          </div>
+        </v-col>
+
+        <v-col class="mb-1 col-4 px-1">
+          <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(8)"
+            :class="{
+              'yellow--text': filter_model == 8
+            }">
+              <div class="d-flex justify-center bold">
+                revision
+              </div>
+              <v-divider inset/>
+              <div class="d-flex justify-end align-center px-1">
+                <span> {{getDashboadDetails.taken.taken_revision}} </span>
               </div>
           </div>
         </v-col>
@@ -94,7 +112,10 @@
         </v-col>
 
         <v-col class="mb-1 col-4 px-1">
-          <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(5)">
+          <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(5)"
+            :class="{
+              'yellow--text': filter_model == 5
+            }">
               <div class="d-flex justify-center bold">
                 invoiced
               </div>
@@ -108,7 +129,7 @@
         <v-col class="mb-1 col-4 px-1">
           <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(6)"
             :class="{
-              orangeredtext: filter_model == 6
+              'yellow--text': filter_model == 6
             }">
               <div class="d-flex justify-center bold">
                 paid
@@ -116,6 +137,33 @@
               <v-divider inset/>
               <div class="d-flex justify-end align-center px-1">
                 <span> {{getDashboadDetails.taken.taken_paid}} </span>
+              </div>
+          </div>
+        </v-col>
+
+        <v-col class="mb-1 col-4 px-1">
+          <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(7)"
+            :class="{
+              'yellow--text': filter_model == 7
+            }">
+              <div class="d-flex justify-center bold">
+                disputed
+              </div>
+              <v-divider inset/>
+              <div class="d-flex justify-end align-center px-1">
+                <span> {{getDashboadDetails.taken.taken_disputed}} </span>
+              </div>
+          </div>
+        </v-col>
+
+        <v-col class="mb-1 col-4 px-1">
+          <div class="grey grey--text rounded elevation-1 pointer">
+              <div class="d-flex justify-center bold">
+                0
+              </div>
+              <v-divider inset/>
+              <div class="d-flex justify-end align-center px-1">
+                <span>  c</span>
               </div>
           </div>
         </v-col>
@@ -160,7 +208,15 @@
             <span @click="go('Explore/Task')" class="blue--text bold-tiny">here</span> 
           </v-col>
           <v-col class="col-12 col-md-6 text-center" v-else-if="filter_model == 4">
-            You have no canceled tasks at the moment. You may learn about the tasks workflow process
+            You have no cancelled tasks at the moment. You may learn about the tasks workflow process
+            <span @click="go('Explore/Task')" class="blue--text bold-tiny">here</span> 
+          </v-col>
+          <v-col class="col-12 col-md-6 text-center" v-else-if="filter_model == 8">
+            You have no tasks in revision at the moment. You may learn about the tasks workflow process
+            <span @click="go('Explore/Task')" class="blue--text bold-tiny">here</span> 
+          </v-col>
+          <v-col class="col-12 col-md-6 text-center" v-else-if="filter_model == 7">
+            You have no disputed tasks at the moment. You may learn about the tasks workflow process
             <span @click="go('Explore/Task')" class="blue--text bold-tiny">here</span> 
           </v-col>
           <v-col class="col-12 col-md-6 text-center" v-else-if="filter_model == 5">

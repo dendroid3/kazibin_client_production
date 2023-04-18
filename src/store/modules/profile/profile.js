@@ -17,6 +17,7 @@ const actions = {
         try{
             const response = await
             axios.get('/profile/get_dashboard_details')
+            console.log(response)
             commit('SET_DASHBOARD_DETAILS', response.data[0])
         } catch(e){
             if(e.response){

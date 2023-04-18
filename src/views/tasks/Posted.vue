@@ -39,8 +39,11 @@
       <v-row class="pa-2 bold no-gutters">
         <v-col class="mb-1 col-4 px-1">
         <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel('all')">
-              <div class="d-flex justify-center bold" >
-                posted
+              <div class="d-flex justify-center bold" 
+              :class="{
+                'yellow--text': !filter_model
+              }">
+                all posted
               </div>
               <v-divider inset/>
               <div class="d-flex justify-end align-center px-1">
@@ -52,7 +55,7 @@
         <v-col class="mb-1 col-4 px-1">
         <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(1)" 
             :class="{
-              redtext: filter_model == 1
+              'yellow--text': filter_model == 1
             }">
               <div class="d-flex justify-center bold">
                 unassigned
@@ -67,7 +70,7 @@
         <v-col class="mb-1 col-4 px-1">
         <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(2)"
             :class="{
-              purpletext: filter_model == 2
+              'yellow--text': filter_model == 2
             }">
               <div class="d-flex justify-center bold">
                 underway
@@ -82,10 +85,10 @@
         <v-col class="mb-1 col-4 px-1">
         <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(3)"
             :class="{
-              greentext: filter_model == 3
+              'yellow--text': filter_model == 3
             }">
               <div class="d-flex justify-center bold">
-                completed
+                complete / editing
               </div>
               <v-divider inset/>
               <div class="d-flex justify-end align-center px-1">
@@ -95,8 +98,22 @@
         </v-col>
 
         <v-col class="mb-1 col-4 px-1">
+        <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(8)" :class="{
+              'yellow--text': filter_model == 8
+            }">
+              <div class="d-flex justify-center bold">
+                revision
+              </div>
+              <v-divider inset/>
+              <div class="d-flex justify-end align-center px-1">
+                <span> {{getDashboadDetails.posted.posted_revision}} </span>
+              </div>
+          </div>
+        </v-col>
+
+        <v-col class="mb-1 col-4 px-1">
         <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(4)" :class="{
-              'yellow--text': filter_model == 3
+              'yellow--text': filter_model == 4
             }">
               <div class="d-flex justify-center bold">
                 cancelled
@@ -109,9 +126,23 @@
         </v-col>
 
         <v-col class="mb-1 col-4 px-1">
+        <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(5)" :class="{
+              'yellow--text': filter_model == 5
+            }">
+              <div class="d-flex justify-center bold">
+                invoiced
+              </div>
+              <v-divider inset/>
+              <div class="d-flex justify-end align-center px-1">
+                <span> {{getDashboadDetails.posted.posted_invoiced}} </span>
+              </div>
+          </div>
+        </v-col>
+
+        <v-col class="mb-1 col-4 px-1">
         <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(6)"
             :class="{
-              orangeredtext: filter_model == 6
+              'yellow--text': filter_model == 6
             }">
               <div class="d-flex justify-center bold">
                 paid
@@ -119,6 +150,22 @@
               <v-divider inset/>
               <div class="d-flex justify-end align-center px-1">
                 <span> {{getDashboadDetails.posted.posted_paid}} </span>
+              </div>
+          </div>
+        </v-col>
+
+        
+        <v-col class="mb-1 col-4 px-1">
+        <div class="tomato white--text rounded elevation-1 pointer" @click="filterModel(7)"
+            :class="{
+              'yellow--text': filter_model == 7
+            }">
+              <div class="d-flex justify-center bold">
+                disputed
+              </div>
+              <v-divider inset/>
+              <div class="d-flex justify-end align-center px-1">
+                <span> {{getDashboadDetails.posted.posted_diputed}} </span>
               </div>
           </div>
         </v-col>
@@ -243,7 +290,7 @@ export default {
         case code = 3:
           return 'complete'
         case code = 4:
-          return 'canceled'
+          return 'cancelled'
         case code = 5:
           return 'invoiced'
         case code = 8:

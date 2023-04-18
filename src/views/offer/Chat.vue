@@ -307,7 +307,7 @@
         mdi-alert
       </v-icon>
       <span v-if="getOfferChatHeader.status == 2">
-        {{"Conversation closed. Offer Canceled."}}
+        {{"Conversation closed. Offer cancelled."}}
       </span>
       <span v-if="getOfferChatHeader.status == 3">
         {{"Conversation closed. Offer Rejected."}}

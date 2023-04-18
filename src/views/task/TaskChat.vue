@@ -10,7 +10,59 @@
     }"
     >
         <div style="width:100%;">
-          <v-toolbar-title class="ml-1">{{getTaskChatHeader.code + ": " + getTaskChatHeader.topic}} </v-toolbar-title> 
+          <v-toolbar-title class="ml-1 d-flex">
+            {{getTaskChatHeader.code + ": " + getTaskChatHeader.topic}} 
+            <v-spacer />
+          <v-menu 
+            transition="slide-y-transition"
+            bottom
+            open-on-hover>
+            <template v-slot:activator="{ on, attrs }">
+            <v-icon 
+            class="mr-1 "
+            v-bind="attrs"
+            v-on="on">
+                mdi-dots-vertical
+            </v-icon>
+            </template>
+            <v-list v-if="!getTaskChatHeader.broker">
+                <v-list-item
+                v-if="
+                  getTaskChatHeader.status != 4 &&
+                  getTaskChatHeader.status != 5 &&
+                  getTaskChatHeader.status != 6 &&
+                  getTaskChatHeader.status != 7
+                "
+                @click="openPopUp('extend_deadline')"
+                class="pointer">
+                  extend deadline
+                </v-list-item>
+                <v-list-item
+                v-if="
+                  getTaskChatHeader.status != 4 &&
+                  getTaskChatHeader.status != 5 &&
+                  getTaskChatHeader.status != 6 &&
+                  getTaskChatHeader.status != 7
+                "
+                @click="openPopUp('change_payment')"
+                class="pointer">
+                  adjust payment
+                </v-list-item>
+                <v-list-item
+                @click="openPopUp('change_payment')"
+                class="pointer">
+                  report writer
+                </v-list-item>
+            </v-list>
+            <v-list v-else>
+                <v-list-item
+                @click="openPopUp('change_payment')"
+                class="pointer">
+                  report broker
+                </v-list-item>
+            </v-list>
+          </v-menu>
+          </v-toolbar-title> 
           <section v-if="getTaskChatHeader.status < 2">
             <v-toolbar-title>
               <v-row class="no-gutters ml-1 ">
@@ -231,7 +283,8 @@
           <div>
             You have no bid yet for this job. Get some leads by sharing the link to your network. Or offer it to some writers on your network.
             <div class="d-flex justify-center mb-2">
-              <v-btn class="green submit-button white--text" small>
+              <v-btn class="green submit-button white--text" small
+              @click="copy">
                 copy link
               </v-btn>
             </div>
@@ -488,9 +541,13 @@
   application/vnd.openxmlformats-officedocument.wordprocessingml.document,
   application/msword"
   ></v-file-input> 
-  <!-- <div class="transparent transparent--text bottom" id="bottom">
-    <a href="#bottom" id="bottom_button"></a>
-  </div> -->
+
+  <changeTaskDetails 
+  v-on:closePopUp="popup_is_open = false" 
+  v-if="popup_is_open" 
+  :why_is_pop_up_open=why_is_pop_up_open
+  :task_id=getTaskChatHeader.id
+  />
 
 </div>
 </template>
@@ -504,8 +561,9 @@ import ViewInvoice from './ViewInvoice.vue'
 import ChatBox from '../../components/ChatBox.vue'
 import DBidsTable from './DBidsTable.vue'
 import DOffersCard from '../../components/dashboard/desktop/DOffersCard.vue'
+import changeTaskDetails from './changeTaskDetails.vue'
 export default {
-  components: { EmptyHere, CreateInvoice, ViewInvoice, ChatBox,DBidsTable, DOffersCard },
+  components: { EmptyHere, CreateInvoice, ViewInvoice, ChatBox,DBidsTable, DOffersCard, changeTaskDetails },
   name: "TaskChat",
   filters:{
        
@@ -554,7 +612,7 @@ export default {
           break;
           
         case 4:
-          return 'canceled'
+          return 'cancelled'
           break;
 
         case 5:
@@ -566,7 +624,7 @@ export default {
           break;
 
         case 7:
-          return 'canceled (pending)'
+          return 'cancelled (pending)'
           break;
 
         case 8:
@@ -670,7 +728,9 @@ export default {
       deleting: false,
       formdata: null,
       rating: null,
-      review: ''
+      review: '',
+      popup_is_open: false,
+      why_is_pop_up_open: null
     }
   },
   methods:{
@@ -737,6 +797,7 @@ export default {
       this.more_info_open = true
       this.goTop()
     },
+
     closeMoreInfo(){
       this.more_info_open = false
       this.goBottom()
@@ -887,7 +948,27 @@ export default {
         this.stepSix(data).then((res) => {
           this.loading = res
         })
+    },
+
+    copy(){
+      navigator.clipboard.writeText(process.env.VUE_APP_FRONT_END_URL + "/t/" + this.getTaskChatHeader.code);
+      alert("Link copied")
+    },
+
+    openPopUp(to_do_what){
+      switch (to_do_what) {
+        case 'extend_deadline':
+          this.why_is_pop_up_open = "extend_deadline"
+          break;
+      
+        default:
+          this.why_is_pop_up_open = "change_payment"
+          break;
       }
+      console.log(to_do_what)
+      this.popup_is_open = true
+    }
+
   },
   created(){
     dayjs.extend(relativeTime)
