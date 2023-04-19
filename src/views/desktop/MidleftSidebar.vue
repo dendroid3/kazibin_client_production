@@ -10,8 +10,8 @@
         :invoices_fetched="true" 
         :chats_fetched="true" 
         />
+        <title-strip :title="`timeline`" :page="'/Logs'" />
         <section class="limiting_wrapper" v-if="getLogMessages[0]">
-            <title-strip :title="`timeline`" :page="'/Logs'" />
             <div class="limiting_wrapper">
                 <logs-strip :Logs="getLogMessages"/>
             </div>
@@ -37,7 +37,7 @@ export default {
 <style lang="css" scoped>
   .limiting_wrapper{
     max-height: 70vh;
-    overflow-y: scroll;
+    overflow-y: scrollp;
     overflow-x: hidden;
   }
   .mid-left-bar{

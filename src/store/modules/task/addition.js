@@ -177,7 +177,13 @@ const actions = {
     try{
       const response = await
       axios.post('create_task/change_deadline', data)
-      dispatch('openAlert', {message: response.data.message, code: 'success'})
+      console.log(response.data)
+      
+      if(data.status > 1){
+        dispatch('openAlert', {message: response.data.message.message, code: 'success'})
+      } else {
+        dispatch('openAlert', {message: response.data.message, code: 'success'})
+      }
       const task = getters.getTaskChatHeader
       task.expiry_time = response.data.task.expiry_time
       dispatch('setTaskChatHeader', task)
@@ -206,8 +212,11 @@ const actions = {
     try{
       const response = await
       axios.post('create_task/change_payment', data)
-      console.log(response)
-      dispatch('openAlert', {message: response.data.message.message, code: 'success'})
+      if(data.status > 1){
+        dispatch('openAlert', {message: response.data.message.message, code: 'success'})
+      } else {
+        dispatch('openAlert', {message: response.data.message, code: 'success'})
+      }
       const task = getters.getTaskChatHeader
       task.pages = response.data.task.pages
       task.page_cost = response.data.task.page_cost

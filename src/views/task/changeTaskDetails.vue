@@ -55,6 +55,7 @@
                 ref="form">
                     <div>
                         <v-text-field 
+                        v-if="task.pages"
                         clearable
                         :placeholder="task.pages"
                         outlined
@@ -73,6 +74,18 @@
                         type="number"
                         v-model="page_cost"
                         :label="`Amount Per Page`"
+                        required
+                        > </v-text-field>  
+                    </div>
+                    <div>
+                        <v-text-field 
+                        v-if="!task.pages"
+                        clearable
+                        outlined
+                        :placeholder="task.full_pay"
+                        type="number"
+                        v-model="full_pay"
+                        :label="`Full Amount`"
                         required
                         > </v-text-field>  
                     </div>
@@ -144,6 +157,8 @@ import {mapActions} from 'vuex'
                         this.page_cost
                     ){
                         return true
+                    } else if(this.full_pay){
+                        return true
                     }
                 }
                 return false
@@ -156,6 +171,7 @@ import {mapActions} from 'vuex'
                 due_time: null,
                 pages: null,
                 page_cost: null,
+                full_pay: null,
 
                 loading: false,
                 valid: false
@@ -185,30 +201,43 @@ import {mapActions} from 'vuex'
                         expiry_time: this.due_date + ' ' + this.due_time,
                         task_id: this.task.id
                     }
-                    this.changeDeadline(data).then((res) => {
+                    this.changeDeadline(data).then(() => {
                         this.loading = false,
                         this.$emit('closePopUp')
                     })
                 } else if(this.why_is_pop_up_open == 'change_payment'){
+                    let data;
+                    let prompt_message;
                     if(this.task.pages){
-                        const prompt_message = "You are about to change the the payment terms to " + this.pages + " pages at " + this.page_cost + "KES. Totaling " 
-                        + (this.pages * this.page_cost) + "KES, \nProcced?'"
-                        if(!confirm(prompt_message)) {
-                            this.loading = false
-                            this.clearEntries()
-                            return
-                        }   
-                        const data = {
+                        prompt_message = "You are about to change the the payment terms to " + this.pages + " pages at " + this.page_cost + "KES. Totaling " 
+                        + (this.pages * this.page_cost) + "KES, \nProcced?"
+                        
+                        data = {
+                            status: this.getTaskChatHeader.status,
                             pages: this.pages,
                             page_cost: this.page_cost,
                             task_id: this.task.id
                         }
-                        this.changePayment(data).then((res) => {
-                            this.loading = false,
-                            this.$emit('closePopUp')
-                        })
-                        console.log(data);
+                    } else {
+                        prompt_message = "You are about to change the the payment terms to " + this.full_pay + " KES for the whole task, "
+                        + "\nProcced?"
+                        
+                        data = {
+                            status: this.getTaskChatHeader.status,
+                            full_pay: this.full_pay,
+                            task_id: this.task.id
+                        }
+
                     }
+                    if(!confirm(prompt_message)) {
+                        this.loading = false
+                        this.clearEntries()
+                        return
+                    }  
+                    this.changePayment(data).then(() => {
+                        this.loading = false,
+                        this.$emit('closePopUp')
+                    })
                 }
 
             },

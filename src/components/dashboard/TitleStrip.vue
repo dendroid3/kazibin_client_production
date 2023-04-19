@@ -7,9 +7,6 @@
       <v-icon class="mr-4" v-if="add_url" @click="goAdd()">
         mdi-plus
       </v-icon>
-      <!-- <v-icon>
-        mdi-arrow-right
-      </v-icon> -->
     </v-col>
   </v-row>
 </template>
