@@ -3,9 +3,6 @@
     <v-row class="no-gutters d-flex align-center">
       <v-col class="col-12 d-flex justify-center">
         <h3 class="ml-2 active">ABOUT </h3>
-        <v-btn @click="tofaqs">
-          FAQ
-        </v-btn>
       </v-col>
     </v-row>
     <div class="container d-flex justify-center">
@@ -35,7 +32,7 @@
     </div>
     <div class="d-flex justify-center">
       <h3 class="bold active" id="faqs">
-        WHAT PEOPLE SAY ABOUT US
+        OUR NUMBERS
       </h3>
     </div>
     <div class="d-flex justify-center" style="font-size: 3rem;">

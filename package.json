@@ -1,6 +1,6 @@
 {
   "name": "kazibin",
-  "version": "2023.04.17",
+  "version": "2023.04.23",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
