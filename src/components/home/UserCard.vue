@@ -34,11 +34,11 @@ export default {
     view(){
       if(this.broker){
         this.setViewBroker(this.user)
-        this.$router.push('/Broker/' + this.user.code)
+        this.$router.push('/broker/' + this.user.code)
       } else {
         // alert("writer" +this.user.code)
         this.setViewWriter(this.user)
-        this.$router.push('/Writer/' + this.user.code)
+        this.$router.push('/writer/' + this.user.code)
       }
     }
   }

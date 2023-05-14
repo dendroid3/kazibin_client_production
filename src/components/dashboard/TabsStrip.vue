@@ -18,7 +18,7 @@
       <content-tab
         v-show="is_open"
         :title="`posted`"
-        :url="`Tasks/Posted`"
+        :url="`tasks/posted`"
         :count="getDashboadDetails.posted.posted_all"
         :loading="!posted_fetched"
       />
@@ -26,7 +26,7 @@
       <content-tab
         v-show="is_open"
         :title="`taken`"
-        :url="`Tasks/Taken`"
+        :url="`tasks/taken`"
         :count="getDashboadDetails.taken.taken_all"
         :loading="!taken_fetched"
       />
@@ -34,7 +34,7 @@
       <content-tab
         v-show="is_open"
         :title="`offers`"
-        :url="`Offers`"
+        :url="`offers`"
         :count="getDashboadDetails.offers.offers_all"
         :loading="!offers_fetched"
       />
@@ -42,7 +42,7 @@
       <content-tab
         v-show="is_open"
         :title="`bids`"
-        :url="`Bids`"
+        :url="`bids`"
         :count="getDashboadDetails.bids.bids_all"
         :loading="!bids_fetched"
         :isGreen="getDashboadDetails.bids.bids_is_green"
@@ -51,7 +51,7 @@
       <content-tab
         v-show="is_open"
         :title="`network`"
-        :url="`Network`"
+        :url="`network`"
         :count="getDashboadDetails.network_count"
         :loading="!liaisons_fetched"
       />
@@ -59,7 +59,7 @@
       <content-tab
         v-show="is_open"
         :title="`requests`"
-        :url="`Requests`"
+        :url="`requests`"
         :count="getDashboadDetails.requests_count"
         :loading="!invoices_fetched"
       />
@@ -67,7 +67,7 @@
       <content-tab
         v-show="is_open"
         :title="`invoices`"
-        :url="`Invoices`"
+        :url="`invoices`"
         :count="getDashboadDetails.invoices.invoices_count"
         :loading="!invoices_fetched"
       />

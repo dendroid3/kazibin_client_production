@@ -31,33 +31,33 @@
                     </v-list-item-avatar>
                 </div>
                  -->
-                <v-list-item class="short-line-under" dark @click="goToSection('Verify')" v-if="!getUser.credential_verification">
+                <v-list-item class="short-line-under" dark @click="goToSection('verify')" v-if="!getUser.credential_verification">
                 {{'Verify AC'}}
                 </v-list-item>
-                <v-list-item class="short-line-under" dark @click="goToSection('MyProfile')">
+                <v-list-item class="short-line-under" dark @click="goToSection('myProfile')">
                 {{'Profile'}}
                 </v-list-item>
-                <v-list-item class="short-line-under" dark @click="goToSection('Dashboard')">
+                <v-list-item class="short-line-under" dark @click="goToSection('dashboard')">
                 {{'Dashboard'}}
                 </v-list-item>
                 
-                <v-list-item class="short-line-under" dark @click="goToSection('Task/Add')">
+                <v-list-item class="short-line-under" dark @click="goToSection('task/add')">
                 {{'Post '}}
                 </v-list-item>
                 
-                <v-list-item class="short-line-under" dark @click="goToSection('Explore/Task')">
+                <v-list-item class="short-line-under" dark @click="goToSection('explore/task')">
                 {{'Available'}}
                 </v-list-item>
                 
-                <v-list-item class="short-line-under" dark @click="goToSection('Explore/Writers')">
+                <v-list-item class="short-line-under" dark @click="goToSection('explore/writers')">
                 {{'Writers'}}
                 </v-list-item>
                 
-                <v-list-item class="short-line-under" dark @click="goToSection('explore/Brokers')">
+                <v-list-item class="short-line-under" dark @click="goToSection('explore/brokers')">
                 {{'Brokers'}}
                 </v-list-item>
                 
-                <v-list-item class="short-line-under" dark @click="goToSection('About')">
+                <v-list-item class="short-line-under" dark @click="goToSection('about')">
                 {{'About Us'}}
                 </v-list-item>
                 
