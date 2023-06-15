@@ -679,7 +679,6 @@ export default {
     },
 
     mounted(){
-        console.log(this.getViewMyBroker);
     }
 }
 </script>

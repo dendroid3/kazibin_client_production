@@ -8,7 +8,10 @@ const state = {
   writers_pagination_details: null,
   my_writer_details: {},
   my_writer: null,
-  my_writer_tasks_pagination_details: {}
+  my_writer_tasks_pagination_details: {},
+  my_writer_offers: null,
+  my_writer_bids: null,
+  my_writer_invoices: null
 }
 
 const getters = {
@@ -19,7 +22,9 @@ const getters = {
   getViewMyWriter: (state) => (state.my_writer),
   getViewMyWriterDetails: (state) => (state.my_writer_details),
   getViewMyWriterTasksPaginationDetails: (state) => (state.my_writer_tasks_pagination_details),
-
+  getViewMyWriterOffers: (state) => (state.my_writer_offers),
+  getViewMyWriterBids: (state) => (state.my_writer_bids),
+  getViewMyWriterInvoices: (state) => (state.my_writer_invoices)
 }
 
 const actions = {
@@ -74,7 +79,6 @@ const actions = {
     }
   },
 
-  
   setViewMyWriterDetails({commit}, writer){
     commit('SET_VIEW_MY_WRITER_DETAILS', writer)
   },
@@ -89,7 +93,6 @@ const actions = {
       commit('SET_VIEW_MY_WRITER', response.data)
       commit('SET_MY_WRITER_TASKS_PAGINATION_DETAILS', response.data.data.tasks)
       return true
-      console.log(response)
     } catch (e) {
       if(e.response){
         dispatch('handleError', {error: e, error_code: e.response.status, action: 'getMyWriter'}, {root: true})
@@ -97,7 +100,63 @@ const actions = {
         dispatch('handleError', {error: e, action: 'getMyWriter'}, {root: true})
       }
     }
-  }
+  },
+
+  async fetchMyWriterOffers({commit,dispatch}, network){
+    try {
+      const data = {
+        writer_id: network.writer_id
+      }
+      const response = await
+      axios.post('/liaison/get_my_writer_offers', data)
+      commit('SET_VIEW_MY_WRITER_OFFERS', response.data)
+      console.log(response)
+
+      return response
+    } catch (e) {
+      if(e.response){
+        dispatch('handleError', {error: e, error_code: e.response.status, action: 'fetchMyWriterOffers'}, {root: true})
+      } else {
+        dispatch('handleError', {error: e, action: 'fetchMyWriterOffers'}, {root: true})
+      }
+    }
+  },
+
+  async fetchMyWriterBids({commit,dispatch}, network){
+    try {
+      const data = {
+        writer_id: network.writer_id
+      }
+      const response = await
+      axios.post('/liaison/get_my_writer_bids', data)
+      commit('SET_VIEW_MY_WRITKER_BIDS', response.data)
+      return response
+    } catch (e) {
+      if(e.response){
+        dispatch('handleError', {error: e, error_code: e.response.status, action: 'fetchMyWriterBids'}, {root: true})
+      } else {
+        dispatch('handleError', {error: e, action: 'fetchMyWriterBids'}, {root: true})
+      }
+    }
+  },
+
+  async fetchMyWriterInvoices({commit,dispatch}, network){
+    try {
+      const data = {
+        broker_id: network.broker_id
+      }
+      const response = await
+      axios.post('/liaison/get_my_writer_invoices', data)
+      commit('SET_VIEW_MY_WRITER_INVOICES', response.data)
+      return response
+    } catch (e) {
+      if(e.response){
+        dispatch('handleError', {error: e, error_code: e.response.status, action: 'fetchMyWriterInvoices'}, {root: true})
+      } else {
+        dispatch('handleError', {error: e, action: 'fetchMyWriterInvoices'}, {root: true})
+      }
+    }
+  },
 }
 
 const mutations = {
@@ -111,7 +170,10 @@ const mutations = {
   SET_WRITERS_PAGINATION_DETAILS: (state, writers_pagination_details) => (
     state.writers_pagination_details = writers_pagination_details
   ),
-  SET_VIEW_MY_WRITER_DETAILS: (state, my_writer_details) => (state.my_writer_details = my_writer_details)
+  SET_VIEW_MY_WRITER_DETAILS: (state, my_writer_details) => (state.my_writer_details = my_writer_details),
+  SET_VIEW_MY_WRITER_OFFERS: (state, my_writer_offers) => (state.my_writer_offers = my_writer_offers),
+  SET_VIEW_MY_WRITKER_BIDS: (state, my_writer_bids) => (state.my_writer_bids = my_writer_bids),
+  SET_VIEW_MY_WRITER_INVOICES: (state, my_writer_invoices) => (state.my_writer_invoices = my_writer_invoices)
 }
 
 export default {
