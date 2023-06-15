@@ -167,7 +167,18 @@
                 </section> 
 
                 <section v-else>
-                    Empty here
+                    <div class="padded ma-4">
+                        <v-row class="no-gutters d-flex align-center">
+                            <v-col class="col-12 col-md-6">
+                                <emptyHere />
+                            </v-col>
+                            <v-col class="col-md-6 col-12">
+                                You do not have any mutual tasks with 
+                                {{ getViewMyBrokerDetails.username }}
+                                Tasks that you have done belonging to this broker will appear here. 
+                            </v-col>
+                        </v-row>
+                    </div>
                 </section>
   
             </section>
@@ -265,6 +276,22 @@
                         </v-col>
                     </v-row>
                 </section>
+                <section v-if="getViewMyBrokerOffers.data.offers.data[0]">
+
+                </section>
+                <section v-else>
+                    <div class="padded ma-4">
+                        <v-row class="no-gutters d-flex align-center">
+                            <v-col class="col-12 col-md-6">
+                                <emptyHere />
+                            </v-col>
+                            <v-col class="col-md-6 col-12">
+                                {{ getViewMyBrokerDetails.username }}
+                                has never offered you any task. If they do, then they will appear here.
+                            </v-col>
+                        </v-row>
+                    </div>
+                </section>
             </section>
             
             <!-- bids section -->
@@ -352,7 +379,7 @@
                             </div>
                         </v-col>
                     </v-row>
-                    <section v-if="bids">
+                    <section v-if="bids[0]">
                         <div class="limiting_wrapper"  v-if="bids[0]  && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
                             <bids-strip v-for="(bid, i) in bids" :key="i" :bid="bid" />
                         </div>
@@ -383,6 +410,20 @@
                                 </span>
                             </v-col>
                         </v-row>
+                    </section>
+                    <section v-else>
+                        <div class="padded ma-4">
+                            <v-row class="no-gutters d-flex align-center">
+                                <v-col class="col-12 col-md-6">
+                                    <emptyHere />
+                                </v-col>
+                                <v-col class="col-md-6 col-12">
+                                    You have never bid on any of
+                                    {{ getViewMyBrokerDetails.username + "'" }}
+                                    s tasks. Those bids will apper here once you do.
+                                </v-col>
+                            </v-row>
+                        </div>
                     </section>
                 </section>
             </section>
@@ -491,6 +532,20 @@
                             </v-col>
                         </v-row>
                     </section>
+                    <section v-else>
+                        <div class="padded ma-4">
+                            <v-row class="no-gutters d-flex align-center">
+                                <v-col class="col-12 col-md-6">
+                                    <emptyHere />
+                                </v-col>
+                                <v-col class="col-md-6 col-12">
+                                    You have no invoice where 
+                                    {{ getViewMyBrokerDetails.username }}
+                                    is the broker. These invoices will appear here once they are created.
+                                </v-col>
+                            </v-row>
+                        </div>
+                    </section>
                 </section>
             </section>
             
@@ -511,11 +566,13 @@ import DBidsCard from '../../components/dashboard/desktop/DBidsCard.vue';
 import InvoiceStrip from '../../components/dashboard/InvoiceStrip.vue';
 import DInvoiceCard from '../../components/dashboard/desktop/DInvoiceCard.vue';
 
+import emptyHere from '../../components/svg/emptyHere.vue'
+
 export default {
     name: 'ViewMyBroker',
 
     components:{
-        UserCard, FetchingItems, DTakenCard, TasksStrip, BidsStrip, DBidsCard, InvoiceStrip, DInvoiceCard
+        UserCard, FetchingItems, DTakenCard, TasksStrip, BidsStrip, DBidsCard, InvoiceStrip, DInvoiceCard, emptyHere
     },
 
     computed:{
@@ -626,3 +683,12 @@ export default {
     }
 }
 </script>
+<style scoped>
+ .padded{
+    background-color: rgb(228, 227, 227);
+    /* background-color: red; */
+    padding: 0.1rem 0.1rem;
+    font-size: 0.8rem;
+    border-radius: 0.5rem;
+  }
+</style>

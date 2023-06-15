@@ -7,15 +7,14 @@
         </span>
       </v-col>
     </v-row>
-    <div class="d-flex justify-center pb-4">
-      <v-form class="mt-4 mx-2 mb-4 pb-4"
-     
+    <p class="backg heading d-flex justify-center">
+      Create An Account
+    </p>
+    <div class="d-flex justify-center pb-4 mb-4">
+      <v-form class="mt-1 mx-2 pb-4 form"
       v-model="valid"
       :lazy-validation="lazy"
       ref="form">
-        <p class="backg d-flex justify-center heading">
-          Create An Account
-        </p>
         <div class="mx-2 px-4">
           <v-text-field 
           hint="The username is intended just for the eyes only. It is not neccessary that is unique to you. Kazibin shall assign you a unique code that shall be your identifier on 
@@ -191,5 +190,18 @@ export default {
   .main-wrapper{
     padding-bottom: 5rem;
     align-items: center;
+    height: calc(100vh - 50px);
+    overflow-y: hidden;
   }
+ @media only screen and (min-width: 960px) {
+    .form{
+      max-width: 20vw;
+      height: 75vh;
+      overflow-y: auto;
+    }
+}
+
+.form{
+  margin-bottom: 100rem;
+}
 </style>
