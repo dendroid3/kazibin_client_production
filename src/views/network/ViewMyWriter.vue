@@ -227,7 +227,13 @@
               </v-col>
           </v-row>
           <section v-if="getViewMyWriterOffers.data.offers.data[0]">
+            <div class="limiting_wrapper" v-if="!($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+              <offers-strip v-for="(offer, i) in getViewMyWriterOffers.data.offers.data" :key="i" :offer="offer" />
+            </div>
 
+            <div class="limiting_wrapper" v-if="($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+              <d-offers-card :offers="getViewMyWriterOffers.data.offers.data"/>
+            </div>
           </section>
           <section v-else>
               <div class="padded ma-4">
@@ -372,12 +378,6 @@
                       <v-spacer />
                       <span> {{getViewMyWriterInvoices.data.broker_writer_invoices['total']}} </span>
                   </div>
-                  <v-progress-linear
-                      indeterminate
-                      rounded
-                      color="rgb(15,14,56)"
-                      height="3"
-                  ></v-progress-linear>
                   </div>
               </v-col>
 
@@ -391,12 +391,6 @@
                       <v-spacer />
                       <span> {{getViewMyWriterInvoices.data.broker_writer_invoices['pending']}} </span>
                   </div>
-                  <v-progress-linear
-                      indeterminate
-                      rounded
-                      color="rgb(15,14,56)"
-                      height="3"
-                  ></v-progress-linear>
                   </div>
               </v-col>
               
@@ -410,12 +404,6 @@
                       <v-spacer />
                       <span> {{getViewMyWriterInvoices.data.broker_writer_invoices['paid']}} </span>
                   </div>
-                  <v-progress-linear
-                      indeterminate
-                      rounded
-                      color="rgb(15,14,56)"
-                      height="3"
-                  ></v-progress-linear>
                   </div>
               </v-col>
           </v-row>
@@ -447,6 +435,9 @@ import DTasksCard from '../../components/dashboard/desktop/DTasksCard.vue';
 import TasksStrip from '../../components/dashboard/TasksStrip.vue';
 import emptyHere from '../../components/svg/emptyHere.vue';
 import FetchingItems from '../../components/widgets/FetchingItems.vue';
+import OffersStrip from '../../components/dashboard/OffersStrip.vue';
+import DOffersCard from '../../components/dashboard/desktop/DOffersCard.vue'
+
 
 import { mapActions, mapGetters } from 'vuex'
 
@@ -454,7 +445,7 @@ export default {
     name: 'ViewMyWriter',
 
     components:{
-      UserCard, DTasksCard, TasksStrip, emptyHere, FetchingItems
+      UserCard, DTasksCard, TasksStrip, emptyHere, FetchingItems, DOffersCard, OffersStrip
     },
 
     computed: {
