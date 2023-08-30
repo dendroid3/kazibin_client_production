@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-4" style="height: calc(100vh - 50px);">
+  <div class="pa-4">
     <v-row class="no-gutters">
       <v-col class="col-12 pa-4 d-flex justify-center">
         <span @click="go('/')">
@@ -10,45 +10,60 @@
     <p class="backg d-flex justify-center heading">
       Verify Email
     </p>
-    <v-card
-    class="mx-auto primary-color"
-    height="350"
-    outlined
-  >
-    <v-list-item three-line>
-      <v-list-item-content>
-        <div class="text-overline mb-4 --text">
-          <v-icon large>
-            mdi-mail
-          </v-icon>
-          <h1 class="text-center">
-            You've got mail!
-          </h1>
-        </div>
-        <h5 class="--text text-center">{{'Email sent to '}}{{getUser.email}} {{'. Access it to go ahead with this process'}}</h5>
-      </v-list-item-content>
+    <v-row class="no-gutters">
+      <v-col class="col-12 col-md-4"
+      :class="{
+        'offset-4': ($vuetify.breakpoint.lg || $vuetify.breakpoint.md || $vuetify.breakpoint.xl)
+      }">
+        <v-card
+          class="mx-auto primary-color elevation-2"
+          outlined
+        >
+          <v-list-item three-line>
+            <v-list-item-content>
+              <span>
+                Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? 
+                If you didn't receive the email, we will gladly send you another.
+              </span>
+            </v-list-item-content>
 
-    </v-list-item>
+          </v-list-item>
 
-    <v-card-actions class="d-flex justify-space-between">
-      <v-btn
-        @click="isAlreadyVerified"
-        :disabled="checking_if_verified"
-        class="blue white--text"
-        small
-      >
-        {{checking_if_verified ? 'checking' : 'Already verified'}}
-      </v-btn>
-      <v-btn
-        @click="resend"
-        class="red white--text"
-        small
-        :loading="resending"
-      >
-        Resend Email
-      </v-btn>
-    </v-card-actions>
-  </v-card>
+          <v-card-actions class="d-flex justify-space-between">
+            <v-row class="no-gutters">
+              <v-col class="col-9">
+                <v-btn
+                  @click="resend"
+                  :loading="resending"
+                  class="blue white--text"
+                  small
+                  block
+                >
+              {{checking_if_verified ? 'resending' : 'Resend Email'}}
+            </v-btn>
+              </v-col>
+              <v-col class="col-3 d-flex justify-end">
+                <!-- <a
+                
+              @click="isAlreadyVerified"
+              :disabled="checking_if_verified"
+                  class="mx-1"
+                >
+                  Resend Email
+                </a> -->
+                <a
+                  class="mx-1"
+                  @click="resend"
+                  :loading="resending"
+                >
+                  Log Out
+                </a>
+              </v-col>
+            </v-row>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
   </div>
 </template>
 <script>
