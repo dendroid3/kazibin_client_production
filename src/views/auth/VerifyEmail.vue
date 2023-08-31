@@ -26,8 +26,6 @@ export default {
     },
 
     mounted(){
-        let email_verification = this.$router.history.current.params.email_verification
-
         const data = {
             email_verification: this.$router.history.current.params.email_verification
         }

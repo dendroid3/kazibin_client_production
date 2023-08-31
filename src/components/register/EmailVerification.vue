@@ -31,7 +31,7 @@
 
           <v-card-actions class="d-flex justify-space-between">
             <v-row class="no-gutters">
-              <v-col class="col-9">
+              <v-col class="col-8">
                 <v-btn
                   @click="resend"
                   :loading="resending"
@@ -42,22 +42,35 @@
               {{checking_if_verified ? 'resending' : 'Resend Email'}}
             </v-btn>
               </v-col>
-              <v-col class="col-3 d-flex justify-end">
-                <!-- <a
-                
-              @click="isAlreadyVerified"
-              :disabled="checking_if_verified"
-                  class="mx-1"
-                >
-                  Resend Email
-                </a> -->
-                <a
-                  class="mx-1"
-                  @click="resend"
-                  :loading="resending"
-                >
-                  Log Out
-                </a>
+              <v-col class="col-4 d-flex justify-end">
+                <v-row class="no-gutters">
+                  <v-col class="col-6 d-flex justify-center align-center">
+                    <a
+                      class="mx-1"
+                      @click="isAlreadyVerified"
+                      v-if="!checking_if_verified"
+                    >
+                      Verified
+                    </a>
+                    <v-progress-circular
+                        v-if="checking_if_verified"
+                        :size="15"
+                        :width="2"
+                        color="primary"
+                        indeterminate
+                    >
+                    </v-progress-circular>
+                  </v-col>
+                  <v-col class="col-6 d-flex justify-center align-center">
+                    <a
+                    class="mx-1"
+                    @click="resend"
+                    :loading="resending"
+                  >
+                    Log Out
+                  </a>
+                  </v-col>
+                </v-row>
               </v-col>
             </v-row>
           </v-card-actions>
