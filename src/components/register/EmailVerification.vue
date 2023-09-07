@@ -39,7 +39,7 @@
                   small
                   block
                 >
-              {{checking_if_verified ? 'resending' : 'Resend Email'}}
+              {{resending ? 'resending' : 'Resend Email'}}
             </v-btn>
               </v-col>
               <v-col class="col-4 d-flex justify-end">

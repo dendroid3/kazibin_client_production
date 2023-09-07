@@ -98,7 +98,7 @@
       </v-col>
     </v-row>
     <v-row class="d-flex justify-center mt-4 n-gutters" v-if="pagination_links_set && getAllTasksAvailableForBidding[0] && pagination_links.length > 3">
-      <v-col class="col-1 white--text mt-4 primary-color text-center" v-for="(link, i) in pagination_links" 
+      <v-col class="col-1 white--text mt-4 primary-color text-center pointer" v-for="(link, i) in pagination_links" 
       :key="i" 
       :class="{
         'red': link.active,
