@@ -92,6 +92,51 @@
                     </v-row>
 
                     <v-row class="d-flex mx-4 no-gutters bold">
+                        <v-col class="col-2">
+                            {{"Deadline: " }}
+                        </v-col>
+                        <v-col class="col-10 d-flex align-center">
+                        {{getTaskForBidding.expiry_time | diffForHumans}}
+                        </v-col>
+                        </v-row>
+
+                        <v-row class="d-flex mx-4 no-gutters bold" v-if="getTaskForBidding.page_cost">
+                        <v-col class="col-2">
+                            {{"Pages: " }}
+                        </v-col>
+                        <v-col class="col-10">
+                        {{page_count}}
+                        </v-col>
+                    </v-row>
+
+                    <v-row class="d-flex mx-4 no-gutters bold" v-if="getTaskForBidding.page_cost">
+                        <v-col class="col-2">
+                            {{"CPP: " }}
+                        </v-col>
+                        <v-col class="col-10">
+                            {{"KES " + getTaskForBidding.page_cost}}
+                        </v-col>
+                    </v-row>
+
+                    <v-row class="d-flex mx-4 no-gutters bold">
+                        <v-col class="col-2">
+                            {{"Full pay: " }}
+                        </v-col>
+                        <v-col class="col-10">
+                            {{"KES " + getTaskForBidding.full_pay}}
+                        </v-col>
+                    </v-row>
+
+                    <v-row class="d-flex mx-4 no-gutters bold">
+                        <v-col class="col-2">
+                            {{"Pay mode: " }}
+                        </v-col>
+                        <v-col class="col-10">
+                            {{pay_mode}}
+                        </v-col>
+                    </v-row>
+
+                    <v-row class="d-flex mx-4 no-gutters bold">
                         <v-col class="col-2 d-flex align-center">
                             {{"Instructions: "}}
                         </v-col>
@@ -122,51 +167,6 @@
                             </v-row>
                         </v-card>
                     </div>
-
-                    <v-row class="d-flex mx-4 no-gutters bold">
-                        <v-col class="col-4">
-                            {{"Deadline: " }}
-                        </v-col>
-                        <v-col class="col-8 d-flex align-center">
-                        {{getTaskForBidding.expiry_time | diffForHumans}}
-                        </v-col>
-                        </v-row>
-
-                        <v-row class="d-flex mx-4 no-gutters bold" v-if="getTaskForBidding.page_cost">
-                        <v-col class="col-4">
-                            {{"Pages: " }}
-                        </v-col>
-                        <v-col class="col-8">
-                        {{page_count}}
-                        </v-col>
-                    </v-row>
-
-                    <v-row class="d-flex mx-4 no-gutters bold" v-if="getTaskForBidding.page_cost">
-                        <v-col class="col-4">
-                            {{"CPP: " }}
-                        </v-col>
-                        <v-col class="col-8">
-                            {{"KES " + getTaskForBidding.page_cost}}
-                        </v-col>
-                    </v-row>
-
-                    <v-row class="d-flex mx-4 no-gutters bold">
-                        <v-col class="col-4">
-                            {{"Full pay: " }}
-                        </v-col>
-                        <v-col class="col-8">
-                            {{"KES " + getTaskForBidding.full_pay}}
-                        </v-col>
-                    </v-row>
-
-                    <v-row class="d-flex mx-4 no-gutters bold">
-                        <v-col class="col-4">
-                            {{"Pay mode: " }}
-                        </v-col>
-                        <v-col class="col-8">
-                            {{pay_mode}}
-                        </v-col>
-                    </v-row>
 
                     <div class="d-flex red--text justify-center text-center mt-4">
                         <h1 style="font-size: 1.5rem;">
