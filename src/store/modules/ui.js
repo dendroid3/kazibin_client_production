@@ -11,7 +11,8 @@ const state = {
   alert_code: false,
   task_chat_invoice: false,
   task_chat_view_invoice: false,
-  alert_endpoint: false
+  alert_endpoint: false,
+  hide_mid_left_bar: false
 }
 
 const getters = {
@@ -23,6 +24,7 @@ const getters = {
   getAlertEndPoint: (state) => (state.alert_endpoint),
   getTaskChatInvoice: (state) => (state.task_chat_invoice),
   getTaskChatViewInvoice: (state) => (state.task_chat_view_invoice),
+  getHideShowMidLeftSidebar: (state) => (state.hide_mid_left_bar)
 }
 
 const actions = {
@@ -72,6 +74,10 @@ const actions = {
       }
       axios.post('/log_error', error)
     }
+  },
+
+  toogleHideMidLeftSidebar({commit}, data){
+    commit('SET_HIDE_SHOW_MID_LEFT_BAR', data)
   },
 
   inputRegistrationStep({commit}, number) {
@@ -140,7 +146,8 @@ const mutations = {
   ),
   TOOGLE_TASK_CHAT_VIEW_INVOICE: (state, data) => (
     state.task_chat_view_invoice = data
-  )
+  ),
+  SET_HIDE_SHOW_MID_LEFT_BAR: (state, hide_mid_left_bar) => (state.hide_mid_left_bar = hide_mid_left_bar)
 }
 
 export default {

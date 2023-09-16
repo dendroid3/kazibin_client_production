@@ -1,6 +1,6 @@
 <template lang="">
     <div class="mid-left-bar grey lighten-2">
-        <TransactionsBelt style="z-index: 1;" />
+        <TransactionsBelt style="z-index: 9;" />
         <tabs-strip 
         :posted_fetched="true" 
         :taken_fetched="true" 
@@ -42,5 +42,6 @@ export default {
   }
   .mid-left-bar{
     height: 100vh;
+    z-index: 99;
   }
 </style>

@@ -10,7 +10,8 @@ const state = {
   availability_details: null,
   task_for_bidding: null,
   all_available_for_bidding_pagination_details: null,
-  all_done_by_me_pagination_details: null
+  all_done_by_me_pagination_details: null,
+  available_tasks_count: null
 }
 const getters = {
   getAllTasksPostedByMe: (state)=> (state.all_posted_by_me),
@@ -21,6 +22,7 @@ const getters = {
   getAllTasksAvailableForBiddingPaginationDetails: (state)=> (state.all_available_for_bidding_pagination_details),
   getAvailabilityDetails: (state)=> (state.availability_details),
   getTaskForBidding: (state)=> (state.task_for_bidding),
+  getAvailableTasksCount: (state) => (state.available_tasks_count)
 }
 const actions = {
   async fetchAllPostedByMe({commit, dispatch}){
@@ -139,6 +141,20 @@ const actions = {
         dispatch('handleError', {error: e, action: 'fetchTaskForBidding'}, {root: true})
       }
     }
+  },
+
+  async fetchTotalAvailableTasks({commit}){
+    try {
+      const response = await
+      axios.get('get_total_available_tasks')
+      commit('SET_ALL_AVAILABLE_TASKS_COUNT', response.data)
+    } catch (e) {
+      if(e.response){
+        dispatch('handleError', {error: e, error_code: e.response.status, action: 'fetchTotalAvailableTasks'}, {root: true})
+      } else {
+        dispatch('handleError', {error: e, action: 'fetchTotalAvailableTasks'}, {root: true})
+      }
+    }
   }
 }
 const mutations = {
@@ -155,7 +171,8 @@ const mutations = {
   ),
   SET_ALL_TASKS_DONE_BY_ME_PAGINATION_DETAILS: (state, all_done_by_me_pagination_details) => (
     state.all_done_by_me_pagination_details = all_done_by_me_pagination_details
-  )
+  ),
+  SET_ALL_AVAILABLE_TASKS_COUNT: (state, available_tasks_count) => (state.available_tasks_count = available_tasks_count)
 }
 
 export default {

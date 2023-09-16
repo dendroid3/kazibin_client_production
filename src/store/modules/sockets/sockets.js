@@ -8,6 +8,12 @@ const getters = {}
 const actions = {
     
   bootAllSockets({dispatch}){
+    window.Echo.channel('public_notifications')
+    .listen(event, (e) => {
+      if(event == 'TaskAdded'){
+        dispatch('fetchTotalAvailableTasks', null, { root: true })
+      }
+    })
     const events = [
       'BidMade', //done
       'BidPulled', //done
@@ -56,7 +62,6 @@ const actions = {
           dispatch('notify', e, { root: true })
         }
 
-
         dispatch('handle' + event, e, { root: true })
 
       })
@@ -73,7 +78,7 @@ const actions = {
           requireInteraction: true
         });
         notification.onclick = () => {
-          if(notification_details.type = 'TaskMessageSent'){
+          if(notification_details.type == 'TaskMessageSent'){
             window.open(process.env.VUE_APP_FRONT_END_URL + '/t/' + notification_details.id);
           }
         };

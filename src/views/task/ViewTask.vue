@@ -31,11 +31,7 @@
                 <v-toolbar 
                     class="pb-4 top-toolbar"
                     text
-                    :class="{
-                        'full-width': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs,
-                        'medium-width':  $vuetify.breakpoint.md,
-                        'large-width':  $vuetify.breakpoint.lg,
-                    }">
+                    >
                     
                     <div class="d-flex bold pointer" @click="viewBroker">
                         <v-toolbar-title>{{"Broker: " + getTaskForBidding.broker.user.code + ": "}}</v-toolbar-title>
@@ -379,13 +375,15 @@ export default {
     .main-wrapper{
         height: calc(100vh - 50px);
         overflow-x: scroll;
+        position: relative;
         padding-bottom: 5rem;
     }
     .top-toolbar{
     padding-bottom: 5rem; 
-    position: fixed; 
-    top: 50px; 
+    position: absolute; 
+    top: 0; 
     right: 0; 
+    left: 0;
     z-index: 1;
   }
 </style>
