@@ -5,17 +5,17 @@
   :lazy-validation="lazy"
   ref="form">
   <div class="d-flex justify-center">
-    <v-file-input
-    outlined
-    hint="Files, could be images, word documents or pdfs"
-    multiple
-    @change="registerFiles"
-    label="Files"
-    accept="image/*,
-    application/pdf,
-    application/vnd.ms-excel,
-    application/vnd.openxmlformats-officedocument.wordprocessingml.document,
-    application/msword"
+      <v-file-input
+      outlined
+      hint="Files, could be images, word documents or pdfs"
+      multiple
+      @change="registerFiles"
+      label="Files"
+      accept="image/*,
+      application/pdf,
+      application/vnd.ms-excel,
+      application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+      application/msword"
     ></v-file-input>
   </div>
   <div class="d-flex justify-center">
