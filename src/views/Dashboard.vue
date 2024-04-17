@@ -142,7 +142,6 @@
         </div>
       </section>
     </section>
-
     <section>
         <section class="padder" v-if="
         !getAllTasksPostedByMe || 
@@ -185,7 +184,6 @@
         !getCreditedInvoices[0] &&
         !getRequestsToAndFromBrokers[0] &&
         !getRequestsToAndFromWWriters[0] &&
-        !getLogMessages[0] &&
         !getMyTransactions[0]
       ">
         <div class="padded mb-4">

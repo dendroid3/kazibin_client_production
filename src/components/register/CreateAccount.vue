@@ -86,7 +86,17 @@
             > </v-text-field>  
         </div>
 
-        <div class="d-flex text-center justify-center mx-2 my-2">
+        <div class="d-flex text-center justify-center red mx-2 my-2">
+          <div class="d-flex justify-center">
+            <v-btn 
+            small 
+            @click="registerUser" 
+            :loading='loading'
+            class="rounded success submit-button"
+            :disabled="!valid">
+              sign up
+            </v-btn>
+          </div>
           <span>
             by registering you agree to our<router-link to="/TermsAndConditions" class="text mx-1">terms and conditions </router-link>
           </span>
@@ -191,7 +201,7 @@ export default {
     padding-bottom: 5rem;
     align-items: center;
     height: calc(100vh - 50px);
-    overflow-y: hidden;
+    overflow-y: auto;
   }
  @media only screen and (min-width: 960px) {
     .form{

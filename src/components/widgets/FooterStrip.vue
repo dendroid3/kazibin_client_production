@@ -62,7 +62,7 @@ export default {
   computed:{
     ...mapGetters([]),
     year(){
-      return '2023'
+      return Date()
     }
   },
   methods: {

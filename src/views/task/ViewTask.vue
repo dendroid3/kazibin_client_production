@@ -164,23 +164,27 @@
                         </v-card>
                     </div>
 
-                    <div class="d-flex red--text justify-center text-center mt-4">
-                        <h1 style="font-size: 1.5rem;">
-                            {{time_left}}
-                        </h1>
-                    </div>
+                    <section v-if="getTaskForBidding.broker.id !== getUser.broker.id">
 
-                    <div class="d-flex justify-center mx-4 my-1" >
-                        <v-btn small class="elevation-15 submit-button red lighten-2 white--text" style="font-weight: 900;" @click="initiateBid" :loading="bidding" :disabled="bidded">
-                            Bid Now!
-                        </v-btn>
-                    </div>
+                        <div class="d-flex red--text justify-center text-center mt-4">
+                            <h1 style="font-size: 1.5rem;">
+                                {{time_left}}
+                            </h1>
+                        </div>
+
+                        <div class="d-flex justify-center mx-4 my-1">
+                            <v-btn small class="elevation-15 submit-button red lighten-2 white--text" style="font-weight: 900;" @click="initiateBid" :loading="bidding" :disabled="bidded">
+                                Bid Now!
+                            </v-btn>
+                        </div>
+
+                    </section>
 
                 </section>
 
             </section>
 
-            <section v-else>
+            <section v-if="!getTaskForBidding.broker">
                 <v-row class="no-gutters pt-4 mt-4">
                     <v-col class="col-8 offset-2 pa-4">
                         <v-img class="" :src="require(`../../assets/pageNotFound.svg`)" contain />
@@ -191,7 +195,7 @@
                     <v-col class="col-8 offset-2 px-4 d-flex text-center justify-center primary-color-text">
                         {{"Go to this page instead to look for other available tasks:"}}
                     </v-col>
-                    <v-col class="my-2 px-4 d-flex justify-center ">
+                    <v-col class="my-2 px-4 d-flex justify-center col-12">
                         <v-btn small class="mx-1 submit-button white--text" @click="go('/')" style="background-color: tomato;">Home</v-btn>
                     </v-col>
                 </v-row>
@@ -228,7 +232,7 @@ export default {
     },
 
     computed:{
-        ...mapGetters(['getTaskForBidding']),
+        ...mapGetters(['getTaskForBidding', 'getUser']),
 
         page_count(){
             if(this.getTaskForBidding.pages){
@@ -379,11 +383,11 @@ export default {
         padding-bottom: 5rem;
     }
     .top-toolbar{
-    padding-bottom: 5rem; 
-    position: absolute; 
-    top: 0; 
-    right: 0; 
-    left: 0;
-    z-index: 1;
+        padding-bottom: 5rem; 
+        position: absolute; 
+        top: 0; 
+        right: 0; 
+        left: 0;
+        z-index: 1;
   }
 </style>

@@ -74,10 +74,10 @@
     clipped 
     right
     fixed
-    width = '80%'
+    width="80%"
     >
       <div class="d-flex justify-end">
-        <div class="white pa-2 rounded" @click="home_drawer = false" style="position: fixed; top: 0; right: 0; z-index:900;">
+        <div class="white pa-2 rounded" @click="home_drawer=false" style="position: fixed; top: 0; right: 0; z-index:900;">
           <v-icon class="red--text">
             mdi-close
           </v-icon>
@@ -89,13 +89,13 @@
     <v-main class="main grey lighten-3">
       <v-container fluid class="pa-0">
         <v-row class="no-gutters"  style="padding-top: 50px;">
-          <v-col class="col-md-1 col-lg-1" v-if=" ($vuetify.breakpoint.lg || $vuetify.breakpoint.md) && show_nav_bar" style="calc(height:100vh - 50px); overflow-y: hidden;">
+          <v-col class="col-md-1 col-lg-1" v-if=" ($vuetify.breakpoint.lg || $vuetify.breakpoint.md) && show_nav_bar" style="height: calc(100vh-50px); overflow-y: hidden;">
             <farleft-sidebar />
           </v-col>
-          <v-col class="col-md-4 grey lighten-2  px-4" v-if=" ($vuetify.breakpoint.lg  || $vuetify.breakpoint.md) && show_nav_bar && getUser && show_left_mid_side_bar" style="calc(height:100vh - 50px); overflow-y: hidden;">
+          <v-col class="col-md-4 grey lighten-2  px-4" v-if=" ($vuetify.breakpoint.lg  || $vuetify.breakpoint.md) && show_nav_bar && getUser && show_left_mid_side_bar" style="height: calc(100vh - 50px); overflow-y: hidden;">
             <midleft-sidebar />
           </v-col>
-          <v-col style="width: 100; height:100vh; overflow-y: auto; padding-bottom: 5rem;" class="pa left-border">
+          <v-col style="width: 100; height:100vh; overflow-y: auto; padding-bottom: 0rem;" class="pa left-border">
             <router-view />
           </v-col>
         </v-row>
