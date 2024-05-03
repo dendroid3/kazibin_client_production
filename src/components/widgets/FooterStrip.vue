@@ -6,7 +6,7 @@
           <ul>
             <li>+254 705 715 099</li>
             <li>info@kazibin.com</li>
-            <li>TILL #: 000000</li>
+            <li>PAYBILL #: 000000</li>
           </ul>
         </div>
         <div class="col-6">

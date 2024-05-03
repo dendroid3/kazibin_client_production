@@ -86,17 +86,7 @@
             > </v-text-field>  
         </div>
 
-        <div class="d-flex text-center justify-center red mx-2 my-2">
-          <div class="d-flex justify-center">
-            <v-btn 
-            small 
-            @click="registerUser" 
-            :loading='loading'
-            class="rounded success submit-button"
-            :disabled="!valid">
-              sign up
-            </v-btn>
-          </div>
+        <div class="d-flex text-center justify-center mx-2 my-2">
           <span>
             by registering you agree to our<router-link to="/TermsAndConditions" class="text mx-1">terms and conditions </router-link>
           </span>
@@ -200,14 +190,43 @@ export default {
   .main-wrapper{
     padding-bottom: 5rem;
     align-items: center;
-    height: calc(100vh - 50px);
-    overflow-y: auto;
+    height: 100vh;
+    overflow-y: hidden;
   }
  @media only screen and (min-width: 960px) {
     .form{
       max-width: 20vw;
       height: 75vh;
+      margin-bottom: 50rem;
       overflow-y: auto;
+    }
+    ::-webkit-scrollbar {
+      width: 5px;
+      background: tomato;
+    }
+  
+    ::-webkit-scrollbar:hover {
+      width: 0px;
+      background: white;
+    }
+  
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: #888;
+      display: block;
+    }
+  
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      display: block;
+      background: rgb(15,14,56);
+
+    }
+  
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      display: block;
+      background: tomato;
     }
 }
 

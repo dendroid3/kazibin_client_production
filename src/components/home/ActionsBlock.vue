@@ -13,12 +13,12 @@
     />
     <action-tab
       :action="`Discover Writers`"
-      :description="`get writers to be giving jobs to`"
+      :description="`get writers to be giving tasks to`"
       :route="`Explore/Writers`"
     />
     <action-tab
       :action="`Discover Brokers`"
-      :description="`get brokers to be giving you jobs `"
+      :description="`get brokers to be giving you tasks `"
       :route="`Explore/Brokers`"
     />
 

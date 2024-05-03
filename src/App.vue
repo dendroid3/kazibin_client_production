@@ -28,9 +28,6 @@
       v-if="($vuetify.breakpoint.sm || $vuetify.breakpoint.xs) && getUser.email">
         mdi-menu
       </v-icon>
-      <!-- <span class="white--text pointer" @click="go(`dashboard`)"
-      v-if="$vuetify.breakpoint.md || $vuetify.breakpoint.xl || $vuetify.breakpoint.lg">
-      </span> -->
 
       <span class="white--text pointer"
         v-bind="attrs"
@@ -95,7 +92,9 @@
           <v-col class="col-md-4 grey lighten-2  px-4" v-if=" ($vuetify.breakpoint.lg  || $vuetify.breakpoint.md) && show_nav_bar && getUser && show_left_mid_side_bar" style="height: calc(100vh - 50px); overflow-y: hidden;">
             <midleft-sidebar />
           </v-col>
-          <v-col style="width: 100; height:100vh; overflow-y: auto; padding-bottom: 0rem;" class="pa left-border">
+          <v-col style="width: 100; height:100vh; overflow-y: auto; padding-bottom: 0rem;"  class="pa left-border" :class="{
+            'pull-up': !show_nav_bar
+          }">
             <router-view />
           </v-col>
         </v-row>
@@ -199,6 +198,10 @@ export default {
       border-left: 1px white solid;
     }
   }
+  .pull-up{
+    margin-top: -50px;
+  }
+
   .col-block{
     position: relative;
   }
