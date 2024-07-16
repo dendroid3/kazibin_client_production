@@ -58,7 +58,7 @@
           </v-btn>
       </v-col>
     </v-row>
-    <div class=" lighten-4 d-flex align-center my-4 justify-center" style="position: fixed; z-index: 999; top: 0; right: 0; left: 0; bottom: 0;" v-if="deposit_form">
+    <div class=" lighten-4 d-flex align-center my-4 justify-center" style="position: fixed; z-index: 999; top: 0; right: 0; left: 0; bottom: 0;" v-if="!deposit_form">
       <div class="grey px-4 py-2 -2 rounded">
         <div class="d-flex justify-end">
           <v-icon class="pa-4 red--text mb-2" @click="closeDepositForm">
@@ -68,42 +68,46 @@
         <div class="green--text bold d-flex justify-center white rounded" style=" font-size: 2rem;">
           Deposit From Mpesa
         </div><br>
-        <span style="color: #ffffff;">
-          1. Go to Mpesa Menu
-        </span><br>
-        <span style="color: #ffffff;">
-          2. Select Lipa na Mpesa
-        </span><br>
-        <span style="color: #ffffff;">
-          3. Select Paybill
-        </span><br>
-        <span style="color: #ffffff;">
-          4. Input the paybill number <strong class="red--text white rounded px-1"> 411 53 61 </strong>
-        </span><br>
-        <span style="color: #ffffff;">
-          4. Enter the account number: <strong class="red--text white rounded px-1"> {{ getUser.code }} </strong>
-        </span><br>
-        <span style="color: #ffffff;">
-          6. Input the amount you want to deposit and PIN
-        </span><br>
-        <span style="color: #ffffff;">
-          7. Input the Mpesa Transaction code below here
-        </span><br>
-        <span style="color: #ffffff;">
-          *. The Mpesa Hakikisha name is; <strong class="red--text white rounded px-1">WAZO TANK</strong>
-        </span><br>
-        <!-- <v-row class="no-gutters d-flex align-center">
-          <v-col class="col-9 d-flex justify-center align-center pa-4">
-            <input type="text" placeholder="mpesa transaction code" 
-            style="border-radius: 5px; border: solid black 1px; width: 100%;"
-            class="px-4 white" v-model="mpesa_transaction_id">
-          </v-col>
-          <v-col class="col-3 d-flex justify-center pa-4">
-            <v-btn small class="green white--text" @click="claim" :disabled="!can_deposit" :loading="claiming">
+        
+        <v-form class=" mt-4 mx-2"
+          v-model="valid"
+          :lazy-validation="lazy"
+          ref="form">
+          <div class="mx-2 px-4">
+            <v-text-field 
+            outlined
+            :rules="rules.phoneRules"
+            v-model="deposit_details.phone_number"
+            clearable
+            type="number"
+            label="phone number"
+            required
+            > 
+              <span slot="prepend">
+                +254
+              </span>
+            </v-text-field>  
+          </div>
+          <div class="mx-2 px-4">
+            <v-text-field 
+            outlined
+            clearable
+            type="number"
+            v-model="deposit_details.amount"
+            label="Amount"
+            required
+            > </v-text-field>  
+          </div>
+          <div class="d-flex justify-center mb-4">
+            <v-btn 
+            small 
+            @click="depositFromMpesa" 
+            class="rounded success submit-button"
+            :disabled="!canDeposit">
               Deposit
             </v-btn>
-          </v-col>
-        </v-row> -->
+          </div>
+        </v-form>
         <v-row class="no-gutters d-flex align-center white pa-2">
           <ul>
             <li>
@@ -154,16 +158,45 @@ export default {
         return 0
       }
     },
+    canDeposit(){
+      if(!this.deposit_details.phone_number || !this.deposit_details.amount){
+        return false
+      }
+
+      if(this.deposit_details.phone_number.length < 9){
+        return false
+      }
+
+      return true
+    }
   },
   data(){
     return{
       deposit_form: false,
       mpesa_transaction_id: 'The 10 Alphanumeric Code',
-      claiming: false
+      claiming: false,
+      valid: true,
+      lazy: false,
+      deposit_details: {},
+      rules: {
+        phoneRules: [
+          v => !!v || 'Phone number is required',
+          v => (v && v.length <= 15) || 'Name must be less than 15 characters',
+        ],
+      },
     }
   },
   methods:{
-    ...mapActions(['claimTransaction']),
+    ...mapActions(['claimTransaction', 'sendRequestToDeposit']),
+
+    depositFromMpesa(){
+      const data = {
+        phone_number: '254' + this.deposit_details.phone_number,
+        amount: this.deposit_details.amount
+      }
+      this.sendRequestToDeposit(data)
+    },
+
     alert(question){
       switch (question) {
         case 'use_of_money':

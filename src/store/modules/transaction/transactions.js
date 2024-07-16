@@ -11,6 +11,17 @@ const getters = {
 }
 
 const actions = {
+    async sendRequestToDeposit({}, data){
+        try {
+            const response = await
+            axios.post('transaction/depositFromMpesa', data)
+            console.log(response)
+            return true
+        } catch (err) {
+            console.log(err)
+        }
+    },
+
     async claimTransaction({dispatch}, data){
         try{
             const response = await

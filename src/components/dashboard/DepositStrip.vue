@@ -6,7 +6,6 @@
           Deposit From Mpesa
         </div><br>
         <span style="color: #ffffff;">
-          1. Go to Mpesa Menu
         </span><br>
         <span style="color: #ffffff;">
           2. Select Lipa na Mpesa

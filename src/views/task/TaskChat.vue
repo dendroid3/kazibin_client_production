@@ -973,7 +973,6 @@ export default {
           this.why_is_pop_up_open = "change_payment"
           break;
       }
-      console.log(to_do_what)
       this.popup_is_open = true
     }
 
