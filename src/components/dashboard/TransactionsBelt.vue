@@ -58,7 +58,7 @@
           </v-btn>
       </v-col>
     </v-row>
-    <div class=" lighten-4 d-flex align-center my-4 justify-center" style="position: fixed; z-index: 999; top: 0; right: 0; left: 0; bottom: 0;" v-if="!deposit_form">
+    <div class=" lighten-4 d-flex align-center my-4 justify-center" style="position: fixed; z-index: 999; top: 0; right: 0; left: 0; bottom: 0;" v-if="deposit_form">
       <div class="grey px-4 py-2 -2 rounded">
         <div class="d-flex justify-end">
           <v-icon class="pa-4 red--text mb-2" @click="closeDepositForm">
