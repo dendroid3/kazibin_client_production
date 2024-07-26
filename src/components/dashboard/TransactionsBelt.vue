@@ -182,7 +182,7 @@ export default {
       rules: {
         phoneRules: [
           v => !!v || 'Phone number is required',
-          v => (v && v.length <= 15) || 'Name must be less than 15 characters',
+          v => (v && v.length <= 9) || 'Name must be less than 15 characters',
         ],
       },
       sending_deposit_request: false

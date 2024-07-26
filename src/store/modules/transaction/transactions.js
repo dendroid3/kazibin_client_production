@@ -11,7 +11,7 @@ const getters = {
 }
 
 const actions = {
-    async sendRequestToDeposit({dispatch}, data){
+    async sendRequestToDeposit({dispatch},  data){
         try {
             const response = await
             axios.post('transaction/depositFromMpesa', data)
@@ -26,6 +26,32 @@ const actions = {
                 dispatch('handleError', {error: e, action: 'sendRequestToDeposit'}, {root: true})
             }
         }
+    },
+
+    async intitiateRequestToDeposit({dispatch}, data){
+        const confirmation_message = `You do not have enough balance to ${data.action}. Your balance is ${0}, you require KES ${data.required_amount} more. Would you like to deposit?`
+
+        if(!confirm(confirmation_message)){
+            return
+        }
+
+        const phone_number = prompt("Enter the phone number you want to deposit from:")
+
+        const truncated_phone_number = phone_number.toString().replace(/^0+(?=\d)/, '')
+
+        if(Math.abs(phone_number.length) !== 10) {
+            dispatch('openAlert', {message: 'Phone number must be 10 digits.', code: 'error', timeout: 5000}, {root: true})
+            return
+        }
+
+        const deposit_data = {
+            phone_number: '254' + truncated_phone_number,
+            amount: data.required_amount
+        }
+
+        dispatch('sendRequestToDeposit', deposit_data, {root: true})
+
+        return
     },
 
     async claimTransaction({dispatch}, data){

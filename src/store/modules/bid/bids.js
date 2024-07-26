@@ -31,7 +31,12 @@ const actions = {
       const balance = getters.getDashboadDetails.transactions.balance
 
       if(data.bid_cost > balance){
-        dispatch('openAlert', {message: 'You do not have enough balance to send this bid, kindly top up and try again.', code: 'error'}, {root: true})
+        const deposit_data = {
+          action: "bid on this task.",
+          required_amount: (data.bid_cost - balance)
+        }
+
+        dispatch('intitiateRequestToDeposit', deposit_data, {root: true})
         return false
       }
 
