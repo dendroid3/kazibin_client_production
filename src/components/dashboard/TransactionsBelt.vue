@@ -196,7 +196,7 @@ export default {
         phone_number: '254' + this.deposit_details.phone_number,
         amount: this.deposit_details.amount
       }
-      // this.sending_deposit_request = true
+      this.sending_deposit_request = true
       this.sendRequestToDeposit(data).then(() => {
         this.sending_deposit_request = false
       })
