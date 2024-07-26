@@ -103,6 +103,7 @@
             small 
             @click="depositFromMpesa" 
             class="rounded success submit-button"
+            :loading="sending_deposit_request"
             :disabled="!canDeposit">
               Deposit
             </v-btn>
@@ -184,6 +185,7 @@ export default {
           v => (v && v.length <= 15) || 'Name must be less than 15 characters',
         ],
       },
+      sending_deposit_request: false
     }
   },
   methods:{
@@ -194,7 +196,11 @@ export default {
         phone_number: '254' + this.deposit_details.phone_number,
         amount: this.deposit_details.amount
       }
-      this.sendRequestToDeposit(data)
+      // this.sending_deposit_request = true
+      this.sendRequestToDeposit(data).then(() => {
+        this.sending_deposit_request = false
+      })
+
     },
 
     alert(question){

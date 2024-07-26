@@ -29,6 +29,7 @@ const getters = {
 
 const actions = {
   handleError({dispatch, getters}, data){
+    console.log(data)
     if(data.error_code){
       switch (data.error_code) {
         case 401:
@@ -45,6 +46,7 @@ const actions = {
             page: router.history.current.name,
             action: data.action
           }
+          console.log("Caught")
           axios.post('/log_error', error)
           break;
       

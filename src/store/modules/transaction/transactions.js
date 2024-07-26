@@ -11,14 +11,20 @@ const getters = {
 }
 
 const actions = {
-    async sendRequestToDeposit({}, data){
+    async sendRequestToDeposit({dispatch}, data){
         try {
             const response = await
             axios.post('transaction/depositFromMpesa', data)
-            console.log(response)
-            return true
-        } catch (err) {
-            console.log(err)
+            return response
+        } catch (e) {
+            if(e.response){
+                console.log('e.res is present')
+                console.log(e.response.status)
+                dispatch('openAlert', {message: e.response.data.message, code: 'error', timeout: 5000}, {root: true})
+
+            } else {
+                dispatch('handleError', {error: e, action: 'sendRequestToDeposit'}, {root: true})
+            }
         }
     },
 
