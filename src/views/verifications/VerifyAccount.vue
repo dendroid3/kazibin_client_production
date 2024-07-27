@@ -68,7 +68,7 @@
                     ></v-file-input>
                 </div>
 
-                <div class=" ">
+                <!-- <div class=" ">
                     <v-text-field 
                     outlined
                     :disabled="!passport"
@@ -79,10 +79,10 @@
                     :rules="rules.mpesaTransactionCodeRule"
                     required
                     > </v-text-field>  
-                </div>
+                </div> -->
                 <div class=" d-flex lighten-3 align-center justify-center">
                     <v-checkbox
-                        :disabled="(!mpesa_transaction_id || !(mpesa_transaction_id.length == 10) )"
+                        :disabled="!passport"
                         required
                         v-model="declared"
                         :label="`I, being of sound and disposing mind declare that the information given herein is true.`"
@@ -112,7 +112,7 @@ export default {
     components: {AnimatedIcon},
 
     computed: {
-        ...mapGetters(['getUser'])
+        ...mapGetters(['getUser', 'getDashboadDetails'])
     },
 
     data: () => ({
@@ -134,7 +134,7 @@ export default {
     }),
     
     methods: {
-        ...mapActions(['initialiseVerification']),
+        ...mapActions(['initialiseVerification', 'intitiateRequestToDeposit']),
 
         goHome(){
             if(this.getUser){
@@ -168,13 +168,23 @@ export default {
         },
 
         submit(){
+            if(this.getDashboadDetails.transactions.balance < 500) {
+                const required_amount = 500 - this.getDashboadDetails.transactions.balance;
+                const intitiate_request_to_deposit_data = {
+                action: "verify account detail",
+                required_amount: required_amount
+                }
+                this.intitiateRequestToDeposit(intitiate_request_to_deposit_data)
+                
+                return
+            }
+
+
             const confirmation = 'Ensure that the files provided are correct. You wont have a chance to reverse this process.'
 
             if(!confirm(confirmation)) { return }
 
             this.loading = true
-
-            this.formdata.append('mpesa_transaction_id', this.mpesa_transaction_id)
 
             this.initialiseVerification(this.formdata).then(() => (
                 this.loading = false
