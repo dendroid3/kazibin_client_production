@@ -47,7 +47,7 @@
           <v-icon small class="white--text">
             mdi-copyright
           </v-icon>
-            {{year}} 
+            {{ year }} 
         <router-link to="/TermsAndConditions" class="text mx-4"> T&C apply </router-link>
         </span>
       </div>
@@ -62,7 +62,9 @@ export default {
   computed:{
     ...mapGetters([]),
     year(){
-      return Date()
+      let date = new Date()
+      return date.getFullYear()
+      // return '2024'
     }
   },
   methods: {
