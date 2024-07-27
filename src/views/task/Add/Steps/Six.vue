@@ -128,7 +128,7 @@ export default {
     }
   },
   methods:{
-    ...mapActions(['stepSix', 'openAlert']),
+    ...mapActions(['stepSix', 'intitiateRequestToDeposit']),
     addWriter(writer_id){
       this.applied = false
       this.selected_writers.push(writer_id)
@@ -158,16 +158,20 @@ export default {
           task_id: this.getStepOneResponse.id
         }
         if(this.broadcast_on_telegram){
-        
           let prompt_message = "Broadcasting to telegram is sure to expose your task to a larger number of writers, faster. It costs 20 KES to broadcast to the XXX telegram group. Proceed?"
+
           if(!confirm(prompt_message)){ this.loading = false; return }
 
           if(this.getDashboadDetails.transactions.balance < 20){
-            const data = {
-              message: "You do not have enough balance to send broadcast this task, kindly top up and try again.",
-              code: 'error'
+            const required_amount = (20 - this.getDashboadDetails.transactions.balance);
+
+            const intitiate_request_to_deposit_data = {
+              action: "forward a task to telegram",
+              required_amount: required_amount
             }
-            this.openAlert(data)
+
+            this.intitiateRequestToDeposit(intitiate_request_to_deposit_data)
+
             this.loading = false
             return 
           }
