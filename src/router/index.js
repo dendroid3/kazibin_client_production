@@ -387,7 +387,6 @@ const routes = [
     }
   },
 
-  
   {
     path: '*',
     name: 'PageNotFound',
@@ -409,6 +408,9 @@ const router = new VueRouter({
 
 
 router.beforeEach(( to, from, next) => {
+
+  store.dispatch("closeReminderToVerifyAccount")
+
   if(!to.meta.middleware){
       return next()
   } else {

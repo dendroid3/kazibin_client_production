@@ -12,7 +12,8 @@ const state = {
   task_chat_invoice: false,
   task_chat_view_invoice: false,
   alert_endpoint: false,
-  hide_mid_left_bar: false
+  hide_mid_left_bar: false,
+  show_reminder_to_verify_account: true
 }
 
 const getters = {
@@ -24,10 +25,46 @@ const getters = {
   getAlertEndPoint: (state) => (state.alert_endpoint),
   getTaskChatInvoice: (state) => (state.task_chat_invoice),
   getTaskChatViewInvoice: (state) => (state.task_chat_view_invoice),
-  getHideShowMidLeftSidebar: (state) => (state.hide_mid_left_bar)
+  getHideShowMidLeftSidebar: (state) => (state.hide_mid_left_bar),
+  isReminderToVerifyAccountClosed: (state) => (state.show_reminder_to_verify_account)
 }
 
 const actions = {
+  closeReminderToVerifyAccount({commit, getters}, data){
+    console.log("called")
+    // Check if user is verified
+    if(getters.getUser.credential_verification){
+      commit('SET_REMINDER_TO_VERIFY_ACCOUNT', true)
+      return
+    }
+
+    if(data) {
+      //Set new expiry time
+      const d = new Date();
+      d.setTime(d.getTime() + (60*1000));
+      let expires = d.valueOf()
+      commit('SET_REMINDER_TO_VERIFY_ACCOUNT', {exipiry_time: expires})
+      return
+    }
+
+    // Check if time has expired
+    if(getters.isReminderToVerifyAccountClosed.exipiry_time){
+      const d2 = new Date()
+      d2.setTime(d2.getTime())
+
+      let expiry_time = getters.isReminderToVerifyAccountClosed.exipiry_time
+
+      let current_time = d2.valueOf()
+
+      if(current_time > expiry_time){
+        commit('SET_REMINDER_TO_VERIFY_ACCOUNT', false)
+      }
+    
+      return
+    }  
+    commit('SET_REMINDER_TO_VERIFY_ACCOUNT', false)
+  },
+
   handleError({dispatch, getters}, data){
     console.log(data)
     if(data.error_code){
@@ -127,6 +164,10 @@ const actions = {
 }
 
 const mutations = {
+  SET_REMINDER_TO_VERIFY_ACCOUNT: (state, boolean) => (
+    state.show_reminder_to_verify_account = boolean
+  ),
+
   INPUT_REGISTRATION_STEP: (state, number) => (
     state.registration_step = number
   ),

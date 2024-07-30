@@ -82,7 +82,8 @@
       </div>
       <nav-drawer />
     </v-navigation-drawer>
-      <alert-box />
+    <alert-box />
+    <not-verified />
     <v-main class="main grey lighten-3">
       <v-container fluid class="pa-0">
         <v-row class="no-gutters"  style="padding-top: 50px;">
@@ -106,6 +107,7 @@
 import { mapActions, mapGetters } from 'vuex';
 import LoaderWidget from './components/widgets/LoaderWidget.vue'
 import AlertBox from './components/widgets/AlertBox.vue'
+import NotVerified from './components/widgets/NotVerified.vue';
 import NavDrawer from './components/widgets/NavDrawer.vue'
 import FarleftSidebar from './views/desktop/FarleftSidebar.vue';
 import MidleftSidebar from './views/desktop/MidleftSidebar.vue';
@@ -114,7 +116,7 @@ import Cookies from 'js-cookie'
 export default {
   name: 'App',
 
-  components:{LoaderWidget, AlertBox, NavDrawer, FarleftSidebar, MidleftSidebar},
+  components:{LoaderWidget, AlertBox, NavDrawer, FarleftSidebar, MidleftSidebar, NotVerified},
 
   computed: {
     ...mapGetters(['isLoading', 'getUser', 'getHideShowMidLeftSidebar']),

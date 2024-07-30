@@ -17,7 +17,7 @@
       </v-col>
     </v-row>
     <div class="container  pa-0" v-for="(faq, i) in faqs" :key="i">
-      <div class="bold pointer px-4" @click="openFaq(i)">{{faq.question}}</div>
+      <div class="bold pointer px-4" @click="openFaq(i)" :id="faq.id ? faq.id : null">{{faq.question}}</div>
       <div class="pa-4 white rounded mx-2" v-if="open_faq == i">{{faq.answer}}</div>
     </div> <br>
     <span class="bold mx-4 mt-4">Not answered? </span> <br>
@@ -76,42 +76,56 @@ export default {
           faqs: [
             {
               question: 'who can join?',
-              answer: 'We are a dependable platform and partner for professional freelance academic and article writers looking for a trusted and sustainable long-term partnership. We also provide multiple intriguing projects through our other platforms for clients seeking to expand their portfolio. Furthermore, we provide clients with a support team, available round the clock, ready to help you as you continue to work'
+              answer: 'We are a dependable platform and partner for professional freelance academic and article writers looking for a trusted and sustainable long-term partnership. We also provide multiple intriguing projects through our other platforms for clients seeking to expand their portfolio. Furthermore, we provide clients with a support team, available round the clock, ready to help you as you continue to work',
+              id: 'who_can_join'
             },
             
             {
               question: 'how can I join?',
-              answer: 'We are a dependable platform and partner for professional freelance academic and article writers looking for a trusted and sustainable long-term partnership. We also provide multiple intriguing projects through our other platforms for clients seeking to expand their portfolio. Furthermore, we provide clients with a support team, available round the clock, ready to help you as you continue to work.'
+              answer: 'We are a dependable platform and partner for professional freelance academic and article writers looking for a trusted and sustainable long-term partnership. We also provide multiple intriguing projects through our other platforms for clients seeking to expand their portfolio. Furthermore, we provide clients with a support team, available round the clock, ready to help you as you continue to work.',
+              id: 'how_to_join'
             },
             
             {
               question: 'why should I join?',
-              answer: 'We are a dependable platform and partner for professional freelance academic and article writers looking for a trusted and sustainable long-term partnership. We also provide multiple intriguing projects through our other platforms for clients seeking to expand their portfolio. Furthermore, we provide clients with a support team, available round the clock, ready to help you as you continue to work.'
+              answer: 'We are a dependable platform and partner for professional freelance academic and article writers looking for a trusted and sustainable long-term partnership. We also provide multiple intriguing projects through our other platforms for clients seeking to expand their portfolio. Furthermore, we provide clients with a support team, available round the clock, ready to help you as you continue to work.',
+              id: 'why_join'
+            },
+            
+            {
+              question: 'why should I verify my account?',
+              answer: 'We are a dependable platform and partner for professional freelance academic and article writers looking for a trusted and sustainable long-term partnership. We also provide multiple intriguing projects through our other platforms for clients seeking to expand their portfolio. Furthermore, we provide clients with a support team, available round the clock, ready to help you as you continue to work.',
+              id: 'why_verify'
             },
             
             {
               question: 'who is a broker?',
-              answer: 'We are a dependable platform and partner for professional freelance academic and article writers looking for a trusted and sustainable long-term partnership. We also provide multiple intriguing projects through our other platforms for clients seeking to expand their portfolio. Furthermore, we provide clients with a support team, available round the clock, ready to help you as you continue to work.'
+              answer: 'We are a dependable platform and partner for professional freelance academic and article writers looking for a trusted and sustainable long-term partnership. We also provide multiple intriguing projects through our other platforms for clients seeking to expand their portfolio. Furthermore, we provide clients with a support team, available round the clock, ready to help you as you continue to work.',
+              id: 'who_is_a_broker'
             },
             
             {
               question: 'who is a writer?',
-              answer: 'We are a dependable platform and partner for professional freelance academic and article writers looking for a trusted and sustainable long-term partnership. We also provide multiple intriguing projects through our other platforms for clients seeking to expand their portfolio. Furthermore, we provide clients with a support team, available round the clock, ready to help you as you continue to work.'
+              answer: 'We are a dependable platform and partner for professional freelance academic and article writers looking for a trusted and sustainable long-term partnership. We also provide multiple intriguing projects through our other platforms for clients seeking to expand their portfolio. Furthermore, we provide clients with a support team, available round the clock, ready to help you as you continue to work.',
+              id: 'who_is_a_writer'
             },
             
             {
               question: "why can't I decide whether to be either?",
-              answer: 'We are a dependable platform and partner for professional freelance academic and article writers looking for a trusted and sustainable long-term partnership. We also provide multiple intriguing projects through our other platforms for clients seeking to expand their portfolio. Furthermore, we provide clients with a support team, available round the clock, ready to help you as you continue to work.'
+              answer: 'We are a dependable platform and partner for professional freelance academic and article writers looking for a trusted and sustainable long-term partnership. We also provide multiple intriguing projects through our other platforms for clients seeking to expand their portfolio. Furthermore, we provide clients with a support team, available round the clock, ready to help you as you continue to work.',
+              id: 'why_can_t_I_decide'
             },
             
             {
               question: "do we offer captioning jobs?",
-              answer: 'We are a dependable platform and partner for professional freelance academic and article writers looking for a trusted and sustainable long-term partnership. We also provide multiple intriguing projects through our other platforms for clients seeking to expand their portfolio. Furthermore, we provide clients with a support team, available round the clock, ready to help you as you continue to work.'
+              answer: 'We are a dependable platform and partner for professional freelance academic and article writers looking for a trusted and sustainable long-term partnership. We also provide multiple intriguing projects through our other platforms for clients seeking to expand their portfolio. Furthermore, we provide clients with a support team, available round the clock, ready to help you as you continue to work.',
+              id: 'do_we_offer_captioning_jobs'
             },
             
             {
               question: "other processes I need to know of? ",
-              answer: 'We are a dependable platform and partner for professional freelance academic and article writers looking for a trusted and sustainable long-term partnership. We also provide multiple intriguing projects through our other platforms for clients seeking to expand their portfolio. Furthermore, we provide clients with a support team, available round the clock, ready to help you as you continue to work.'
+              answer: 'We are a dependable platform and partner for professional freelance academic and article writers looking for a trusted and sustainable long-term partnership. We also provide multiple intriguing projects through our other platforms for clients seeking to expand their portfolio. Furthermore, we provide clients with a support team, available round the clock, ready to help you as you continue to work.',
+              id: 'any_other_processes'
             }
           ],
           open_faq: null
@@ -135,8 +149,20 @@ export default {
           } else {
             this.open_faq = i
           }
-s        }
+        },
+        objectWithIdSimilarToRouterHash(hash) {
+          return this.faqs
+        }
     },
+
+    created() {
+      for (let index = 0; index < this.faqs.length; index++) {
+        if((`#${this.faqs[index].id}`) === this.$router.history.current.hash){
+          this.openFaq(index)
+        }
+      }
+    },
+
     components: { FooterStrip },
     mounted(){
       this.fetchAboutStatistics()
