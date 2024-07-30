@@ -31,7 +31,6 @@ const getters = {
 
 const actions = {
   closeReminderToVerifyAccount({commit, getters}, data){
-    console.log("called")
     // Check if user is verified
     if(getters.getUser.credential_verification){
       commit('SET_REMINDER_TO_VERIFY_ACCOUNT', true)
@@ -41,7 +40,8 @@ const actions = {
     if(data) {
       //Set new expiry time
       const d = new Date();
-      d.setTime(d.getTime() + (60*1000));
+      // Expires after 6 hours
+      d.setTime(d.getTime() + (6*60*1000));
       let expires = d.valueOf()
       commit('SET_REMINDER_TO_VERIFY_ACCOUNT', {exipiry_time: expires})
       return
@@ -66,7 +66,6 @@ const actions = {
   },
 
   handleError({dispatch, getters}, data){
-    console.log(data)
     if(data.error_code){
       switch (data.error_code) {
         case 401:
@@ -83,7 +82,6 @@ const actions = {
             page: router.history.current.name,
             action: data.action
           }
-          console.log("Caught")
           axios.post('/log_error', error)
           break;
       
