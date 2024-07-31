@@ -119,7 +119,7 @@ export default {
           v => !!v || 'Field is required',
         ],
       },
-      offering_options: ['all my writers', 'select writers', 'everyone'],
+      offering_options: ['all my writers', 'select writers', 'everyone', 'verified only'],
       offering: '',
       loading: false,
       broadcast_on_telegram: false,
@@ -151,12 +151,17 @@ export default {
     submit(){
       this.loading = true
 
-      if(this.offering == 'everyone'){
+      if(this.offering == 'everyone' || this.offering == 'verified only'){
         const data = {
           takers: '',
           difficulty: this.task.difficulty,
           task_id: this.getStepOneResponse.id
         }
+
+        if(this.offering == 'verified only'){
+          data.verified_only = true
+        }
+        
         if(this.broadcast_on_telegram){
           let prompt_message = "Broadcasting to telegram is sure to expose your task to a larger number of writers, faster. It costs 20 KES to broadcast to the XXX telegram group. Proceed?"
 
@@ -181,7 +186,7 @@ export default {
         this.stepSix(data).then((res) => {
           this.loading = res
         })
-      } else if(this.offering == 'select writers'){
+      } else if(this.offering == 'select writers') {
 
         let usernames = ''
         

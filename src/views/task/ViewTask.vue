@@ -174,7 +174,8 @@
 
                         <div class="d-flex justify-center mx-4 my-1">
                             <v-btn small class="elevation-15 submit-button red lighten-2 white--text" style="font-weight: 900;" @click="initiateBid" :loading="bidding" :disabled="bidded">
-                                Bid Now!
+                                {{ bidded ? 'bid sent' : 'bid'}}
+                                {{ getTaskForBidding.verified_only ? '(Verified Only)' : "(Any Writer)" }}
                             </v-btn>
                         </div>
 
@@ -331,6 +332,17 @@ export default {
         },
 
         initiateBid(){
+            if(this.getTaskForBidding.verified_only) {
+                if(!this.getUser.credential_verification){
+                const confirmation_to_start_verification_process = "The task owner requires account verification to bid on this task. Please go to your profile settings and complete the verification process. Thank you!"
+
+                if(confirm(confirmation_to_start_verification_process)){
+                    this.$router.push('/Verify')
+                } 
+                return
+                }
+            }
+
             let bid_cost = null
             if(parseInt(this.getTaskForBidding.full_pay) <= 1000){
                 bid_cost = 10

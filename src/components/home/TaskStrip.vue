@@ -1,5 +1,5 @@
 <template>
-  <div class="grey lighten-3 wrapper pa-2 my-1 mx-2 rounded ">
+  <div class="grey lighten-3 wrapper pa-2 my-1 relative mx-2 rounded fill-height">
     <section>
       <span class="head pointer" @click="goToView">
         {{task.code}}
@@ -7,27 +7,27 @@
         {{task.topic}}  
       </span>
       <br>
-      {{task.unit}} {{task.type}} 
-      {{due_time}} <br>
-      {{full_pay }}{{mode_of_payment}} <br>
-      <div class="d-flex align-center">
+      <div class="pointer" @click="goToView">
+        {{task.unit}} {{task.type}} 
+        {{due_time}} <br>
+        {{full_pay }}{{mode_of_payment}} <br>
+      </div>
+      <div class="d-flex align-center pointer" @click="goToView">
         {{"Broker: "}}
         {{task.broker.user.username}}
         {{task.broker.user.credential_verification ? "[verifed]" : null }}
-        <v-icon color="yellow"  small>
-          mdi-star
-        </v-icon>
-        {{". Difficulty: " + task.difficulty + "/10"}}
-        <v-icon color="yellow"  small>
-          mdi-star
-        </v-icon>
-        {{". Files: 0"}}
+      </div>
+      <div class="d-flex align-center pointer" @click="goToView">
+        {{"Difficulty: " + task.difficulty + "/10"}}
+      </div>
+      <div class="d-flex align-center pointer" @click="goToView">
+        {{"Files: 0"}}
         <v-icon color="bleck"  small>
           mdi-file
         </v-icon>
       </div>
     </section>
-    <div class="d-flex justify-end" >
+    <div class="d-flex justify-end">
       <v-btn small 
       class="elevation-15 red lighten-2 white--text" 
       style="font-weight: 900;" 
@@ -35,6 +35,7 @@
       :disabled="bidded" 
       :loading="bidding">
         {{bidded ? 'bid sent' : 'bid'}}
+        {{ task.verified_only ? '(Verified Only)' : "(Any Writer)" }}
       </v-btn>
     </div>
   </div>
@@ -43,7 +44,7 @@
 
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'TaskStrip',
@@ -53,6 +54,7 @@ export default {
   mounted(){
   },
   computed:{
+    ...mapGetters(['getUser']),
     mode_of_payment(){
       switch (this.task.pay_day) {
         case '1997-09-17 00:00:00':
@@ -90,11 +92,22 @@ export default {
     }
   },
   methods:{
-    ...mapActions(['createBid']),
+    ...mapActions(['createBid', 'initialiseVerification']),
     goToView(){
       this.$router.push('/t/' + this.task.code)
     },
     initiateBid(){
+      if(this.task.verified_only) {
+        if(!this.getUser.credential_verification){
+          const confirmation_to_start_verification_process = "The task owner requires account verification to bid on this task. Please go to your profile settings and complete the verification process. Thank you!"
+
+          if(confirm(confirmation_to_start_verification_process)){
+            this.$router.push('/Verify')
+          } 
+          return
+        }
+      }
+
       let bid_cost = null
       if(parseInt(this.task.full_pay) <= 1000){
         bid_cost = 10

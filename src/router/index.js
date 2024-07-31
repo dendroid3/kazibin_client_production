@@ -228,7 +228,7 @@ const routes = [
   {
     path: '/t/:task_code',
     name: 'ViewTaskForBidding',
-  component: () => import('../views/task/ViewTask.vue'),
+    component: () => import('../views/task/ViewTask.vue'),
   },
   {
     path: '/Explore/Task',

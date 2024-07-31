@@ -92,7 +92,7 @@
     </section>
     
     <task-strip />
-    <v-row class="no-gutters">
+    <v-row>
       <v-col class="col-12 col-md-6" v-for="(task, i) in getAllTasksAvailableForBidding" :key="i" v-if="pagination_links_set">
         <task-strip :task="task"/>
       </v-col>
