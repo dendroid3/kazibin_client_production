@@ -48,7 +48,7 @@
         :heading="`available tasks`"
         :route="`/Explore/Task`"
       />
-      <v-row class="no-gutters limiting_wrapper">
+      <v-row class="limiting_wrapper">
         <v-col class="col-12 col-md-6"  v-for="(task, i) in getAllTasksAvailableForBidding" :key="i">
           <task-strip :task="task"/>
         </v-col>
