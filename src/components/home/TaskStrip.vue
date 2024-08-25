@@ -1,5 +1,5 @@
 <template>
-  <div class="grey lighten-3 wrapper pa-2 my-1 relative mx-2 rounded fill-height">
+  <div class="grey lighten-4 wrapper pa-2 my-1 relative mx-2 rounded fill-height">
     <section>
       <span class="head pointer uppercase" @click="goToView">
         {{ task.code }}
