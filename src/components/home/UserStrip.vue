@@ -13,13 +13,13 @@
                             <span class="d-flex initials">
                                 {{broker ? initials(broker.username) : initials(writer.username)}}
                             </span>
-                            <v-divider dark/>
+                            <!-- <v-divider dark/>
                             <span v-if="broker">
                                 {{'broker'}}
                             </span>
                             <span v-if="writer">
                                 {{'writer'}}
-                            </span>
+                            </span> -->
                         </div>
                     </v-list-item-avatar>
                 </v-col>
