@@ -1,6 +1,6 @@
 {
   "name": "kazibin",
-  "version": "2024.08.25.07",
+  "version": "2024.08.25.08",
   "private": true,
   "scripts": {
     "serve": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",

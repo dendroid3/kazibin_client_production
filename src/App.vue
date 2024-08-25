@@ -65,7 +65,7 @@
 
     <v-navigation-drawer
     v-if="getUser"
-    class="grey lighten-2"
+    class="grey lighten-2 drawer"
     v-model="home_drawer"
     temporary
     clipped 
@@ -224,6 +224,10 @@ export default {
 
   .uppercase{
     text-transform: uppercase;
+  }
+
+  .drawer{
+    z-index: 9999;
   }
 
   .bold-tiny{

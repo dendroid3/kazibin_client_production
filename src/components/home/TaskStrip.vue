@@ -151,7 +151,7 @@ export default {
   .wrapper{
     background-color: blue;
     position: relative;
-    z-index: 999;
+    z-index: 1;
   }
   .wrapper::after{
     content: '';
