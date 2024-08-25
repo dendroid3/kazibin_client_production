@@ -2,6 +2,28 @@
   <div class="grey lighten-1">
     <search-tab />
     <actions-block /> 
+    
+    <section v-if="getAllTasksAvailableForBidding[0]"  style="border-top: 0.25rem solid white;" class="white">
+      <heading-tab
+        class="grey lighten-1"
+        :heading="`available tasks`"
+        :route="`/Explore/Task`"
+      />
+      <v-row class="limiting_wrapper">
+        <v-col class="col-12 col-md-6"  v-for="(task, i) in getAllTasksAvailableForBidding" :key="i">
+          <task-strip :task="task"/>
+        </v-col>
+        <v-col class="col-12 d-flex justify-center pa-3">
+          <v-btn 
+            @click="go(`/Explore/Task`)"
+            small 
+            class="rounded success submit-button">
+              Load More
+          </v-btn>
+        </v-col>
+      </v-row>
+    </section>
+    
     <section class="white">
       <heading-tab
         class="grey lighten-1"
@@ -35,26 +57,6 @@
         <v-col class="col-12 d-flex justify-center pa-3">
           <v-btn 
             @click="go(`/Explore/Writers`)"
-            small 
-            class="rounded success submit-button">
-              Load More
-          </v-btn>
-        </v-col>
-      </v-row>
-    </section>
-    <section v-if="getAllTasksAvailableForBidding[0]"  style="border-top: 0.25rem solid white;" class="white">
-      <heading-tab
-        class="grey lighten-1"
-        :heading="`available tasks`"
-        :route="`/Explore/Task`"
-      />
-      <v-row class="limiting_wrapper">
-        <v-col class="col-12 col-md-6"  v-for="(task, i) in getAllTasksAvailableForBidding" :key="i">
-          <task-strip :task="task"/>
-        </v-col>
-        <v-col class="col-12 d-flex justify-center pa-3">
-          <v-btn 
-            @click="go(`/Explore/Task`)"
             small 
             class="rounded success submit-button">
               Load More
