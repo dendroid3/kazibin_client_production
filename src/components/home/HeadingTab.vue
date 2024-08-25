@@ -20,5 +20,7 @@ export default {
 }
 </script>
 <style lang="css" scoped>
-
+  div{
+    z-index: 1;
+  }
 </style>
