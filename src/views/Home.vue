@@ -9,7 +9,7 @@
         :heading="`available tasks`"
         :route="`/Explore/Task`"
       />
-      <v-row class="limiting_wrapper">
+      <v-row class="limiting_wrapper no-gutters">
         <v-col class="col-12 col-md-6"  v-for="(task, i) in getAllTasksAvailableForBidding" :key="i">
           <task-strip :task="task"/>
         </v-col>
@@ -23,7 +23,7 @@
         </v-col>
       </v-row>
     </section>
-    
+
     <section class="white">
       <heading-tab
         class="grey lighten-1"
