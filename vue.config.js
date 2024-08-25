@@ -2,6 +2,11 @@ module.exports = {
   transpileDependencies: [
     'vuetify',
   ],
+  pwa: {
+    workboxOptions: {
+        skipWaiting: true
+    }
+  },
   devServer: {
     overlay: {
       warnings: true,
