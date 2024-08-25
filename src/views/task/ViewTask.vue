@@ -37,8 +37,9 @@
                         <v-toolbar-title>{{"Broker: " + getTaskForBidding.broker.user.code + ": "}}</v-toolbar-title>
                         <v-toolbar-title class="ml-1">{{getTaskForBidding.broker.user.username}}</v-toolbar-title>
                         <span v-if="getTaskForBidding.broker.user.credential_verification">
-                            <v-icon class="rounded ml-4 white primary-color--text">
-                                mdi-check
+                            <v-icon small class="rounded-circle primary-color pa-1 ml-2 white--text">
+                                <!-- mdi-check -->
+                                mdi-checkbox-marked-circle-outline
                             </v-icon>
                         </span>
                     </div>

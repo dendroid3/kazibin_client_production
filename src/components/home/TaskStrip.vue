@@ -2,9 +2,9 @@
   <div class="grey lighten-3 wrapper pa-2 my-1 relative mx-2 rounded fill-height">
     <section>
       <span class="head pointer" @click="goToView">
-        {{task.code}}
-        {{': '}}
-        {{task.topic}}  
+        {{ task.code }}
+        {{ ': ' }}
+        {{ task.topic }}  
       </span>
       <br>
       <div class="pointer" @click="goToView">
@@ -14,7 +14,7 @@
       </div>
       <div class="d-flex align-center pointer" @click="goToView">
         {{"Broker: "}}
-        {{task.broker.user.username}}
+        {{task.broker.user.username + " " + last_activity}}
         {{task.broker.user.credential_verification ? "[verifed]" : null }}
       </div>
       <div class="d-flex align-center pointer" @click="goToView">
@@ -81,6 +81,9 @@ export default {
     },
     due_time(){
       return 'due in ' + dayjs(this.task.expiry_time).fromNow(true)
+    },
+    last_activity(){
+      return "( last seen " + dayjs(this.task.broker.user.last_activity).fromNow(true) + " ago )"
     }
   },
   data(){

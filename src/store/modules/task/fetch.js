@@ -101,6 +101,7 @@ const actions = {
       const response = await
       axios.post('/task/get_available_for_bidding', data)
       commit('SET_ALL_TASKS_AVAILABLE_FOR_BIDDING', response.data)
+      console.log(response.data)
       return true
     } catch (e){
       if(e.response){

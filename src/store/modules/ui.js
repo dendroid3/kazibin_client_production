@@ -41,7 +41,7 @@ const actions = {
       //Set new expiry time
       const d = new Date();
       // Expires after 6 hours
-      d.setTime(d.getTime() + (6*60*1000));
+      d.setTime(d.getTime() + (60*60*1000));
       let expires = d.valueOf()
       commit('SET_REMINDER_TO_VERIFY_ACCOUNT', {exipiry_time: expires})
       return
