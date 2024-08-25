@@ -10,7 +10,7 @@
         :route="`/Explore/Task`"
       />
       <v-row class="limiting_wrapper no-gutters">
-        <v-col class="col-12 col-md-6"  v-for="(task, i) in getAllTasksAvailableForBidding" :key="i">
+        <v-col class="col-12 col-md-6 mb-2"  v-for="(task, i) in getAllTasksAvailableForBidding" :key="i">
           <task-strip :task="task"/>
         </v-col>
         <v-col class="col-12 d-flex justify-center pa-3">
