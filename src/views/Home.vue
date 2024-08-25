@@ -3,13 +3,13 @@
     <search-tab />
     <actions-block /> 
     
-    <section v-if="getAllTasksAvailableForBidding[0]"  style="border-top: 0.25rem solid white;" class="white">
+    <section v-if="getAllTasksAvailableForBidding[0]"  style="border-top: 0.25rem solid white;" class="grey lighten-1 pb-4">
       <heading-tab
         class="grey lighten-1"
         :heading="`available tasks`"
         :route="`/Explore/Task`"
       />
-      <v-row class="limiting_wrapper no-gutters">
+      <v-row class="limiting_wrapper">
         <v-col class="col-12 col-md-6"  v-for="(task, i) in getAllTasksAvailableForBidding" :key="i">
           <task-strip :task="task"/>
         </v-col>
@@ -24,7 +24,7 @@
       </v-row>
     </section>
 
-    <section class="white">
+    <section class="grey lighten-1 pb-1">
       <heading-tab
         class="grey lighten-1"
         :heading="`top job brokers`"
@@ -44,7 +44,8 @@
         </v-col>
       </v-row>
     </section>
-    <section class="white" style="border-top: 0.25rem solid white;">
+
+    <section class="grey lighten-1 pb-1" style="border-top: 0.25rem solid white;">
       <heading-tab
         class="grey lighten-1"
         :heading="`top writers`"

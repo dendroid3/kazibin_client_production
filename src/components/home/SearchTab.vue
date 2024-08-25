@@ -1,17 +1,19 @@
 <template>
   <div>
-    <v-row class="no-gutters d-flex align-center">
-      <v-col class="col-8 d-flex justify-center align-center pa-4">
+    <v-row class="no-gutters d-flex align-center px-2">
+      <v-col class="col-10 d-flex justify-center align-center pa-4">
         <input type="text" placeholder="enter user or job code" 
         v-model="search_code"
         class="px-4 input pa-1">
       </v-col>
-      <v-col class="col-4 d-flex justify-center pa-4">
+      <v-col class="col-2 d-flex justify-center pa-4">
         <v-btn  class="success white--text"
         small 
         :loading="searching"
         @click="search">
-          search
+          <v-icon>
+            mdi-magnify
+          </v-icon>
         </v-btn>
       </v-col>
     </v-row>
@@ -185,6 +187,7 @@ export default {
     border-radius: 5px; 
     background-color: white;
     border: solid black 1px;
+    width: 100%;
   } 
   .metrics{
       font-weight: 900;
