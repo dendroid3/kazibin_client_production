@@ -57,21 +57,22 @@
       <section v-for="task in getBrokerMetrics.available_tasks" :key="task.id">
         <div class="grey lighten-3 wrapper pa-2">
           <section @click="goToView(task)">
-            <span class="head">
+            <span class="head uppercase">
               {{task.code}}
               {{': '}}
               {{task.topic}}  
             </span>
             <br>
-            {{task.unit}} {{task.type}} 
-            {{dueTime(task.expiry_time)}} <br>
-            {{fullPay(task) }}{{modeOfPayment(task.pay_day)}} <br>
+            <span class="uppercase">
+              {{task.unit}} {{task.type}} 
+              {{dueTime(task.expiry_time)}} <br>
+              {{fullPay(task) }}{{modeOfPayment(task.pay_day)}} <br>
+            </span>
             <div class="d-flex align-center">
               {{"Difficulty: " + task.difficulty + "/10"}}
-              <v-icon color="yellow"  small>
-                mdi-star
-              </v-icon>
-              {{". Files: 0"}}
+            </div>
+            <div class="d-flex align-center">
+              {{"Files: 0"}}
               <v-icon color="bleck"  small>
                 mdi-file
               </v-icon>
@@ -85,6 +86,7 @@
             :disabled="bidded" 
             :loading="bidding">
               {{bidded ? 'bid sent' : 'bid'}}
+              {{ task.verified_only ? '(Verified Only)' : "(Any Writer)" }}
             </v-btn>
           </div>
         </div>
