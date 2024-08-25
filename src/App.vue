@@ -222,6 +222,10 @@ export default {
     text-decoration: none;
   }
 
+  .uppercase{
+    text-transform: uppercase;
+  }
+
   .bold-tiny{
     font-weight: 900;
     font-size: 0.9rem;

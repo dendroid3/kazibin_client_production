@@ -1,13 +1,13 @@
 <template>
   <div class="grey lighten-3 wrapper pa-2 my-1 relative mx-2 rounded fill-height">
     <section>
-      <span class="head pointer" @click="goToView">
+      <span class="head pointer uppercase" @click="goToView">
         {{ task.code }}
         {{ ': ' }}
         {{ task.topic }}  
       </span>
       <br>
-      <div class="pointer" @click="goToView">
+      <div class="pointer uppercase" @click="goToView">
         {{task.unit}} {{task.type}} 
         {{due_time}} <br>
         {{full_pay }}{{mode_of_payment}} <br>
