@@ -73,6 +73,10 @@
           {{'Explore Tasks'}}
         </v-list-item>
         
+        <v-list-item class="short-line-under" @click="goToSection('marketplace')">
+          {{'Marketplace'}}
+        </v-list-item>
+        
         <v-list-item class="short-line-under" @click="goToSection('Explore/Writers')">
           {{'Discover Writers'}}
         </v-list-item>

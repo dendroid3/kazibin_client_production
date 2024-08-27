@@ -23,6 +23,27 @@
         </v-col>
       </v-row>
     </section>
+    
+    <section v-if="getAllTasksAvailableForBidding[0]"  style="border-top: 0.25rem solid white;" class="grey lighten-1 pb-4">
+      <heading-tab
+        class="grey lighten-1"
+        :heading="`accounts marketplace`"
+        :route="`/Marketplace`"
+      />
+      <v-row class="limiting_wrapper no-gutters">
+        <v-col class="col-12 col-md-6 mb-2"  v-for="(task, i) in getAllTasksAvailableForBidding" :key="i">
+          <account-card />
+        </v-col>
+        <v-col class="col-12 d-flex justify-center pa-3">
+          <v-btn 
+            @click="go(`/Marketplace`)"
+            small 
+            class="rounded success submit-button">
+              Load More
+          </v-btn>
+        </v-col>
+      </v-row>
+    </section>
 
     <section class="grey lighten-1 pb-1">
       <heading-tab
@@ -76,11 +97,12 @@ import FooterStrip from '../components/widgets/FooterStrip.vue'
 import TaskStrip from '../components/home/TaskStrip.vue'
 import UserCard from '../components/home/UserCard.vue'
 import UserStrip from '../components/home/UserStrip.vue';
+import AccountCard from '../components/marketplace/AccountCard.vue'
 
 import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Home',
-  components: { SearchTab, HeadingTab, ActionsBlock, FooterStrip, TaskStrip, UserCard, UserStrip},
+  components: { SearchTab, HeadingTab, ActionsBlock, FooterStrip, TaskStrip, UserCard, UserStrip, AccountCard},
   computed: {
     ...mapGetters(['getAllTasksAvailableForBidding', 'getAllWriters', 'getAllBrokers']),
     env(){

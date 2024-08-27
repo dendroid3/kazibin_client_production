@@ -41,12 +41,10 @@
                     {{'Dashboard'}}
                 </v-list-item>
                 
-                <v-list-item class="short-line-under" v-if="getUser" dark @click="goToSection('task/add')">
-                    {{'Post '}}
-                </v-list-item>
                 <v-list-item class="short-line-under" v-if="!getUser" dark @click="goToSection('register')">
                     {{'Register'}}
                 </v-list-item>
+
                 <v-list-item class="short-line-under" v-if="!getUser" dark @click="goToSection('login')">
                     {{'Login'}}
                 </v-list-item>
@@ -58,6 +56,18 @@
                             {{ getAvailableTasksCount ?  getAvailableTasksCount : 0 }}
                         </span>
                     </span>
+                </v-list-item>
+                
+                <v-list-item class="short-line-under" v-if="getUser" dark @click="goToSection('task/add')">
+                    {{'Post Task'}}
+                </v-list-item>
+    
+                <v-list-item class="short-line-under" dark @click="goToSection('marketplace')">
+                    {{'Marketplace'}}
+                </v-list-item>
+
+                <v-list-item class="short-line-under" dark @click="goToSection('marketplace')">
+                    {{'Post AC'}}
                 </v-list-item>
                 
                 <v-list-item class="short-line-under" dark @click="goToSection('explore/writers')">

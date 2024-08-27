@@ -80,11 +80,18 @@
         :loading="!chats_fetched"
       />
       
-      <content-tab
+      <!-- <content-tab
         v-show="is_open"
         :title="`activity`"
         :count="getLogMessages.length ? getLogMessages.length : 0"
         :loading="!chats_fetched"
+      /> -->
+
+      <content-tab
+        v-show="is_open"
+        :title="`accounts`"
+        :count="0"
+        :loading="false"
       />
     </v-row>
   </div>
