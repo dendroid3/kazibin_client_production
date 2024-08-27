@@ -15,7 +15,7 @@
     
     <action-tab
       :action="`Sell a Writing Account`"
-      :description="`advertise your writing account on sell to potential buyers`"
+      :description="`advertise writing account to potential buyers`"
       :route="`Account/Add`"
     />
 
