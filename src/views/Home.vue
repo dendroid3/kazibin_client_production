@@ -31,8 +31,8 @@
         :route="`/Marketplace`"
       />
       <v-row class="limiting_wrapper no-gutters">
-        <v-col class="col-12 col-md-6 mb-2"  v-for="(task, i) in getAllTasksAvailableForBidding" :key="i">
-          <account-card />
+        <v-col class="col-12 col-md-6 mb-2"  v-for="(account, i) in getAccounts" :key="i">
+          <account-card :account="account"/>
         </v-col>
         <v-col class="col-12 d-flex justify-center pa-3">
           <v-btn 
@@ -104,7 +104,7 @@ export default {
   name: 'Home',
   components: { SearchTab, HeadingTab, ActionsBlock, FooterStrip, TaskStrip, UserCard, UserStrip, AccountCard},
   computed: {
-    ...mapGetters(['getAllTasksAvailableForBidding', 'getAllWriters', 'getAllBrokers']),
+    ...mapGetters(['getAllTasksAvailableForBidding', 'getAllWriters', 'getAllBrokers', 'getAccounts']),
     env(){
       return process.env.VUE_APP_API
     },
@@ -112,6 +112,7 @@ export default {
   data(){
     return {
       fetched_tasks: false,
+      fetched_accounts: false,
       fetched_writers: false,
       fetched_brokers: false,
       counter: 8,
@@ -119,10 +120,11 @@ export default {
     }
   },
   methods:{
-    ...mapActions(['fetchAllAvailableForBidding', 'fetchAllWriters', 'fetchAllBrokers']),
+    ...mapActions(['fetchAllAvailableForBidding', 'fetchAllWriters', 'fetchAllBrokers', 'fetchAccounts']),
     async boot(){
       try{
         await this.fetchAllAvailableForBidding().then(() => {this.fetched_tasks = true})
+        await this.fetchAccounts().then(() => {this.fetched_accounts = true})
         await this.fetchAllBrokers(null).then(() => {this.fetched_brokers = true})
         await this.fetchAllWriters(null).then(() => {this.fetched_writers = true})
       } catch(e){

@@ -251,6 +251,16 @@ const routes = [
     }
   },
   {
+    path: '/account/add',
+    name: 'AddAccount',
+    component: () => import('../views/marketplace/AddAccount.vue'),
+    meta:{
+      middleware: [
+        auth, emailverified
+      ]
+    }
+  },
+  {
     path: '/marketplace',
     name: 'Marketplace',
     component: () => import('../views/marketplace/ViewMarketplace.vue'),
@@ -259,6 +269,11 @@ const routes = [
         auth, emailverified
       ]
     }
+  },
+  {
+    path: '/m/:account_code',
+    name: 'ViewAccount',
+    component: () => import('../views/marketplace/ViewAccount.vue')
   },
   {
     path: '/Explore/Brokers',
