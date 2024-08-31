@@ -1,6 +1,6 @@
 {
   "name": "kazibin",
-  "version": "2024.08.31.04",
+  "version": "2024.08.31.05",
   "private": true,
   "scripts": {
     "serve": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
@@ -10,11 +10,13 @@
   "dependencies": {
     "@mdi/font": "^5.9.55",
     "axios": "^0.21.1",
+    "caniuse-lite": "^1.0.30001655",
     "core-js": "^3.6.5",
     "dayjs": "^1.10.7",
     "js-cookie": "^2.2.1",
     "register-service-worker": "^1.7.1",
     "vue": "^2.6.11",
+    "vue-meta": "^2.4.0",
     "vue-router": "^3.2.0",
     "vuejs-datetimepicker": "^1.1.13",
     "vuetify": "^2.4.0",

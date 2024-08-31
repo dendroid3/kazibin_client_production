@@ -55,6 +55,18 @@ import { mapActions, mapGetters } from 'vuex';
 import FooterStrip from '../components/widgets/FooterStrip.vue'
 export default {
     name: "About",
+
+    metaInfo: {
+      // if no subcomponents specify a metaInfo.title, this title will be used
+      title: 'About Us',
+      // all titles will be injected into this template
+      titleTemplate: '%s | kazibin',
+      meta: [
+        // { 'og:title' : 'now' },
+        { property: 'og:title', content: 'An example Vue application with vue-meta.' },
+      ]
+    },
+
     filters:{
       formatToReadable(number){
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

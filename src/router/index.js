@@ -8,6 +8,7 @@ import auth from './middleware/auth'
 import emailverified from './middleware/emailverified'
 import guest from './middleware/guest'
 import middlewarePipeline from './middlewarePipeline'
+import Meta from 'vue-meta'
 
 //This injects the api url removing the need for it to be changed in VueX modules everytime it changes
 //the if statement checks whether the user is logged in in order to inject the "Authorization"/"Bearer" token to the HTTP request from the cookie
@@ -22,6 +23,7 @@ if(Cookies.get('KAZIBIN_TOKEN')){
 } 
 
 Vue.use(VueRouter)
+Vue.use(Meta)
 
 const routes = [
   {
