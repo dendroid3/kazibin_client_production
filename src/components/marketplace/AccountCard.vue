@@ -108,7 +108,7 @@ export default {
 
         goToWhatsApp() {
             // Encode the message to be URL-safe
-            let message = `Hello ${this.account.user.username},\n\nI hope this message finds you well. I am interested in the ${this.account.title} writing account advertised on kazibin (${process.env.VUE_APP_FRONT_END_URL})/m/${this.account.code})VUE_APP_FRONT_END_URL.  Could you please provide more details about the account?\n\nLooking forward to your response.\n\nBest regards,\n${this.getUser.username}`;
+            let message = `Hello ${this.account.user.username},\n\nI hope this message finds you well. I am interested in the ${this.account.title} writing account advertised on kazibin (${process.env.VUE_APP_FRONT_END_URL}/m/${this.account.code}).  Could you please provide more details about the account?\n\nLooking forward to your response.\n\nBest regards,\n${this.getUser.username}`;
 
             let encodedMessage = encodeURIComponent(message)
 
@@ -126,7 +126,7 @@ export default {
 
         sms(){
             // Encode the message to be URL-safe
-            let message = `Hello ${this.account.user.username},\n\nI hope this message finds you well. I am interested in the ${this.account.title} writing account advertised on kazibin (${process.env.VUE_APP_FRONT_END_URL})/m/${this.account.code})VUE_APP_FRONT_END_URL.  Could you please provide more details about the account?\n\nLooking forward to your response.\n\nBest regards,\n${this.getUser.username}`;
+            let message = `Hello ${this.account.user.username},\n\nI hope this message finds you well. I am interested in the ${this.account.title} writing account advertised on kazibin (${process.env.VUE_APP_FRONT_END_URL}/m/${this.account.code}).  Could you please provide more details about the account?\n\nLooking forward to your response.\n\nBest regards,\n${this.getUser.username}`;
 
             let encodedMessage = encodeURIComponent(message)
 
@@ -140,7 +140,7 @@ export default {
             let encodedSubject = `INTEREST IN THE ${this.account.title.toUpperCase()} ACCOUNT`
             
             // Encode the message to be URL-safe
-            let message = `Hello ${this.account.user.username},\n\nI hope this message finds you well. I am interested in the ${this.account.title} writing account advertised on kazibin (${process.env.VUE_APP_FRONT_END_URL})/m/${this.account.code})VUE_APP_FRONT_END_URL.  Could you please provide more details about the account?\n\nLooking forward to your response.\n\nBest regards,\n${this.getUser.username}`;
+            let message = `Hello ${this.account.user.username},\n\nI hope this message finds you well. I am interested in the ${this.account.title} writing account advertised on kazibin (${process.env.VUE_APP_FRONT_END_URL}/m/${this.account.code}).  Could you please provide more details about the account?\n\nLooking forward to your response.\n\nBest regards,\n${this.getUser.username}`;
 
             let encodedBody = encodeURIComponent(message)
 
