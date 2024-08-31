@@ -15,6 +15,7 @@ const actions = {
         try {
             const response = await
             axios.post('transaction/depositFromMpesa', data)
+            dispatch('openAlert', {message: 'Mpesa transaction initiated. Kindly enter your Mpesa PIN to complete the transation.', code: 'success', timeout: 5000}, {root: true})
             return response
         } catch (e) {
             if(e.response){
