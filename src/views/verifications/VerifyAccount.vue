@@ -168,8 +168,8 @@ export default {
         },
 
         submit(){
-            if(this.getDashboadDetails.transactions.balance < 500) {
-                const required_amount = 500 - this.getDashboadDetails.transactions.balance;
+            if(this.getDashboadDetails.transactions.balance < process.env.VUE_APP_VERIFICATION_COST) {
+                const required_amount = process.env.VUE_APP_VERIFICATION_COST - this.getDashboadDetails.transactions.balance;
                 const intitiate_request_to_deposit_data = {
                 action: "verify account detail",
                 required_amount: required_amount

@@ -17,8 +17,8 @@ const actions = {
         try{
             const response = await
             axios.get('/profile/get_dashboard_details')
-            console.log(response)
             commit('SET_DASHBOARD_DETAILS', response.data[0])
+            console.log(response)
         } catch(e){
             if(e.response){
                 dispatch('handleError', {error: e, error_code: e.response.status, action: 'fetchDashboardDetails'}, {root: true})

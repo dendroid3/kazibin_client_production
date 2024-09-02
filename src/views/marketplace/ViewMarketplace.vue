@@ -11,6 +11,23 @@
             <v-col class="col-12 col-md-6 mb-2"  v-for="(account, i) in getAccounts" :key="i">
                 <account-card :account="account"/>
             </v-col>
+            <section v-if="getAccounts.length < 1">
+                <v-row class="no-gutters pt-4 mt-4">
+                    <v-col class="col-8 offset-2 pa-4">
+                      <v-img class="" :src="require(`../../assets/pageNotFound.svg`)" contain />
+                    </v-col>
+                    <v-col class="col-8 offset-2 px-4 d-flex justify-center text-center tomato-text bold">
+                      {{"Ooops! No writing accounts currently available!"}}
+                    </v-col>
+                    <v-col class="col-8 offset-2 px-4 d-flex justify-center primary-color-text text-center mt-4">
+                      {{"We forward all advertised writing accounts real time to our telegram channel. Join it to be notified as soon as there is an available task"}}
+                    </v-col>
+                    <v-col class="col-8 offset-2 px-4 d-flex justify-center ">
+                      <v-btn class="mx-1 white--text" @click="goTelegram" style="background-color: tomato;">Join Channel</v-btn>
+                      <v-btn class="mx-1 white--text" @click="go('/Dashboard')" style="background-color: tomato;">Dashboard</v-btn>
+                    </v-col>
+                </v-row>
+            </section>
         </v-row>
         <div v-else>
             <fetching-items :message='`fetching accounts`' />
@@ -90,6 +107,8 @@ export default {
                     this.pagination_links_set = true
                 }
                 this.accounts_details_set = true
+            }).catch(() => {
+                this.accounts_details_set = true
             })
         },
 
@@ -118,6 +137,6 @@ export default {
     }
 
     .main-wrapper{
-        padding-bottom: 5rem; 
+        padding-bottom: 0.5rem; 
     }
 </style>

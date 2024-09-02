@@ -220,7 +220,7 @@ const routes = [
   {
     path: '/Tasks/Taken',
     name: 'TakenTasks',
-    component: () => import('../views/tasks/Taken'),
+    component: () => import('../views/tasks/Taken.vue'),
     meta:{
       middleware: [
         auth, emailverified
@@ -256,6 +256,16 @@ const routes = [
     path: '/account/add',
     name: 'AddAccount',
     component: () => import('../views/marketplace/AddAccount.vue'),
+    meta:{
+      middleware: [
+        auth, emailverified
+      ]
+    }
+  },
+  {
+    path: '/accounts',
+    name: 'MyAccounts',
+    component: () => import('../views/marketplace/Accounts.vue'),
     meta:{
       middleware: [
         auth, emailverified

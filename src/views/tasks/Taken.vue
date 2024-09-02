@@ -183,7 +183,7 @@
         <div v-if="getAllTasksDoneByMe[0] && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
           <d-taken-card :tasks="getAllTasksDoneByMe" />
         </div>
-      </section>
+    </section>
   
     <v-row class="padder d-flex justify-center" v-if="!getAllTasksDoneByMe[0] && pagination_links_set">
       <div class="padded mb-4">

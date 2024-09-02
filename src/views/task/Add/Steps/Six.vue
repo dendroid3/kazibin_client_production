@@ -167,8 +167,8 @@ export default {
 
           if(!confirm(prompt_message)){ this.loading = false; return }
 
-          if(this.getDashboadDetails.transactions.balance < 20){
-            const required_amount = (20 - this.getDashboadDetails.transactions.balance);
+          if(this.getDashboadDetails.transactions.balance < process.env.VUE_APP_BROADCAST_TASK_COST){
+            const required_amount = (process.env.VUE_APP_BROADCAST_TASK_COST - this.getDashboadDetails.transactions.balance);
 
             const intitiate_request_to_deposit_data = {
               action: "forward a task to telegram",

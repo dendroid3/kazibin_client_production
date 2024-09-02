@@ -90,7 +90,8 @@
       <content-tab
         v-show="is_open"
         :title="`accounts`"
-        :count="0"
+        :url="`Accounts`"
+        :count="getDashboadDetails.accounts.total"
         :loading="false"
       />
     </v-row>
