@@ -141,43 +141,43 @@ export default{
 
         goToWhatsApp() {
             // Encode the message to be URL-safe
-            let message = `Hello ${this.account.user.username},\n\nI hope this message finds you well. I am interested in the ${this.account.title} writing account advertised on kazibin (${process.env.VUE_APP_FRONT_END_URL}/m/${this.account.code}).  Could you please provide more details about the account?\n\nLooking forward to your response.\n\nBest regards,\n${this.getUser.username}`;
+            let message = `Hello ${this.getCurrentAccountInView.user.username},\n\nI hope this message finds you well. I am interested in the ${this.getCurrentAccountInView.title} writing account advertised on kazibin (${process.env.VUE_APP_FRONT_END_URL}/m/${this.getCurrentAccountInView.code}).  Could you please provide more details about the account?\n\nLooking forward to your response.\n\nBest regards,\n${this.getUser.username}`;
 
             let encodedMessage = encodeURIComponent(message)
 
             // Construct the WhatsApp URL with the phone number and message
-            let whatsappUrl = `https://wa.me/+254${this.account.user.phone_number}?text=${encodedMessage}`;
+            let whatsappUrl = `https://wa.me/+254${this.getCurrentAccountInView.user.phone_number}?text=${encodedMessage}`;
 
             // Open WhatsApp with the pre-filled message
             window.open(whatsappUrl);
         },
 
         call(){
-            const phone_number = '+254' + this.account.user.phone_number
+            const phone_number = '+254' + this.getCurrentAccountInView.user.phone_number
             window.location.href = 'tel:' + phone_number;
         },
 
         sms(){
             // Encode the message to be URL-safe
-            let message = `Hello ${this.account.user.username},\n\nI hope this message finds you well. I am interested in the ${this.account.title} writing account advertised on kazibin (${process.env.VUE_APP_FRONT_END_URL}/m/${this.account.code}).  Could you please provide more details about the account?\n\nLooking forward to your response.\n\nBest regards,\n${this.getUser.username}`;
+            let message = `Hello ${this.getCurrentAccountInView.user.username},\n\nI hope this message finds you well. I am interested in the ${this.getCurrentAccountInView.title} writing account advertised on kazibin (${process.env.VUE_APP_FRONT_END_URL}/m/${this.getCurrentAccountInView.code}).  Could you please provide more details about the account?\n\nLooking forward to your response.\n\nBest regards,\n${this.getUser.username}`;
 
             let encodedMessage = encodeURIComponent(message)
 
             // Construct the sms: URI with the phone number and message body
-            let smsUri = `sms:+254${this.account.user.phone_number}?body=${encodedMessage}`
+            let smsUri = `sms:+254${this.getCurrentAccountInView.user.phone_number}?body=${encodedMessage}`
 
             window.location.href = smsUri;
         },
 
         sendEmail() {
-            let encodedSubject = `INTEREST IN THE ${this.account.title.toUpperCase()} ACCOUNT`
+            let encodedSubject = `INTEREST IN THE ${this.getCurrentAccountInView.title.toUpperCase()} ACCOUNT`
             
             // Encode the message to be URL-safe
-            let message = `Hello ${this.account.user.username},\n\nI hope this message finds you well. I am interested in the ${this.account.title} writing account advertised on kazibin (${process.env.VUE_APP_FRONT_END_URL}/m/${this.account.code}).  Could you please provide more details about the account?\n\nLooking forward to your response.\n\nBest regards,\n${this.getUser.username}`;
+            let message = `Hello ${this.getCurrentAccountInView.user.username},\n\nI hope this message finds you well. I am interested in the ${this.getCurrentAccountInView.title} writing account advertised on kazibin (${process.env.VUE_APP_FRONT_END_URL}/m/${this.getCurrentAccountInView.code}).  Could you please provide more details about the account?\n\nLooking forward to your response.\n\nBest regards,\n${this.getUser.username}`;
 
             let encodedBody = encodeURIComponent(message)
 
-            let mailtoUri = `mailto:${this.account.user.email}?subject=${encodedSubject}&body=${encodedBody}`;
+            let mailtoUri = `mailto:${this.getCurrentAccountInView.user.email}?subject=${encodedSubject}&body=${encodedBody}`;
 
             // Open the email client with the pre-filled information
             window.location.href = mailtoUri;
@@ -186,7 +186,6 @@ export default{
         boot() {
             //check whether the account details are set
             const account_code = this.$router.history.current.params.account_code
-            console.log(account_code)
 
             if(!this.getCurrentAccountInView){
                 this.fetchAccount({
