@@ -88,7 +88,7 @@
     </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
     name: "AccountCard",
@@ -102,7 +102,9 @@ export default {
     },
 
     methods: {
+        ...mapActions(['setCurrentAccountInView']),
         viewAccount() {
+            this.setCurrentAccountInView(this.account)
             this.$router.push('/m/' + this.account.code)
         },
 

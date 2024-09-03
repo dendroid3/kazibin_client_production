@@ -13,6 +13,7 @@
     :chats_fetched="chats_fetched" 
     :requests_fetched="requests_fetched"
     :transactions_fetched="transactions_fetched"
+    :accounts_fetched="accounts_fetched"
     />
     <section v-if="
         getAllTasksPostedByMe && 
@@ -135,6 +136,20 @@
 
       </section>
 
+      <section v-if="getMyAccounts">
+        <!-- {{ getMyAccounts.accounts.data }} -->
+        <title-strip :title="`accounts posted`" :page="`/accounts`"  v-if="getMyAccounts.accounts.data[0]"/> 
+        <div class="limiting_wrapper" v-if="getMyAccounts.accounts.data[0] && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+          <accounts-strip :account="account" v-for="account in getMyAccounts.accounts.data" :key="account.id" />
+          <!-- I am accounts smaill screen -->
+        </div>
+
+        <div v-if="getMyAccounts.accounts.data[0] && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+          <d-accounts-card :accounts="getMyAccounts.accounts.data"/>
+        </div>
+
+      </section>
+
       <section v-if="getLogMessages &&  ($vuetify.breakpoint.md || $vuetify.breakpoint.sm || $vuetify.breakpoint.xs)">
         <title-strip :title="`timeline`" :page="`/Logs`" v-if="getLogMessages[0]" />
         <div class="limiting_wrapper">
@@ -226,6 +241,7 @@ import BidsStrip from '../components/dashboard/BidsStrip.vue'
 import InvoiceStrip from '../components/dashboard/InvoiceStrip.vue'
 import emptyHere from '../components/svg/emptyHere.vue'
 import TransactionStrip from '../components/dashboard/TransactionStrip.vue'
+import AccountsStrip from '../components/dashboard/AccountsStrip.vue'
 
 //desktop
 
@@ -236,6 +252,7 @@ import DTakenCard from '../components/dashboard/desktop/DTakenCard.vue'
 import DInvoiceCard from '../components/dashboard/desktop/DInvoiceCard.vue'
 import DTransactionsCard from '../components/dashboard/desktop/DTransactionsCard.vue'
 import DOffersCard from '../components/dashboard/desktop/DOffersCard.vue'
+import DAccountsCard from '../components/dashboard/desktop/DAccountsCard.vue'
 
 import { mapActions, mapGetters } from 'vuex'
 
@@ -243,9 +260,9 @@ export default {
   name: 'Dashboard',
   components: { 
     UserCard, TransactionsBelt, TitleStrip, TabsStrip, TasksStrip, LogsStrip, RequestsCard, NetworkStrip, OffersStrip, BidsStrip, 
-    InvoiceStrip, emptyHere, TransactionStrip, 
+    InvoiceStrip, emptyHere, TransactionStrip, AccountsStrip,
     //desktop
-    DTasksCard, DBidsCard, DNetworkCard, DTakenCard, DInvoiceCard, DTransactionsCard, DOffersCard
+    DTasksCard, DBidsCard, DNetworkCard, DTakenCard, DInvoiceCard, DTransactionsCard, DOffersCard, DAccountsCard
   },
   data(){
     return {
@@ -258,17 +275,18 @@ export default {
       chats_fetched: false,
       network_fetched: false,
       requests_fetched: false,
-      transactions_fetched: false
+      transactions_fetched: false,
+      accounts_fetched: false
     } 
   },
   computed:{
     ...mapGetters(['getAllTasksPostedByMe', 'getLogMessages', 'getMyBrokers', 'getMyWriters', 'getMyOffers', 'getMyBids', 
     'getAllTasksDoneByMe', 'getRequestsToAndFromWWriters', 'getRequestsToAndFromBrokers', 'getDashboadDetails', 'getUser',
-    'getDebitedInvoices', 'getCreditedInvoices', 'getMyTransactions'])
+    'getDebitedInvoices', 'getCreditedInvoices', 'getMyTransactions', 'getMyAccounts'])
   },
   methods:{
     ...mapActions(['fetchAllPostedByMe','fetchAllDoneByMe', 'fetchAllRequests', 'fetchLogMessages', 'fetchMyWriters',
-     'fetchMyBrokers', 'fetchTaskOffers', 'fetchMyBids', 'fetchDashboardDetails', 'getInvoices', 'fetchMyTransactions']),
+     'fetchMyBrokers', 'fetchTaskOffers', 'fetchMyBids', 'fetchDashboardDetails', 'getInvoices', 'fetchMyTransactions', 'fetchMyAccounts']),
     go(code){
       this.$router.push('/' + code)
     },
@@ -278,17 +296,14 @@ export default {
         await this.fetchAllPostedByMe().then(() => {this.posted_fetched = true})
         await this.fetchAllDoneByMe().then(() => {this.taken_fetched = true})
         await this.fetchTaskOffers().then(() => {this.offers_fetched = true})
-        await this.fetchMyBids().then((res) => {this.bids_fetched = true})
+        await this.fetchMyBids().then(() => {this.bids_fetched = true})
         await this.fetchMyWriters()
         await this.fetchMyBrokers().then(() => {this.liaisons_fetched = true})
-        await this.fetchAllRequests().then((res) => {this.requests_fetched = true;})
-        await this.getInvoices().then((res) => {
-          this.invoices_fetched = true
-        })
-        await this.fetchMyTransactions().then((res) => this.transactions_fetched = true)
-        await this.fetchLogMessages().then((res) => {
-          this.chats_fetched = true
-        })
+        await this.fetchAllRequests().then(() => {this.requests_fetched = true;})
+        await this.getInvoices().then(() => {this.invoices_fetched = true})
+        await this.fetchMyTransactions().then(() => {this.transactions_fetched = true})
+        await this.fetchMyAccounts().then(() => {this.accounts_fetched = true})
+        await this.fetchLogMessages().then(() => {this.chats_fetched = true})
       } catch {
       }
     }

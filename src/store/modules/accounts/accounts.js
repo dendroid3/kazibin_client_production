@@ -40,13 +40,19 @@ const actions = {
         }
     },
 
-    async fetchAccount({commit}) {
+    async fetchAccount({commit, dispatch}, data) {
         try {
             const response = await
             axios.post('/account/get_current', data)
             commit('SET_CURRENT_ACCOUNT_IN_VIEW', response.data)
+            console.log(response)
             return true
         } catch (err) {
+            if(err.code) {
+                console.log(err.code)
+            }
+            dispatch('openAlert', {message: 'You must write a proposal to go with your bid!', code: 'error'}, {root: true})
+
             console.log(err)
         }
     },

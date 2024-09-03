@@ -132,6 +132,7 @@ export default {
         {name: 'network', page: '/Network'},
         {name: 'requests', page: '/Requests'},
         {name: 'invoices', page: '/Invoices'},
+        {name: 'accounts', page: '/Accounts'},
         {name: 'transactions', page: '/Transactions'}
       ]
     }

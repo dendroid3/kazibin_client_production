@@ -71,6 +71,14 @@
         :count="getDashboadDetails.invoices.invoices_count"
         :loading="!invoices_fetched"
       />
+
+      <content-tab
+        v-show="is_open"
+        :title="`accounts`"
+        :url="`Accounts`"
+        :count="getDashboadDetails.accounts.total"
+        :loading="!accounts_fetched"
+      />
       
       <content-tab
         v-show="is_open"
@@ -86,14 +94,6 @@
         :count="getLogMessages.length ? getLogMessages.length : 0"
         :loading="!chats_fetched"
       /> -->
-
-      <content-tab
-        v-show="is_open"
-        :title="`accounts`"
-        :url="`Accounts`"
-        :count="getDashboadDetails.accounts.total"
-        :loading="false"
-      />
     </v-row>
   </div>
 </template>
@@ -111,7 +111,8 @@ export default {
     'invoices_fetched', 
     'chats_fetched',
     'requests_fetched',
-    'transactions_fetched'
+    'transactions_fetched',
+    'accounts_fetched'
   ],
   components:{
     ContentTab

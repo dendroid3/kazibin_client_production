@@ -9,6 +9,7 @@
         :liaisons_fetched="true" 
         :invoices_fetched="true" 
         :chats_fetched="true" 
+        :accounts_fetched="true"
         />
         <title-strip :title="`timeline`" :page="'/Logs'" />
         <section class="limiting_wrapper" v-if="getLogMessages[0]">

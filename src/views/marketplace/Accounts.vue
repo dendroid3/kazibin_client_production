@@ -127,7 +127,7 @@ export default {
     border-radius: 3%;
   }
   .limiting_wrapper{
-    max-height: 70vh;
+    max-height: calc(100vh - 50px);
     overflow-y: scroll;
     overflow-x: hidden;
   }
