@@ -125,7 +125,7 @@ export default{
     },
 
     computed: {
-        ...mapGetters(['getCurrentAccountInView'])
+        ...mapGetters(['getCurrentAccountInView', 'getUser'])
     },
 
     methods: {
