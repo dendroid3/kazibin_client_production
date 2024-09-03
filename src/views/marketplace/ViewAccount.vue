@@ -18,7 +18,7 @@
             <section>
                 <v-row class="d-flex mx-4 no-gutters bold">
                     <v-col class="col-12">
-                        {{ `Seller:  ${getCurrentAccountInView.user.code}:${getCurrentAccountInView.user.username}` }}
+                        {{ `SELLER:  ${getCurrentAccountInView.user.code}:${getCurrentAccountInView.user.username}` }}
                     </v-col>
                     <v-col class="col-12">
                         {{ `PROFILE: ${getCurrentAccountInView.profile_origin} ( ${getCurrentAccountInView.profile_gender} )` }}
@@ -85,8 +85,6 @@ export default{
             console.log(account_code)
 
             if(!this.getCurrentAccountInView){
-                alert("Nothing in view")
-
                 this.fetchAccount({
                     account_code: account_code
                 }).then(() => (
@@ -96,7 +94,6 @@ export default{
             }
 
             if(this.getCurrentAccountInView.code != account_code){
-                alert("Different code")
                 this.fetchAccount({
                     account_code: account_code
                 }).then(() => (
