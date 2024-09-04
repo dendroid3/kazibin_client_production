@@ -24,7 +24,7 @@
       </v-row>
     </section>
     
-    <section v-if="getAllTasksAvailableForBidding[0]"  style="border-top: 0.25rem solid white;" class="grey lighten-1 pb-4">
+    <section v-if="getAccounts[0]"  style="border-top: 0.25rem solid white;" class="grey lighten-1 pb-4">
       <heading-tab
         class="grey lighten-1"
         :heading="`accounts marketplace`"
