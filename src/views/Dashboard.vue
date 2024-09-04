@@ -124,6 +124,18 @@
         </div>
       </section>
 
+      <section v-if="getMyAccounts">
+        <title-strip :title="`accounts posted`" :page="`/accounts`"  v-if="getMyAccounts.accounts.data[0]"/> 
+        <div class="limiting_wrapper" v-if="getMyAccounts.accounts.data[0] && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+          <accounts-strip :account="account" v-for="account in getMyAccounts.accounts.data" :key="account.id" />
+        </div>
+
+        <div v-if="getMyAccounts.accounts.data[0] && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+          <d-accounts-card :accounts="getMyAccounts.accounts.data"/>
+        </div>
+
+      </section>
+
       <section v-if="getMyTransactions">
         <title-strip :title="`transactions`" :page="`/Transactions`"  v-if="getMyTransactions[0]"/> 
         <div class="limiting_wrapper" v-if="getMyTransactions[0] && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
@@ -132,20 +144,6 @@
 
         <div v-if="getMyTransactions[0] && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
           <d-transactions-card :transactions="getMyTransactions" />
-        </div>
-
-      </section>
-
-      <section v-if="getMyAccounts">
-        <!-- {{ getMyAccounts.accounts.data }} -->
-        <title-strip :title="`accounts posted`" :page="`/accounts`"  v-if="getMyAccounts.accounts.data[0]"/> 
-        <div class="limiting_wrapper" v-if="getMyAccounts.accounts.data[0] && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
-          <accounts-strip :account="account" v-for="account in getMyAccounts.accounts.data" :key="account.id" />
-          <!-- I am accounts smaill screen -->
-        </div>
-
-        <div v-if="getMyAccounts.accounts.data[0] && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
-          <d-accounts-card :accounts="getMyAccounts.accounts.data"/>
         </div>
 
       </section>

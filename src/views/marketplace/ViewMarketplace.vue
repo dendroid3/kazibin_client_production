@@ -116,7 +116,7 @@ export default {
             this.pagination_links_set = false
             this.accounts_details_set = false
 
-            this.fetchAccountsPaginated(link.split('?')[1]).then((pagination_details) => {
+            this.fetchMyAccounts({page: link.split('=')[1]}).then((pagination_details) => {
                 if(pagination_details.accounts.last_page > 1){
                     this.pagination_links_set = true
                 }

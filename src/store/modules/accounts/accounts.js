@@ -30,7 +30,7 @@ const actions = {
         try {
             const url = data ? '/account/get_paginated?' + data : '/account/get_paginated'
             const response = await
-            axios.get(url)
+            axios.post(url)
             commit('SET_ACCOUNTS', response.data.accounts.data)
             console.log(response.data)
             commit('SET_ACCOUNTS_PAGINATION_DETAILS', response.data)
@@ -74,13 +74,17 @@ const actions = {
 
     async fetchMyAccounts({commit, dispatch}, data){
         try {
+            // console.log(data)
+            // const url = data.page ? '/account/get_mine?' + data.page : '/account/get_mine'
+
             const response = await
-            axios.get('/account/get_mine')
+            axios.post('/account/get_mine', data)
             commit('SET_MY_ACCOUNTS', response.data)
             console.log(response.data)
             return response.data
         } catch (err) {
             console.log(err)
+            return true
         }
     }
 }
