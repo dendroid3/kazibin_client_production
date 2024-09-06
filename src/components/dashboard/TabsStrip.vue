@@ -47,7 +47,14 @@
         :loading="!bids_fetched"
         :isGreen="getDashboadDetails.bids.bids_is_green"
       />
-
+      
+      <content-tab
+        v-show="is_open"
+        :title="`accounts`"
+        :url="`Accounts`"
+        :count="getDashboadDetails.accounts.total"
+        :loading="!accounts_fetched"
+      />
       <content-tab
         v-show="is_open"
         :title="`network`"
@@ -70,14 +77,6 @@
         :url="`invoices`"
         :count="getDashboadDetails.invoices.invoices_count"
         :loading="!invoices_fetched"
-      />
-
-      <content-tab
-        v-show="is_open"
-        :title="`accounts`"
-        :url="`Accounts`"
-        :count="getDashboadDetails.accounts.total"
-        :loading="!accounts_fetched"
       />
       
       <content-tab

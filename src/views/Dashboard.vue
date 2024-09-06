@@ -73,6 +73,17 @@
         </div>
       </section>
 
+      <section v-if="getMyAccounts">
+        <title-strip :title="`accounts posted`" :page="`/accounts`"  v-if="getMyAccounts.accounts.data[0]"/> 
+        <div class="limiting_wrapper" v-if="getMyAccounts.accounts.data[0] && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+          <accounts-strip :account="account" v-for="account in getMyAccounts.accounts.data" :key="account.id" />
+        </div>
+
+        <div v-if="getMyAccounts.accounts.data[0] && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+          <d-accounts-card :accounts="getMyAccounts.accounts.data"/>
+        </div>
+      </section>
+
       <section v-if="getMyBrokers">
         <title-strip :title="`brokers`" :add_url="`/Explore/Brokers`" :page="`/Network`"  v-if="getMyBrokers[0]"/>
         <div class="limiting_wrapper" v-if="getMyBrokers[0] && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
@@ -122,18 +133,6 @@
         <div class="limiting_wrapper"  v-if="getRequestsToAndFromBrokers[0] || getRequestsToAndFromWWriters[0]">
           <requests-card />
         </div>
-      </section>
-
-      <section v-if="getMyAccounts">
-        <title-strip :title="`accounts posted`" :page="`/accounts`"  v-if="getMyAccounts.accounts.data[0]"/> 
-        <div class="limiting_wrapper" v-if="getMyAccounts.accounts.data[0] && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
-          <accounts-strip :account="account" v-for="account in getMyAccounts.accounts.data" :key="account.id" />
-        </div>
-
-        <div v-if="getMyAccounts.accounts.data[0] && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
-          <d-accounts-card :accounts="getMyAccounts.accounts.data"/>
-        </div>
-
       </section>
 
       <section v-if="getMyTransactions">
@@ -284,7 +283,8 @@ export default {
   },
   methods:{
     ...mapActions(['fetchAllPostedByMe','fetchAllDoneByMe', 'fetchAllRequests', 'fetchLogMessages', 'fetchMyWriters',
-     'fetchMyBrokers', 'fetchTaskOffers', 'fetchMyBids', 'fetchDashboardDetails', 'getInvoices', 'fetchMyTransactions', 'fetchMyAccounts']),
+     'fetchMyBrokers', 'fetchTaskOffers', 'fetchMyBids', 'fetchDashboardDetails', 'getInvoices', 'fetchMyTransactions', 
+     'fetchMyAccounts', 'bootAllSockets']),
     go(code){
       this.$router.push('/' + code)
     },
@@ -295,12 +295,12 @@ export default {
         await this.fetchAllDoneByMe().then(() => {this.taken_fetched = true})
         await this.fetchTaskOffers().then(() => {this.offers_fetched = true})
         await this.fetchMyBids().then(() => {this.bids_fetched = true})
+        await this.fetchMyAccounts().then(() => {this.accounts_fetched = true})
         await this.fetchMyWriters()
         await this.fetchMyBrokers().then(() => {this.liaisons_fetched = true})
         await this.fetchAllRequests().then(() => {this.requests_fetched = true;})
         await this.getInvoices().then(() => {this.invoices_fetched = true})
         await this.fetchMyTransactions().then(() => {this.transactions_fetched = true})
-        await this.fetchMyAccounts().then(() => {this.accounts_fetched = true})
         await this.fetchLogMessages().then(() => {this.chats_fetched = true})
       } catch {
       }
@@ -308,6 +308,10 @@ export default {
   },
   created(){
     this.boot()
+  },
+
+  mounted() {
+    this.bootAllSockets()
   }
 }
 </script>

@@ -198,6 +198,7 @@ export default {
       }
       this.sending_deposit_request = true
       this.sendRequestToDeposit(data).then(() => {
+        this.deposit_form = false
         this.sending_deposit_request = false
       })
 

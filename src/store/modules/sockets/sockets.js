@@ -8,12 +8,8 @@ const getters = {}
 const actions = {
     
   bootAllSockets({dispatch}){
-    window.Echo.channel('public_notifications')
-    .listen(event, (e) => {
-      if(event == 'TaskAdded'){
-        dispatch('fetchTotalAvailableTasks', null, { root: true })
-      }
-    })
+    console.log("Listening on ")
+
     const events = [
       'BidMade', //done
       'BidPulled', //done
@@ -33,40 +29,61 @@ const actions = {
       'TaskMarkedComplete', //done 
       'TaskEarmarkedForRevisionEvent', //???
       'TaskRated', 
-      'InvoiceCreated' //done
+      'InvoiceCreated', //done
+
+      'MpesaTransactionComplete'
     ]
 
-    events.forEach(event => {
-      window.Echo.private('private_notification_' + store.state.auth.user.id)
-      .listen(event, (e) => {
-        if(event == 'BidMessageSent' || event == 'OfferMessageSent' || event == 'TaskMessageSent'){
-          let second_stub = e.message.type == 'text' 
-          ? e.message.message 
-          :'{file}'
-          const alert_message = e.system_message +"\n\n" + second_stub + "\n\n"
-          console.log(e)
-          const notification_details = {
-            message: alert_message,
-            title: e.title,
-            id: e.id,
-            type: event
+    console.log(events)
+
+    if(store.state.auth.user.id){
+      events.forEach(event => {
+        console.log("Listening on " + event)
+        window.Echo.private('private_notification_' + store.state.auth.user.id)
+        .listen(event, (e) => {
+          if(event == 'BidMessageSent' || event == 'OfferMessageSent' || event == 'TaskMessageSent'){
+            let second_stub = e.message.type == 'text' 
+            ? e.message.message 
+            :'{file}'
+            const alert_message = e.system_message +"\n\n" + second_stub + "\n\n"
+            const notification_details = {
+              message: alert_message,
+              title: e.title,
+              id: e.id,
+              type: event
+            }
+            dispatch('notify', notification_details, { root: true })
+          } else if(event == 'OfferMade' || event == 'OfferAccepted' || event == 'OfferRejected' || event == 'OfferCancelled') {
+            const notification_details = {
+              message: e.system_message,
+              title: e.title
+            }
+            dispatch('notify', notification_details, { root: true })
+          } else if(event == 'MpesaTransactionComplete') {
+            const notification_details = {
+              message: e.message,
+              title: 'Mpesa Transaction Complete'
+            }
+
+            console.log(e.message)
+
+            dispatch('notify', notification_details, { root: true })
+          } {
+            dispatch('notify', e, { root: true })
           }
-          dispatch('notify', notification_details, { root: true })
-        } else if(event == 'OfferMade' || event == 'OfferAccepted' || event == 'OfferRejected' || event == 'OfferCancelled') {
-          const notification_details = {
-            message: e.system_message,
-            title: e.title
-          }
-          dispatch('notify', notification_details, { root: true })
-        } else {
-          dispatch('notify', e, { root: true })
-        }
 
-        dispatch('handle' + event, e, { root: true })
+          dispatch('handle' + event, e, { root: true })
 
-      })
+        })
 
-    });
+      });
+    }
+
+    
+    window.Echo.channel('public_notifications')
+    .listen(event, (e) => {
+        dispatch('fetchTotalAvailableTasks', null, { root: true })
+    })
   },
 
   notify({}, notification_details){
@@ -84,6 +101,13 @@ const actions = {
         };
       })
     }
+  },
+
+  handleMpesaTransactionComplete({dispatch}, e){
+    dispatch('fetchDashboardDetails', {}, {root: true})
+    dispatch('fetchMyTransactions', {}, {root: true})
+    dispatch('fetchLogMessages', {}, {root: true})
+    dispatch('openAlert', {message: e.message, code: e.code}, {root: true})
   },
 
   handleBidMessageSent({getters, dispatch}, e){
