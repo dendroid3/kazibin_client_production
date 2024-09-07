@@ -82,20 +82,35 @@ const actions = {
   },
 
   notify({}, notification_details){
-    if(window.Notification){
-      showNotification( permission => {
-        let notification = new Notification(notification_details.title, {
-          body: notification_details.message, 
-          icon: "http://localhost:8000/icon.svg",
-          requireInteraction: true
+    Notification.requestPermission().then((result) => {
+      if (result === "granted") {
+        navigator.serviceWorker.ready.then((registration) => {
+          registration.showNotification(notification_details.title, {
+            body: notification_details.message, 
+            icon: "http://localhost:8000/icon.svg",
+            // requireInteraction: true,
+            // tag: "vibration-sample",
+          });
         });
-        notification.onclick = () => {
-          if(notification_details.type == 'TaskMessageSent'){
-            window.open(process.env.VUE_APP_FRONT_END_URL + '/t/' + notification_details.id);
-          }
-        };
-      })
-    }
+      }
+    })
+    // if(window.Notification){
+    //   // ServiceWorkerRegistration.
+    //   Notification.requestPermission( permission => {
+    //     let notification = showNotification(notification_details.title, {
+    //       body: notification_details.message, 
+    //       icon: "http://localhost:8000/icon.svg",
+    //       requireInteraction: true
+    //     });
+    //     notification.onclick = () => {
+    //       if(notification_details.type == 'TaskMessageSent'){
+    //         window.open(process.env.VUE_APP_FRONT_END_URL + '/t/' + notification_details.id);
+    //       }
+    //     };
+    //   })
+
+
+    // }
   },
 
   handleMpesaTransactionComplete({dispatch}, e){
