@@ -83,7 +83,7 @@ const actions = {
 
   notify({}, notification_details){
     if(window.Notification){
-      Notification.requestPermission( permission => {
+      ServiceWorkerRegistration.showNotification( permission => {
         let notification = new Notification(notification_details.title, {
           body: notification_details.message, 
           icon: "http://localhost:8000/icon.svg",
