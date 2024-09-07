@@ -104,6 +104,7 @@ const actions = {
   },
 
   handleMpesaTransactionComplete({dispatch}, e){
+    console.log("handleMpesaTransactionComplete Called")
     dispatch('fetchDashboardDetails', {}, {root: true})
     dispatch('fetchMyTransactions', {}, {root: true})
     dispatch('fetchLogMessages', {}, {root: true})
