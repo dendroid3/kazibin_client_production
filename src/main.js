@@ -22,9 +22,9 @@ window.Echo = new Echo({
   },
 
   // production setting
-  // authEndpoint : process.env.VUE_APP_API + 'broadcasting/auth',
+  authEndpoint : process.env.VUE_APP_API + 'broadcasting/auth',
   enabledTransports: ['ws', 'wss'],
-  encrypted: true,
+  encrypted: false,
   forceTLS: false,
   disableStats: true,
   wsHost: 'api.kazibin.adilirealestate.com',
