@@ -34,11 +34,8 @@ const actions = {
       'MpesaTransactionComplete'
     ]
 
-    console.log(events)
-
     if(store.state.auth.user.id){
       events.forEach(event => {
-        console.log("Listening on " + event)
         window.Echo.private('private_notification_' + store.state.auth.user.id)
         .listen(event, (e) => {
           if(event == 'BidMessageSent' || event == 'OfferMessageSent' || event == 'TaskMessageSent'){
@@ -65,10 +62,8 @@ const actions = {
               title: 'Mpesa Transaction Complete'
             }
 
-            console.log(e.message)
-
             dispatch('notify', notification_details, { root: true })
-          } {
+          } else {
             dispatch('notify', e, { root: true })
           }
 
@@ -104,7 +99,6 @@ const actions = {
   },
 
   handleMpesaTransactionComplete({dispatch}, e){
-    console.log("handleMpesaTransactionComplete Called")
     dispatch('fetchDashboardDetails', {}, {root: true})
     dispatch('fetchMyTransactions', {}, {root: true})
     dispatch('fetchLogMessages', {}, {root: true})
