@@ -33,12 +33,12 @@ window.Echo = new Echo({
   wssPort: '',
 
   //local setting
-  wsHost: '127.0.0.1',
-  wsPort: '6001',
-  enabledTransports: ['ws'],
-  authEndpoint : 'http://127.0.0.1:8000/api/broadcasting/auth',
-  disableStats: false,
-  forceTLS: false,
+  // wsHost: '127.0.0.1',
+  // wsPort: '6001',
+  // enabledTransports: ['ws'],
+  // authEndpoint : 'http://127.0.0.1:8000/api/broadcasting/auth',
+  // disableStats: false,
+  // forceTLS: false,
 
 });
 
