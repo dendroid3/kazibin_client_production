@@ -71,7 +71,7 @@
     clipped 
     right
     fixed
-    width="80%"
+    width="60%"
     >
       <div class="d-flex justify-end">
         <div class="white pa-2 rounded" @click="home_drawer=false" style="position: fixed; top: 0; right: 0; z-index:900;">
