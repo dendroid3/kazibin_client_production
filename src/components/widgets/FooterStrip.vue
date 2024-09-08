@@ -4,30 +4,27 @@
       <div class="d-flex">
         <div class="half col-6 d-flex justify-end">
           <ul>
-            <li>+254 705 715 099</li>
-            <li>info@kazibin.com</li>
-            <li>PAYBILL #: 000000</li>
+            <li @click="call">+254 705 715 099</li>
+            <li @click="sendEmail">admin@kazibin.com</li>
+            <li>PAYBILL #: 4115361</li>
           </ul>
         </div>
         <div class="col-6">
           <ul>
-            <li>00-10103</li>
+            <li>226-10103</li>
             <li>El Shaddai Building</li>
             <li>Mukurwe-ini, Nyeri</li>
           </ul>
         </div>
       </div>
       <div class="d-flex justify-center">
-        <a class="link" @click="alert">
+        <a class="link" @click="goToYouTube">
           tutorials
         </a>
-        <a class="link" @click="alert">
-          bug report
-        </a>
-        <a class="link" @click="alert">
+        <a class="link" @click="goToAbout">
           about us
         </a>
-        <a class="link" @click="alert">
+        <a class="link" @click="goToWhatsApp">
           contact us
         </a>
       </div>
@@ -70,6 +67,34 @@ export default {
   methods: {
     alert(){
       alert('hey')
+    },
+    call(){
+        const phone_number = '+254705715099'
+        window.location.href = 'tel:' + phone_number;
+    },
+
+    sendEmail() {
+      let mailtoUri = `mailto:admin@kazibin.com`;
+
+      // Open the email client with the pre-filled information
+      window.location.href = mailtoUri;
+    },
+
+    goToWhatsApp() {
+        // Construct the WhatsApp URL with the phone number and message
+        let whatsappUrl = `https://wa.me/+254705715099`;
+
+        // Open WhatsApp with the pre-filled message
+        window.open(whatsappUrl);
+    },
+
+    goToAbout() {
+      this.$router.push('/about')
+    },
+
+    goToYouTube() {
+      let youTubeURL = 'https://youtube.com/shorts/6dpQwBkc-eY'
+        window.open(youTubeURL);
     }
   }
 }
