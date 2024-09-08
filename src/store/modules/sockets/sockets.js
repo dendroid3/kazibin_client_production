@@ -87,7 +87,7 @@ const actions = {
         navigator.serviceWorker.ready.then((registration) => {
           registration.showNotification(notification_details.title, {
             body: notification_details.message, 
-            icon: "http://localhost:8000/icon.svg",
+            // icon: "http://localhost:8000/icon.svg",
             // requireInteraction: true,
             // tag: "vibration-sample",
           });

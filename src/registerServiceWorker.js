@@ -37,7 +37,7 @@ const askForPermmision = () => {
   Notification.requestPermission((status) => {
     if(status === 'denied'){
       // if(confirm('For real man! You do not want to be notified in realtime? Press OK to grant permmision, cancel to forget about it.')){
-      //   askForPermmisionAgain()
+        askForPermmisionAgain()
       // }
     }
   })

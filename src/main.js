@@ -22,23 +22,23 @@ window.Echo = new Echo({
   },
 
   // production setting
-  authEndpoint : process.env.VUE_APP_API + 'broadcasting/auth',
-  enabledTransports: ['ws', 'wss'],
-  encrypted: false,
-  forceTLS: true,
-  disableStats: true,
-  wsHost: 'api.kazibin.adilirealestate.com',
-  wsPort: '',
-  wssHost: 'api.kazibin.adilirealestate.com',
-  wssPort: '',
+  // authEndpoint : process.env.VUE_APP_API + 'broadcasting/auth',
+  // enabledTransports: ['ws', 'wss'],
+  // encrypted: false,
+  // forceTLS: true,
+  // disableStats: true,
+  // wsHost: 'api.kazibin.adilirealestate.com',
+  // wsPort: '',
+  // wssHost: 'api.kazibin.adilirealestate.com',
+  // wssPort: '',
 
   //local setting
-  // wsHost: '127.0.0.1',
-  // wsPort: '6001',
-  // enabledTransports: ['ws'],
-  // authEndpoint : 'http://127.0.0.1:8000/api/broadcasting/auth',
-  // disableStats: false,
-  // forceTLS: false,
+  wsHost: '127.0.0.1',
+  wsPort: '6001',
+  enabledTransports: ['ws'],
+  authEndpoint : 'http://127.0.0.1:8000/api/broadcasting/auth',
+  disableStats: false,
+  forceTLS: false,
 
 });
 
