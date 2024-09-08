@@ -8,7 +8,7 @@
         
         <v-row class="no-gutters">
             <v-col class="col-3">
-                <v-img style="height:3rem; width:3rem;" src="https://api.kazibin.adilirealestate.com/icon.svg" contain />
+                <v-img style="height:3rem; width:3rem;" src="https://api.app.kazibin.com/icon.svg" contain />
             </v-col>
             
                 <v-col class="col-9 d-flex justify-end">
