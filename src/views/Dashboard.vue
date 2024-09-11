@@ -156,17 +156,17 @@
     </section>
     <section>
         <section class="padder" v-if="
-        !getAllTasksPostedByMe || 
-        !getAllTasksDoneByMe ||
-        !getMyOffers ||
-        !getMyBids || 
-        !getMyBrokers ||
-        !getMyWriters ||
-        !getDebitedInvoices ||
-        !getCreditedInvoices ||
-        !getRequestsToAndFromBrokers ||
-        !getRequestsToAndFromWWriters ||
-        !getMyTransactions ||
+        !getAllTasksPostedByMe && 
+        !getAllTasksDoneByMe &&
+        !getMyOffers &&
+        !getMyBids && 
+        !getMyBrokers &&
+        !getMyWriters &&
+        !getDebitedInvoices &&
+        !getCreditedInvoices &&
+        !getRequestsToAndFromBrokers &&
+        !getRequestsToAndFromWWriters &&
+        !getMyTransactions &&
         !getLogMessages
         ">
           <v-row class="no-gutters">
@@ -196,7 +196,8 @@
         !getCreditedInvoices[0] &&
         !getRequestsToAndFromBrokers[0] &&
         !getRequestsToAndFromWWriters[0] &&
-        !getMyTransactions[0]
+        !getMyTransactions[0] &&
+        (!getMyTransactions[0] && (vuetify.breakpoint.sm || $vuetify.breakpoint.xs))
       ">
         <div class="padded mb-4">
           <v-row class="no-gutters d-flex align-center">
