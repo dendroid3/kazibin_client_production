@@ -197,7 +197,7 @@
         !getRequestsToAndFromBrokers[0] &&
         !getRequestsToAndFromWWriters[0] &&
         !getMyTransactions[0] &&
-        (!getMyTransactions[0] && (vuetify.breakpoint.sm || $vuetify.breakpoint.xs))
+        (!getMyTransactions[0] && ($vuetify.breakpoint.sm || $vuetify.breakpoint.xs))
       ">
         <div class="padded mb-4">
           <v-row class="no-gutters d-flex align-center">
