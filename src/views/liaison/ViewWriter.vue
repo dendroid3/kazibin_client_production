@@ -2,7 +2,6 @@
   <div class="main-wrapper grey lighten-3">
     <user-card :user="getViewWriter" />
 
-
     <section v-if="fetching">
       <div style="margin-top: 50px;" class="center">
       </div>
@@ -27,12 +26,11 @@
 
     <section  v-if="!fetching">
       <writer-metric />
-
-      <div class="d-flex justify-end grey lighten-3" style="padding-bottom: 1.5rem; padding-right: 0.5rem; padding-top: 0.25rem;">
-
+      <div class="d-flex justify-center">
+        <v-btn class="elevation-15 submit-button red lighten-2 white--text" small @click="send" :loading="sending"  style="font-weight: 900;" :disabled="request_sent">
+          Liaise
+        </v-btn>
       </div>
-      
-
     </section>
     
     <div class="pa-3" v-if="getViewWriter.bio">
@@ -53,31 +51,31 @@
       </v-row>
     </div>
     
-    <div class="pa-3" v-if="getWriterMetrics.writer.ratings[0]">
-      <span class="bold">
-        {{"Reviews: " + getViewWriter.writer.number_of_reviews}}
-      </span>
-      <v-row class="px-1 py-1" v-for="rating in getViewWriter.writer.ratings.slice(0,5)" :key="rating.id">
+    <section v-if="!fetching">
+      <div class="pa-3" v-if="getWriterMetrics.writer.ratings[0]">
+        <span class="bold">
+          {{"Reviews: " + getWriterMetrics.writer.number_of_reviews}}
+        </span>
+        <v-row class="px-1 py-1" v-for="rating in getWriterMetrics.writer.ratings.slice(0,5)" :key="rating.id">
           <div class="px-4 white rounded my-1 col-12" style="font-size: 0.95rem;" >
+            <div>
+              {{ `${rating.broker.code}: ${rating.broker.username}` }}
+            </div>
             {{rating.review}}
             <div class="d-flex justify-end col-12" style="font-size: 0.95rem;">
               <v-icon small class="yellow--text" v-for="star in rating.rating" :key="star">
                 mdi-star
               </v-icon>
-              <v-icon small class="grey--text" v-for="star in (5-rating.rating)" :key="star">
+              <v-icon small class="grey--text" v-for="star in (10-rating.rating)" :key="star">
                 mdi-star
               </v-icon>
             </div>
           </div>
+        </v-row>
+      </div>
+    </section>
 
-      </v-row>
-    </div>
 
-    <div class="d-flex justify-center">
-        <v-btn class="elevation-15 submit-button red lighten-2 white--text" small @click="send" :loading="sending"  style="font-weight: 900;" :disabled="request_sent">
-          Liaise
-        </v-btn>
-    </div>
   </div>
 </template>
 <script>
@@ -96,7 +94,7 @@ export default {
     return{
       response: null,
       sending: false,
-      fetching: false,
+      fetching: true,
       request_sent: false
     }
   },
@@ -118,16 +116,16 @@ export default {
         return string.split(",")
     },
     boot(){
-        try{
-          const data = {
-            user_id: this.getViewWriter.id
-          }
-          this.fetchWriterMetrics(data).then( res => {
-            this.fetching = false
-          })
-        } catch(e){
-
+      try{
+        const data = {
+          user_id: this.getViewWriter.id
         }
+        this.fetchWriterMetrics(data).then( res => {
+          this.fetching = false
+        })
+      } catch(e){
+
+      }
     },
   },
 

@@ -12,7 +12,7 @@
         <section>
 
           <div class="d-flex">
-            <v-toolbar-title>{{getCurrentBidTask.code + ": " + getCurrentBidTask.topic}}</v-toolbar-title>
+            <!-- <v-toolbar-title>{{getCurrentBidTask.code + ": " + getCurrentBidTask.topic}}</v-toolbar-title> -->
           </div>
           <div class="d-flex">
             <v-toolbar-title class="ml-1">{{"Writer: " + getBidChatHeader.writer.user.username}}</v-toolbar-title>
@@ -230,8 +230,8 @@ export default {
     },
 
     accept(){
-      let prompt_message = "You are about to accept this bid from " + this.getBidChatHeader.writer.user.username + 
-      ". On task " + this.getCurrentBidTask.code + ": " + this.getCurrentBidTask.topic + ". All other bids will be dropped. \r\n Procced?"
+      let prompt_message = "You are about to accept this bid from " + this.getBidChatHeader.writer.user.username +  ""
+      // ". On task " + this.getCurrentBidTask.code + ": " + this.getCurrentBidTask.topic + ". All other bids will be dropped. \r\n Procced?"
       if(!confirm(prompt_message)){
         return
       }
@@ -246,7 +246,7 @@ export default {
 
     reject(){
       let prompt_message = "You are about to reject this bid from " + this.getBidChatHeader.writer.user.username + 
-      ". On task " + this.getCurrentBidTask.code + ": " + this.getCurrentBidTask.topic + ". The writer will be unable to bid on it again. \r\n Procced?"
+      ". On task  " + this.getCurrentBidTask.topic + ". The writer will be unable to bid on it again. \r\n Procced?"
       if(!confirm(prompt_message)){
         return
       }

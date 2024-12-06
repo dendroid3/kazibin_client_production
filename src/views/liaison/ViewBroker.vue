@@ -25,12 +25,19 @@
 
     </section>
 
-    <section  v-if="!fetching" class="big-padding-bottom grey lighten-3">
+    <section v-if="!fetching" class="big-padding-bottom grey lighten-3">
     
       <broker-metric />
 
     </section>
 
+    <div  class="d-flex justify-center grey lighten-3" style="padding-bottom: 1.5rem; padding-right: 0.5rem; padding-top: 0.25rem;" v-if="!fetching">
+
+      <v-btn class="elevation-15 red submit-button lighten-2 white--text" small @click="send" :loading="sending"  style="font-weight: 900;" :disabled="request_sent">
+        Liaise
+      </v-btn>
+
+    </div>
     
     <div class="pa-3" v-if="getViewBroker.bio">
       <span class="bold">
@@ -50,10 +57,9 @@
       </v-row>
     </div>
     
-    <section v-if="getBrokerMetrics.available_tasks.length > 0">
+    <!-- <section v-if="getBrokerMetrics.available_tasks.length > 0">
 
       <title-strip :title="`available tasks`" />
-      <!-- <task-strip :task="task" v-for="task in getBrokerMetrics.available_tasks" :key="task.id"/> -->
       <section v-for="task in getBrokerMetrics.available_tasks" :key="task.id">
         <div class="grey lighten-3 wrapper pa-2">
           <section @click="goToView(task)">
@@ -92,38 +98,36 @@
         </div>
       </section>
 
-    </section>
+    </section> -->
 
-    <div class="pa-3" v-if="getBrokerMetrics.broker.broker.ratings[0]">
-      <span class="bold">
-        {{"Reviews: " + getBrokerMetrics.broker.broker.number_of_reviews}}
-      </span>
-      <v-row class="px-1 py-1" v-for="rating in getBrokerMetrics.broker.broker.ratings.slice(0,5)" :key="rating.id">
-          <div class="px-4 white rounded my-1 col-12" style="font-size: 0.95rem;" >
-            {{rating.review}}
-            <div class="d-flex justify-end col-12" style="font-size: 0.95rem;">
-              <v-icon small class="yellow--text" v-for="star in rating.rating" :key="star">
-                mdi-star
-              </v-icon>
-              <v-icon small class="grey--text" v-for="star in (5-rating.rating)" :key="star">
-                mdi-star
-              </v-icon>
+    <section v-if="!fetching">
+      <div class="pa-3" v-if="getBrokerMetrics.broker.ratings[0]">
+        <span class="bold">
+          {{"Reviews: " + getBrokerMetrics.broker.number_of_reviews}}
+        </span>
+        <v-row class="px-1 py-1" v-for="rating in getBrokerMetrics.broker.ratings" :key="rating.id">
+            <div class="px-4 white rounded my-1 col-12" style="font-size: 0.95rem;" >
+              <div>
+                {{ `${rating.writer.code}: ${rating.writer.username}` }}
+              </div>
+              {{rating.review}}
+              <div class="d-flex justify-end col-12" style="font-size: 0.95rem;">
+                <v-icon small class="yellow--text" v-for="(star, i) in rating.rating" :key="i">
+                  mdi-star
+                </v-icon>
+                <v-icon small class="grey--text" v-for="(star, i) in (10 - rating.rating)" :key="i">
+                  mdi-star
+                </v-icon>
+              </div>
             </div>
-          </div>
-
-      </v-row>
-    </div>
+        </v-row>
+      </div>
+    </section>
     <section>
       <div>
       </div>
     </section>
-    <div class="d-flex justify-center grey lighten-3" style="padding-bottom: 1.5rem; padding-right: 0.5rem; padding-top: 0.25rem;" v-if="!fetching">
 
-      <v-btn class="elevation-15 red submit-button lighten-2 white--text" small @click="send" :loading="sending"  style="font-weight: 900;" :disabled="request_sent">
-        Liaise
-      </v-btn>
-
-      </div>
   </div>
 </template>
 <script>

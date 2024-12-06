@@ -395,16 +395,33 @@
   
   
   <div style=" margin-bottom: 100px;">
-    <create-invoice v-if="getTaskChatInvoice" />
-    <view-invoice v-if="getTaskChatViewInvoice" :invoice_id="getTaskChatHeader.invoice_id" :recipient="recipient" />
+    <section class="float" :class="{
+      'full-width': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs,
+      'medium-width':  $vuetify.breakpoint.md,
+      'large-width':  $vuetify.breakpoint.lg,
+    }">
+      <create-invoice v-if="getTaskChatInvoice" />
+    </section>
+    <section class="float" :class="{
+      'full-width': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs,
+      'medium-width':  $vuetify.breakpoint.md,
+      'large-width':  $vuetify.breakpoint.lg,
+    }">
+      <view-invoice v-if="getTaskChatViewInvoice" :invoice_id="getTaskChatHeader.invoice_id" :recipient="recipient" />
+    </section>
+
       <!--===== rating section ====-->
-    <section class="ma-4 pa-4 grey lighten-3 " v-if="rating_open">
+    <section class="pa-4 grey lighten-3 mb-4 pb-4 float" v-if="rating_open" :class="{
+      'full-width': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs,
+      'medium-width':  $vuetify.breakpoint.md,
+      'large-width':  $vuetify.breakpoint.lg,
+    }">
       <div class="d-flex justify-end">
         <v-icon @click="rating_open = false" class="red--text">
           mdi-close
         </v-icon>
       </div>
-      <v-text-field
+      <v-textarea
       outlined
       v-model="review"
       clearable
@@ -412,8 +429,8 @@
       label="write a review"
       class="white"
       required
-      > </v-text-field>
-      <div class="d-flex">
+      > </v-textarea>
+      <div class="d-flex justify-center mt-4">
         <v-rating
           v-model="rating"
           small
@@ -421,17 +438,19 @@
           color="yellow accent-4"
           dense
           size="18"
-          :length="5"
+          :length="10"
           hover
         ></v-rating> 
-        {{"("}} {{rating}} {{" / 5)"}}
-        <v-spacer />
+        {{"("}} {{rating}} {{" / 10)"}}
+
+      </div>
+      <div class="d-flex justify-center mt-4">
         <v-btn 
         :disabled="rating == 0 || review == ''"
         small
         @click="rate"
         :loading="is_rating" 
-        class="green white--text mx-1">
+        class="green white--text mx-1 block">
           rate
         </v-btn>
       </div>
@@ -735,7 +754,7 @@ export default {
       submiting_reassign: false,
       deleting: false,
       formdata: null,
-      rating: null,
+      rating: 1,
       review: '',
       popup_is_open: false,
       why_is_pop_up_open: null
@@ -1123,6 +1142,15 @@ export default {
     background-image: url('~@/assets/c21.jpg');
     background-attachment: fixed;
     background-repeat: repeat-x;
+  }
+
+  .float{
+    position: fixed;
+    top: 50%;
+    right: 0rem;
+    transform: translateY(-50%);
+    max-height: 60vh;
+    overflow-y: auto;
   }
 
 </style>

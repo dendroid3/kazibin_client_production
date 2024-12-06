@@ -253,19 +253,9 @@ const routes = [
     }
   },
   {
-    path: '/account/add',
+    path: '/marketplace/add',
     name: 'AddAccount',
     component: () => import('../views/marketplace/AddAccount.vue'),
-    meta:{
-      middleware: [
-        auth, emailverified
-      ]
-    }
-  },
-  {
-    path: '/accounts',
-    name: 'MyAccounts',
-    component: () => import('../views/marketplace/Accounts.vue'),
     meta:{
       middleware: [
         auth, emailverified
@@ -276,6 +266,26 @@ const routes = [
     path: '/marketplace',
     name: 'Marketplace',
     component: () => import('../views/marketplace/ViewMarketplace.vue'),
+    meta:{
+      middleware: [
+        auth, emailverified
+      ]
+    }
+  },
+  {
+    path: '/marketplace/mine',
+    name: 'MyAccountsOnSale',
+    component: () => import('../views/marketplace/MyAccountsOnSale.vue'),
+    meta:{
+      middleware: [
+        auth, emailverified
+      ]
+    }
+  },
+  {
+    path: '/managed',
+    name: 'MyManaged',
+    component: () => import('../views/managed/MyManaged.vue'),
     meta:{
       middleware: [
         auth, emailverified
