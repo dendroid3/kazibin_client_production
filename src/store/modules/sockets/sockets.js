@@ -81,7 +81,7 @@ const actions = {
     })
   },
 
-  notify({}, notification_details){
+  notify({}, notification_details){p
     Notification.requestPermission().then((result) => {
       if (result === "granted") {
         navigator.serviceWorker.ready.then((registration) => {

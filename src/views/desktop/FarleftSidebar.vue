@@ -66,7 +66,7 @@
                     {{'Marketplace'}}
                 </v-list-item>
 
-                <v-list-item class="short-line-under" dark @click="goToSection('account/add')">
+                <v-list-item class="short-line-under" dark @click="goToSection('marketplace/add')">
                     {{'Sell AC'}}
                 </v-list-item>
                 

@@ -14,7 +14,6 @@
         </v-col>
       </v-row>
     <v-row class="no-gutters mt-2">
-    
       <content-tab
         v-show="is_open"
         :title="`posted`"
@@ -47,15 +46,8 @@
         :loading="!bids_fetched"
         :isGreen="getDashboadDetails.bids.bids_is_green"
       />
-      
-      <content-tab
-        v-show="is_open"
-        :title="`accounts`"
-        :url="`Accounts`"
-        :count="getDashboadDetails.accounts.total"
-        :loading="!accounts_fetched"
-      />
-      <content-tab
+    
+          <content-tab
         v-show="is_open"
         :title="`network`"
         :url="`network`"
@@ -69,6 +61,29 @@
         :url="`requests`"
         :count="getDashboadDetails.requests_count"
         :loading="!invoices_fetched"
+      />
+      <content-tab
+        v-show="is_open"
+        :title="`managed`"
+        :url="`managed`"
+        :count="getDashboadDetails.posted.posted_all"
+        :loading="!posted_fetched"
+      />    
+
+      <content-tab
+        v-show="is_open"
+        :title="`marketplace`"
+        :url="`marketplace/mine`"
+        :count="getDashboadDetails.accounts.total"
+        :loading="!accounts_fetched"
+      />
+
+      <content-tab
+        v-show="is_open"
+        :title="`services`"
+        :url="`Accounts`"
+        :count="getDashboadDetails.accounts.total"
+        :loading="!accounts_fetched"
       />
 
       <content-tab
@@ -87,12 +102,12 @@
         :loading="!chats_fetched"
       />
       
-      <!-- <content-tab
+      <content-tab
         v-show="is_open"
         :title="`activity`"
         :count="getLogMessages.length ? getLogMessages.length : 0"
         :loading="!chats_fetched"
-      /> -->
+      />
     </v-row>
   </div>
 </template>

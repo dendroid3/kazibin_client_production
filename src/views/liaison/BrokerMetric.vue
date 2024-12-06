@@ -6,11 +6,11 @@
             {{'Broker Metrics '}}
             </v-col>
             <v-col class="col-5 title d-flex justify-end">
-                {{getBrokerMetrics.broker.broker.average_rating}}
-                <v-icon small class="yellow--text" v-for="star in Math.round(getBrokerMetrics.broker.broker.average_rating)" :key="star">
+                {{getBrokerMetrics.broker.average_rating}}
+                <v-icon small class="yellow--text" v-for="star in Math.round(getBrokerMetrics.broker.average_rating)" :key="star">
                     mdi-star
                 </v-icon>
-                <v-icon small class="white--text" v-for="star in (5-Math.round(getBrokerMetrics.broker.broker.average_rating))" :key="star">
+                <v-icon small class="white--text" v-for="star in (10-Math.round(getBrokerMetrics.broker.average_rating))" :key="star">
                     mdi-star
                 </v-icon>
             </v-col>

@@ -18,7 +18,7 @@ const actions = {
     async fetchAccounts({commit}) {
         try {
             const response = await
-            axios.get('/account/get_for_display')
+            axios.get('/marketplace/get_for_display')
             commit('SET_ACCOUNTS', response.data.accounts)
             return response.data
         } catch (err) {
@@ -30,7 +30,7 @@ const actions = {
         try {
             const url = data ? '/account/get_paginated?' + data : '/account/get_paginated'
             const response = await
-            axios.post(url)
+            axios.get(url)
             commit('SET_ACCOUNTS', response.data.accounts.data)
             console.log(response.data)
             commit('SET_ACCOUNTS_PAGINATION_DETAILS', response.data)
@@ -43,7 +43,7 @@ const actions = {
     async fetchAccount({commit, dispatch}, data) {
         try {
             const response = await
-            axios.post('/account/get_current', data)
+            axios.post('/marketplace/get_current', data)
             commit('SET_CURRENT_ACCOUNT_IN_VIEW', response.data)
             console.log(response)
             return true
@@ -64,7 +64,7 @@ const actions = {
     async addAccount({commit, dispatch}, data) {
         try {
             const response = await
-            axios.post('/account/create', data)
+            axios.post('/marketplace/create', data)
             dispatch('openAlert', {message: response.data.message, code: 'success'}, {root: true})
             return response.data
         } catch (err) {
@@ -78,7 +78,7 @@ const actions = {
             // const url = data.page ? '/account/get_mine?' + data.page : '/account/get_mine'
 
             const response = await
-            axios.post('/account/get_mine', data)
+            axios.post('/marketplace/get_mine', data)
             commit('SET_MY_ACCOUNTS', response.data)
             console.log(response.data)
             return response.data
