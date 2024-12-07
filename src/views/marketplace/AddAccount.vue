@@ -4,123 +4,153 @@
         'medium-width col-6 offset-3':  $vuetify.breakpoint.md,
         'large-width col-6 offset-3':  $vuetify.breakpoint.lg,
     }">
-    <p class="primary-color-text form-title d-flex justify-start px-2">
-        {{ "Post Writing Account" }} 
-    </p>
-    <v-form class="mt-4 px-4"
-    v-model="valid"
-    :lazy-validation="lazy"
-    ref="form">
-      <div>
-          <v-text-field 
-          clearable
-          outlined
-          type="text"
-          hint="E.g: WritersBay, UvoCorp, 4Writers, e.t.c"
-          v-model="account.title"
-          label="account provider"
-          required
-          > </v-text-field>  
-      </div>
-      <div>
-          <v-select
-          :items="country_list"
-          label="profile origin"
-          :disabled="!account.title"
-          v-model="account.profile_origin"
-          required
-          outlined
-          ></v-select>
-      </div>
-      <div>
-          <v-select
-          :items="['male', 'female']"
-          label="profile gender"
-          :disabled="!account.profile_origin"
-          v-model="account.profile_gender"
-          required
-          outlined
-          ></v-select>
-      </div>
-      <div>
-          <v-text-field 
-          clearable
-          outlined
-          type="number"
-          :disabled="!account.profile_gender"
-          v-model="account.total_orders"
-          label="total orders"
-          required
-          > </v-text-field>  
-      </div>
-      <div>
-          <v-text-field 
-          clearable
-          outlined
-          type="number"
-          :disabled="!account.total_orders"
-          v-model="account.pending_orders"
-          label="pending orders"
-          required
-          > </v-text-field>  
-      </div>
-      <div>
-          <v-text-field 
-          clearable
-          outlined
-          type="number"
-          :disabled="!account.pending_orders"
-          :rules="rules.less_than_100"
-          v-model="account.rating"
-          label="percentage rating"
-          required
-          > </v-text-field>  
-      </div>
-      <div>
-          <v-text-field 
-          clearable
-          outlined
-          type="number"
-          :disabled="!account.rating"
-          v-model="account.cost"
-          label="cost"
-          required
-          > </v-text-field>  
-      </div>
-                               
-      <div class="d-flex justify-center">
-          <v-file-input
-          outlined
-          :disabled="!account.cost"
-          @change="registerScreenshots"
-          v-model="account_screenshots"
-          hint="Clear screenshots of the account dashboard."
-          multiple
-          label="account screenshots"
-          accept="image/*"
-          ></v-file-input>
-      </div>
-      <div>
-          <v-checkbox
-          required
-          v-model="account.negotiable"
-          :label="`Negotiable`"
-          ></v-checkbox>
-      </div>
+      <p class="primary-color-text form-title d-flex justify-start px-2">
+          {{ "Post Account" }} 
+      </p>
+      <v-form class="mt-4 px-4"
+      v-model="valid"
+      :lazy-validation="lazy"
+      ref="form">
+          <div>
+            <v-select
+            :items="['academic', 'article', 'transcription', 'bidding', 'other']"
+            label="account type"
+            v-model="account.type"
+            required
+            outlined
+            ></v-select>
+        </div>
+        <div>
+            <v-text-field 
+            clearable
+            outlined
+            type="text"
+            :disabled="!account.type"
+            hint="E.g: WritersBay, UvoCorp, 4Writers, e.t.c"
+            v-model="account.title"
+            label="account provider"
+            required
+            > </v-text-field>  
+        </div>
+        <div>
+            <v-select
+            :items="country_list"
+            label="profile origin"
+            :disabled="!account.title"
+            v-model="account.profile_origin"
+            required
+            outlined
+            ></v-select>
+        </div>
+        <div>
+            <v-select
+            :items="['male', 'female']"
+            label="profile gender"
+            :disabled="!account.profile_origin"
+            v-model="account.profile_gender"
+            required
+            outlined
+            ></v-select>
+        </div>
+        <div>
+            <v-text-field 
+            clearable
+            outlined
+            type="number"
+            :disabled="!account.profile_gender"
+            v-model="account.total_orders"
+            label="total orders"
+            required
+            > </v-text-field>  
+        </div>
+        <div>
+            <v-text-field 
+            clearable
+            outlined
+            type="number"
+            :disabled="!account.total_orders"
+            v-model="account.pending_orders"
+            label="pending orders"
+            required
+            > </v-text-field>  
+        </div>
+        <div>
+            <v-text-field 
+            clearable
+            outlined
+            type="number"
+            :disabled="!account.pending_orders"
+            v-model="account.amount_earned"
+            label="total earned"
+            required
+            > </v-text-field>  
+        </div>
+        <div>
+            <v-text-field 
+            clearable
+            outlined
+            type="text"
+            :disabled="!account.amount_earned"
+            v-model="account.rating"
+            label="rating"
+            required
+            > </v-text-field>  
+        </div>
+        <div>
+            <v-text-field 
+            clearable
+            outlined
+            type="number"
+            :disabled="!account.rating"
+            v-model="account.cost"
+            label="cost"
+            required
+            > </v-text-field>  
+        </div>
+        <div>
+            <v-textarea 
+            clearable
+            outlined
+            type="text"
+            :disabled="!account.cost"
+            v-model="account.description"
+            label="description (make your pitch)"
+            required
+            > </v-textarea>  
+        </div>                 
+        <div class="d-flex justify-center">
+            <v-file-input
+            outlined
+            :disabled="!account.description"
+            @change="registerScreenshots"
+            v-model="account_screenshots"
+            hint="Clear screenshots of the account dashboard."
+            multiple
+            label="account screenshots"
+            accept="image/*"
+            ></v-file-input>
+        </div>
+        <div>
+            <v-checkbox
+            required
+            v-model="account.negotiable"
+            :label="`Negotiable`"
+            ></v-checkbox>
+        </div>
 
-      <div class="d-flex justify-center">
-          <v-btn 
-          :loading="loading"
-          small 
-          @click="submit"
-          :disabled="!account.cost"
-          class="rounded success submit-button"
-          >
-              submit
-          </v-btn>
-      </div>
-      
-    </v-form>
+        <div class="d-flex justify-center">
+            <v-btn 
+            :loading="loading"
+            small 
+            @click="submit"
+            :disabled="!account_screenshots"
+            class="rounded success submit-button"
+            >
+                submit
+            </v-btn>
+        </div>
+        
+      </v-form>
     </div>
 </template>
 <script>
@@ -136,11 +166,6 @@ export default {
           negotiable: true
         },
         loading: false,
-        rules: {
-          less_than_100: [
-            v => (Number(v) < 100) || 'Rating cannot be more than 100%'
-          ]
-        },
         account_screenshots: null,
         formdata: null,
         country_list: [
@@ -420,7 +445,8 @@ export default {
       },
 
       submit() {
-        if(this.getDashboadDetails.transactions.balance < process.env.VUE_APP_ACCOUNT_DISPLAY_COST) {
+        // if(this.getDashboadDetails.transactions.balance < process.env.VUE_APP_ACCOUNT_DISPLAY_COST) {
+          if(1 == 2) {
             const required_amount = process.env.VUE_APP_ACCOUNT_DISPLAY_COST - this.getDashboadDetails.transactions.balance;
             const intitiate_request_to_deposit_data = {
             action: "advertise writing account",
@@ -447,7 +473,7 @@ export default {
         this.addAccount(this.formdata).then(() => (
             this.loading = false,
             setTimeout(() => {
-              this.$router.push('/accounts')
+              this.$router.push('/marketplace/mine')
             }, 1000)
         ))
       }

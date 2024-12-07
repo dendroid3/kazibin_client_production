@@ -1,22 +1,29 @@
 <template lang="">
     <div class="mid-left-bar grey lighten-2">
-        <TransactionsBelt style="z-index: 9;" />
-        <tabs-strip 
-        :posted_fetched="true" 
-        :taken_fetched="true" 
-        :offers_fetched="true" 
-        :bids_fetched="true" 
-        :liaisons_fetched="true" 
-        :invoices_fetched="true" 
-        :chats_fetched="true" 
-        :accounts_fetched="true"
-        />
-        <title-strip :title="`timeline`" :page="'/Logs'" />
-        <section class="limiting_wrapper" v-if="getLogMessages[0]">
-            <div class="limiting_wrapper">
-                <logs-strip :Logs="getLogMessages"/>
-            </div>
-        </section>
+        <div v-if="1==1">
+          <TransactionsBelt style="z-index: 9;" />
+          <tabs-strip 
+          :posted_fetched="true" 
+          :taken_fetched="true" 
+          :offers_fetched="true" 
+          :bids_fetched="true" 
+          :liaisons_fetched="true" 
+          :invoices_fetched="true" 
+          :chats_fetched="true" 
+          :accounts_fetched="true"
+          />
+          <title-strip :title="`timeline`" :page="'/Logs'" />
+          <section class="limiting_wrapper" v-if="getLogMessages[0]">
+              <div class="limiting_wrapper">
+                  <logs-strip :Logs="getLogMessages"/>
+              </div>
+          </section>
+        </div>
+        <div v-else style="background-color: red; height: 85%;">
+          <title-strip :title="`timeline`" :page="'/Logs'" />
+
+          Login 
+        </div>
     </div>
 </template>
 <script>

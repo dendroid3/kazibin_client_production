@@ -22,6 +22,10 @@
             </span>
             <br>
             <span class="uppercase">
+                {{ `TOTAL EARNED: ${formatMoney(account.amount_earned)}`}}
+            </span>
+            <br>
+            <span class="uppercase">
                 {{ `PENDING ORDERS: ${account.pending_orders}` }}  
             </span>
             <br>
