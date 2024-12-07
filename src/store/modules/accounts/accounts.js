@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Cookies from 'js-cookie'
 
 const state = {
     accounts: null,
@@ -28,7 +29,12 @@ const actions = {
 
     async fetchAccountsPaginated({commit}, data) {
         try {
-            const url = data ? '/account/get_paginated?' + data : '/account/get_paginated'
+            let url = ''
+            if(Cookies.get('KAZIBIN_TOKEN')){
+                url = data ? '/marketplace/get_paginated?' + data : '/marketplace/get_paginated'
+            } else {
+                url = data ? '/marketplace/get_paginated_guest?' + data : '/marketplace/get_paginated_guest'
+            }
             const response = await
             axios.get(url)
             commit('SET_ACCOUNTS', response.data.accounts.data)
@@ -44,7 +50,7 @@ const actions = {
         try {
             const response = await
             axios.post('/marketplace/get_current', data)
-            commit('SET_CURRENT_ACCOUNT_IN_VIEW', response.data)
+            commit('SET_CURRENT_ACCOUNT_IN_VIEW', response.data.account)
             console.log(response)
             return true
         } catch (err) {
@@ -86,8 +92,37 @@ const actions = {
             console.log(err)
             return true
         }
-    }
+    },
+
+    async updateAccount({commit, dispatch}, data) {
+        try {
+            const response = await
+            axios.post('/marketplace/update', data)
+            dispatch('openAlert', {message: response.data.message, code: 'success'}, {root: true})
+            console.log(response)
+            return response.status
+        } catch (err) {
+            console.log(err)   
+        }
+    },
+
+    async deleteAccount({commit, dispatch}, data) {
+        try {
+            console.log('data', data)
+
+            const response = await axios.delete('/marketplace/delete', {
+                data: data 
+            });
+            dispatch('openAlert', {message: response.data.message, code: 'success'}, {root: true})
+            dispatch('fetchMyAccounts', null, {root: true})
+            dispatch('fetchDashboardDetails', null, {root: true})
+            return response.status
+        } catch (err) {
+            console.log(err)   
+        }
+    },
 }
+
 
 const mutations = {
     SET_ACCOUNTS: (state, accounts) => (state.accounts = accounts),

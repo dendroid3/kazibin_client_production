@@ -77,7 +77,7 @@
           {{'Marketplace'}}
         </v-list-item>
         
-        <v-list-item class="short-line-under" @click="goToSection('Account/Add')">
+        <v-list-item class="short-line-under" @click="goToSection('marketplace/add')">
           {{'Sell AC'}}
         </v-list-item>
         
@@ -131,6 +131,9 @@ export default {
         {name: 'bids made', page: '/Bids'},
         {name: 'network', page: '/Network'},
         {name: 'requests', page: '/Requests'},
+        {name: 'managed', page: '/Managed'},
+        {name: 'marketplace', page: '/Marketplace/Mine'},
+        {name: 'services', page: '/Requests'},
         {name: 'invoices', page: '/Invoices'},
         {name: 'accounts', page: '/Accounts'},
         {name: 'transactions', page: '/Transactions'}

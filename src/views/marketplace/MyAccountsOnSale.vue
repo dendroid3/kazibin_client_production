@@ -1,7 +1,7 @@
 <template>
     <div class="main-wrapper">
         <v-row class="d-flex grey lighten-2 align-center no-gutters">
-            <v-col class="col-8 pl-4 backg"> accounts in marketplace
+            <v-col class="col-8 pl-4 backg"> accounts on sale
             </v-col>
             <v-col class="col-4 d-flex align-center justify-end px-4">
                 <v-icon class="mx-2" v-if="!is_options_open" @click="is_options_open = true">
@@ -9,6 +9,9 @@
                 </v-icon>
                 <v-icon class="mx-2" v-if="is_options_open" @click="is_options_open = false">
                   mdi-arrow-up  
+                </v-icon>
+                <v-icon class="mx-2" @click="go(`marketplace/add`)">
+                  mdi-plus  
                 </v-icon>
             </v-col>
         </v-row> 
@@ -208,6 +211,9 @@ export default {
           })
         },
 
+        go(code){
+          this.$router.push('/' + code)
+        },
         boot() {
             this.fetchMyAccounts({}).then((pagination_details) => {
               if(pagination_details.accounts.last_page > 1){

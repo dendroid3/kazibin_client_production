@@ -14,36 +14,75 @@
                     <v-toolbar-title>{{ `${getCurrentAccountInView.code}: ${getCurrentAccountInView.title} Account` }}</v-toolbar-title>
                 </div>
             </v-toolbar>
-
             <section>
-                <v-row class="d-flex mx-4 no-gutters bold">
-                    <v-col class="col-12">
-                        {{ `SELLER:  ${getCurrentAccountInView.user.code}:${getCurrentAccountInView.user.username}` }}
+                <v-row class="d-flex mx-4 no-gutters ">
+                    <v-col class="col-12" v-if="getCurrentAccountInView.user">
+                        <span class="bold-here">
+                            {{ `SELLER: ` }} 
+                        </span>
+                        <span>
+                            {{ `${getCurrentAccountInView.user.code}:${getCurrentAccountInView.user.username}` }}
+                        </span>
                     </v-col>
                     <v-col class="col-12">
-                        {{ `PROFILE: ${getCurrentAccountInView.profile_origin} ( ${getCurrentAccountInView.profile_gender} )` }}
+                        <span class="bold-here">
+                            {{ `PROFILE: ` }} 
+                        </span>
+                        <span>
+                            {{ `${getCurrentAccountInView.profile_origin} ( ${getCurrentAccountInView.profile_gender} )` }}
+                        </span>
                     </v-col>
                     <v-col class="col-12">
-                        {{ `RATING: ${getCurrentAccountInView.rating}%` }} 
+                        <span class="bold-here">
+                            {{ `RATING: ` }} 
+                        </span>
+                        <span>
+                            {{ `${getCurrentAccountInView.rating}` }} 
+                        </span>
                     </v-col>
                     <v-col class="col-12">
-                        {{ `TOTAL ORDERS: ${getCurrentAccountInView.total_orders}`}}
+                        <span class="bold-here">
+                            {{ `TOTAL ORDERS: ` }} 
+                        </span>
+                        <span>
+                        {{ `${getCurrentAccountInView.total_orders}`}}
+                        </span>
                     </v-col>
                     <v-col class="col-12">
-                        {{ `PENDING ORDERS: ${getCurrentAccountInView.pending_orders}` }}  
+                        <span class="bold-here">
+                            {{ `PENDING ORDERS: ` }} 
+                        </span>
+                        <span>
+                            {{ `${getCurrentAccountInView.pending_orders}` }}  
+                        </span>
                     </v-col>
                     <v-col class="col-12">
-                        {{ `COST: ${formatMoney(getCurrentAccountInView.cost)} ( ` }}
-                        {{ getCurrentAccountInView.negotiable ? 'Negotiable )' : 'Non-negotiable )' }}
+                        <span class="bold-here">
+                            {{ `COST: ` }} 
+                        </span>
+                        <span>
+                            {{ `${formatMoney(getCurrentAccountInView.cost)} ( ` }}
+                            {{ getCurrentAccountInView.negotiable ? 'Negotiable )' : 'Non-negotiable )' }}
+                        </span>
                     </v-col>
                     <v-col class="col-12">
-                        {{ "SCREENSHOTS" }}
+                        <span class="bold-here">
+                            {{ `DESCRIPTION: ` }} 
+                        </span>
+                        <span>
+                            {{ `${getCurrentAccountInView.description}` }}  
+                        </span>
                     </v-col>
-                    <v-col class="col-12 mb-2" v-for="(ima, i) in 6" :key="i">
-                        <v-img class="" :src="'https://kazibin.nyc3.cdn.digitaloceanspaces.com/Accounts/IJ-4XT/mTjyNxeknREyoul5q3TwZha6THfjvBOj5zWJxb1W.png'" contain />
+                    <v-col class="col-12">
+                        <span class="bold-here">
+                            {{ `SCREENSHOTS: ` }} 
+                        </span>
+                    </v-col>
+                    <v-col class="col-12 mb-2" v-for="(image, i) in getCurrentAccountInView.files" :key="i">
+                        <v-img class="" :src="image.url" contain />
                     </v-col>
 
-                    <div class="d-flex justify-end call-button">
+                    <div class="d-flex justify-end call-button" v-if="getCurrentAccountInView.user">
                         <v-menu 
                         transition="slide-y-transition"
                         bottom
@@ -230,6 +269,10 @@ export default{
     position: fixed;
     bottom: 0.5rem;
     right: 0.5rem;
+}
+
+.bold-here{
+    font-weight: 800;
 }
 </style>
 

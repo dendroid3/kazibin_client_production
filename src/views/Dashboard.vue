@@ -74,7 +74,7 @@
       </section>
 
       <section v-if="getMyAccounts">
-        <title-strip :title="`accounts posted`" :page="`/accounts`"  v-if="getMyAccounts.accounts.data[0]"/> 
+        <title-strip :title="`accounts on sale`" :page="`/marketplace/mine`"  v-if="getMyAccounts.accounts.data[0]"/> 
         <div class="limiting_wrapper" v-if="getMyAccounts.accounts.data[0] && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
           <accounts-strip :account="account" v-for="account in getMyAccounts.accounts.data" :key="account.id" />
         </div>
