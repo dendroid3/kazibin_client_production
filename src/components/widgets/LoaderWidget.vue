@@ -7,7 +7,7 @@
 </template>
 <script>
 export default {
-  name: 'LoaderWidgetap'
+  name: 'LoaderWidget'
 }
 </script>
 <style lang="css" scoped>

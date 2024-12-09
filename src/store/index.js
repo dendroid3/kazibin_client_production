@@ -27,6 +27,7 @@ import Statistics from './modules/statistics/statistics'
 import Verification from './modules/verification/verifications'
 import Accounts from './modules/accounts/accounts'
 import Download from './modules/download'
+import Services from './modules/services/services'
 
 Vue.use(Vuex);
 
@@ -52,7 +53,8 @@ export default new Vuex.Store({
     Statistics,
     Verification,
     Accounts,
-    Download
+    Download,
+    Services
   },
   plugins: [
 
@@ -135,6 +137,10 @@ export default new Vuex.Store({
     createPersistedState({
       key:'Accounts',
       paths:['Accounts']
+    }),
+    createPersistedState({
+      key:'Services',
+      paths:['Services']
     }),
     createPersistedState({
       key: 'KAZIBIN_TOKEN',

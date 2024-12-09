@@ -35,25 +35,25 @@
         </div>
         <section>
             <v-row class="d-flex justify-center mt-4" v-if="pagination_links_set && getAccounts[0]">
-            <v-col class="col-1 white--text mt-4 primary-color text-center" v-for="(link, i) in pagination_links" 
-            :key="i" 
-            :class="{
-                'red': link.active,
-                'grey': ((getAccountsPaginationDetails.accounts.current_page === getAccountsPaginationDetails.accounts.last_page) && link.next) ||
-                        (getAccountsPaginationDetails.accounts.current_page === 1) && link.previous
-                }" 
-            @click="goToPage(link.url)">
-                <span>
-                <span v-if="link.previous">
-                {{"<<"}}
-                </span>
-                <span v-if="!link.previous && !link.next">
-                    {{link.label}}
-                </span>
-                <span v-if="(link.next)">
-                    {{">>"}}
-                </span>
-                </span>
+                <v-col class="col-1 white--text mt-4 primary-color text-center" v-for="(link, i) in pagination_links" 
+                :key="i" 
+                :class="{
+                    'red': link.active,
+                    'grey': ((getAccountsPaginationDetails.accounts.current_page === getAccountsPaginationDetails.accounts.last_page) && link.next) ||
+                            (getAccountsPaginationDetails.accounts.current_page === 1) && link.previous
+                    }" 
+                @click="goToPage(link.url)">
+                    <span>
+                    <span v-if="link.previous">
+                    {{"<<"}}
+                    </span>
+                    <span v-if="!link.previous && !link.next">
+                        {{link.label}}
+                    </span>
+                    <span v-if="(link.next)">
+                        {{">>"}}
+                    </span>
+                    </span>
             </v-col>
             </v-row>
 
