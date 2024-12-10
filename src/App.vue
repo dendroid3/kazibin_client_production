@@ -82,8 +82,22 @@
       </div>
       <nav-drawer />
     </v-navigation-drawer>
+    
     <alert-box />
+    
     <not-verified />
+
+    <cart v-if="isCartOpen"/>
+
+    <div class="cart-button" v-if="getCartItems.length > 0" @click="openCart">
+      <v-icon large class="white--text">
+          mdi-cart
+      </v-icon>
+      <span class="cart-counter">
+          {{ getCartItems.length }}
+      </span>
+    </div>
+    
     <v-main class="main grey lighten-3">
       <v-container fluid class="pa-0">
         <v-row class="no-gutters"  style="padding-top: 50px;">
@@ -106,6 +120,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import LoaderWidget from './components/widgets/LoaderWidget.vue'
+import Cart from './components/widgets/Cart.vue'
 import AlertBox from './components/widgets/AlertBox.vue'
 import NotVerified from './components/widgets/NotVerified.vue';
 import NavDrawer from './components/widgets/NavDrawer.vue'
@@ -116,10 +131,10 @@ import Cookies from 'js-cookie'
 export default {
   name: 'App',
 
-  components:{LoaderWidget, AlertBox, NavDrawer, FarleftSidebar, MidleftSidebar, NotVerified},
+  components:{LoaderWidget, AlertBox, NavDrawer, FarleftSidebar, MidleftSidebar, NotVerified, Cart},
 
   computed: {
-    ...mapGetters(['isLoading', 'getUser', 'getHideShowMidLeftSidebar']),
+    ...mapGetters(['isLoading', 'getUser', 'getHideShowMidLeftSidebar', 'getCartItems', 'isCartOpen']),
     isGuest(){
       return true
     },
@@ -143,7 +158,10 @@ export default {
   },
 
   methods:{
-    ...mapActions(['bootAllSockets', 'logout']),
+    ...mapActions(['bootAllSockets', 'logout', 'toogleCart']),
+    openCart() {
+      this.toogleCart(true)
+    },
     logoutUser(){
       let confirmation = "You are about to logout, you will be logged out in all other devices. Proceed?"
       if(!confirm(confirmation  )) {return}
@@ -314,7 +332,30 @@ export default {
     font-size: 0.8rem;
     border-radius: 3%;
   }
+  .cart-button{
+    position: fixed;
+    bottom: 2rem;
+    z-index: 9999;
+    right: 2rem;
+    background-color: tomato;
+    color: white;
+    border-radius: 50%;
+    padding: 0.5rem;
+    cursor: pointer;
+  }
 
+  .cart-counter{
+    color: white;
+    font-weight: 800;
+    position: absolute;
+    top: -0.25rem;
+    right: -0.25rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: rgb(15,14,56);
+    border-radius: 50%;
+    text-align: center;
+  }
   .full-width{
     width: 100vw;
     overflow-x: hidden;
