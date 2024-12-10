@@ -13,7 +13,8 @@ const state = {
   task_chat_view_invoice: false,
   alert_endpoint: false,
   hide_mid_left_bar: false,
-  show_reminder_to_verify_account: true
+  show_reminder_to_verify_account: true,
+  is_cart_open: false
 }
 
 const getters = {
@@ -26,10 +27,15 @@ const getters = {
   getTaskChatInvoice: (state) => (state.task_chat_invoice),
   getTaskChatViewInvoice: (state) => (state.task_chat_view_invoice),
   getHideShowMidLeftSidebar: (state) => (state.hide_mid_left_bar),
-  isReminderToVerifyAccountClosed: (state) => (state.show_reminder_to_verify_account)
+  isReminderToVerifyAccountClosed: (state) => (state.show_reminder_to_verify_account),
+  isCartOpen: (state) => (state.is_cart_open)
 }
 
 const actions = {
+  toogleCart({commit}, data){
+    commit('SET_IS_CART_OPEN', data)
+  },
+
   closeReminderToVerifyAccount({commit, getters}, data){
     // Check if user is verified
     if(getters.getUser.credential_verification){
@@ -162,6 +168,10 @@ const actions = {
 }
 
 const mutations = {
+  SET_IS_CART_OPEN: (state, boolean) => (
+    state.is_cart_open = boolean
+  ),
+
   SET_REMINDER_TO_VERIFY_ACCOUNT: (state, boolean) => (
     state.show_reminder_to_verify_account = boolean
   ),

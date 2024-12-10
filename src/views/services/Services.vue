@@ -5,7 +5,6 @@
               {{"Services"}}
             </span> 
         </div>
-        {{ getCartItems }}
         <section v-for="(services, category) in getServices" :key="category">
             <h3 class="px-4">
                 {{ category }}
@@ -16,14 +15,6 @@
                 </v-col>
             </v-row>
         </section>
-        <div class="cart-button">
-            <v-icon large class="white--text">
-                mdi-cart
-            </v-icon>
-            <span class="cart-counter">
-                {{ getCartItems.length }}
-            </span>
-        </div>
     </div>
 </template>
 <script>
@@ -57,30 +48,5 @@ export default {
   .main-wrapper{
       padding-bottom: 0.5rem; 
       position: relative;
-  }
-
-  .cart-button{
-    position: fixed;
-    bottom: 2rem;
-    z-index: 9999;
-    right: 2rem;
-    background-color: rgb(15,14,56);
-    color: white;
-    border-radius: 50%;
-    padding: 0.5rem;
-    cursor: pointer;
-  }
-
-  .cart-counter{
-    color: white;
-    font-weight: 800;
-    position: absolute;
-    top: -0.25rem;
-    right: -0.25rem;
-    width: 1.5rem;
-    height: 1.5rem;
-    background-color: rgb(15,14,56);
-    border-radius: 50%;
-    text-align: center;
   }
 </style>
