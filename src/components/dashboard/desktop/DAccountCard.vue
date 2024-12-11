@@ -74,7 +74,7 @@ export default{
             if(this.display){
                 confirmation = 'Is this account no longer available for purchase?\nYou are about to remove this account from display.\nContinue?'
             } else {
-                confirmation = `You are about to put this account back on display. This will cont you ${process.env.VUE_APP_ACCOUNT_DISPLAY_COST} KES. Once you do this acction, the advert will be forwarded to our WhatsApp and Telegram channels and be visible on the website.\nContinue?`
+                confirmation = `You are about to put this account back on display. This will cost you ${process.env.VUE_APP_ACCOUNT_DISPLAY_COST} KES. Once you do this acction, the advert will be forwarded to our WhatsApp and Telegram channels and be visible on the website.\nContinue?`
             
                 // if(this.getDashboadDetails.transactions.balance < process.env.VUE_APP_ACCOUNT_DISPLAY_COST) {
                 if(this.getDashboadDetails.transactions.balance < -100000) {
