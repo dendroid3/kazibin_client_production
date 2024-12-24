@@ -10,6 +10,9 @@
                 <v-icon class="mx-2" v-if="is_options_open" @click="is_options_open = false">
                   mdi-arrow-up  
                 </v-icon>
+                <v-icon class="mx-2">
+                  mdi-plus  
+                </v-icon>
             </v-col>
         </v-row> 
         <v-row class="pa-2 bold no-gutters" v-if="is_options_open">

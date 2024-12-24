@@ -26,6 +26,7 @@ import Transactions from './modules/transaction/transactions'
 import Statistics from './modules/statistics/statistics'
 import Verification from './modules/verification/verifications'
 import Accounts from './modules/accounts/accounts'
+import Managed from './modules/accounts/managed'
 import Download from './modules/download'
 import Services from './modules/services/services'
 
@@ -53,6 +54,7 @@ export default new Vuex.Store({
     Statistics,
     Verification,
     Accounts,
+    Managed,
     Download,
     Services
   },
@@ -141,6 +143,10 @@ export default new Vuex.Store({
     createPersistedState({
       key:'Services',
       paths:['Services']
+    }),
+    createPersistedState({
+      key:'Managed',
+      paths:['Managed']
     }),
     createPersistedState({
       key: 'KAZIBIN_TOKEN',
