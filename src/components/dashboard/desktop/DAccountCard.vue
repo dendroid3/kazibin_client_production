@@ -1,7 +1,7 @@
 <template>
     <tr class="odd gradeX pa-2 wrapper pointer" :class="{
-    greenlist: account.display == 1, 
-    redlist: account.display == 0
+    greenlist: display == 1, 
+    redlist: display == 0
     }">
         <td class="text-center">{{ account.code }}</td>
         <td class="text-center">
