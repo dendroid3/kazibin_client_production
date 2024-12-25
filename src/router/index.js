@@ -298,6 +298,16 @@ const routes = [
     }
   },
   {
+    path: '/managed/add',
+    name: 'AddAccount',
+    component: () => import('../views/managed/AddAccount.vue'),
+    meta:{
+      middleware: [
+        auth, emailverified
+      ]
+    }
+  },
+  {
     path: '/m/:account_code',
     name: 'ViewAccount',
     component: () => import('../views/marketplace/ViewAccount.vue')
