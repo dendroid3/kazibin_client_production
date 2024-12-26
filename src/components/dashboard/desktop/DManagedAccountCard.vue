@@ -15,15 +15,18 @@
             {{ account.status }}
         </td>
         <td class="text-center">
+            {{ account.payday }}
+        </td>
+        <td class="text-center">
             {{ account.total_revenue }}
+        </td>
+        <td class="text-center">
+            {{ account.total_owing }}
         </td>
         <td class="text-center">
             <div class="d-flex justify-center">
                 <v-icon class="blue--text" @click="goView">
                     mdi-eye
-                </v-icon>
-                <v-icon class="red--text" @click="intitializeDeleteAccount">
-                    mdi-delete
                 </v-icon>
             </div>
         </td>

@@ -7,7 +7,9 @@
                     <th>Provider</th>
                     <th>Proxy</th>
                     <th>Status</th>
+                    <th>Payday</th>
                     <th>Total Earned</th>
+                    <th>Total Owing</th>
                     <th></th>
                 </tr>
             </thead>
