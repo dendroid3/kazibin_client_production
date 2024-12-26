@@ -66,7 +66,7 @@
         v-show="is_open"
         :title="`managed`"
         :url="`managed`"
-        :count="getDashboadDetails.posted.posted_all"
+        :count="getDashboadDetails.managed_accounts.total"
         :loading="!posted_fetched"
       />    
 

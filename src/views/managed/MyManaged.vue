@@ -1,7 +1,8 @@
 <template>
     <div class="main-wrapper">
         <v-row class="d-flex grey lighten-2 align-center no-gutters">
-            <v-col class="col-8 pl-4 backg"> managed accounts
+            <v-col class="col-8 pl-4 backg"> 
+              managed accounts
             </v-col>
             <v-col class="col-4 d-flex align-center justify-end px-4">
                 <v-icon class="mx-2" v-if="!is_options_open" @click="is_options_open = true">
@@ -10,65 +11,65 @@
                 <v-icon class="mx-2" v-if="is_options_open" @click="is_options_open = false">
                   mdi-arrow-up  
                 </v-icon>
-                <v-icon class="mx-2">
+                <v-icon class="mx-2" @click="go(`managed/add`)">
                   mdi-plus  
                 </v-icon>
             </v-col>
         </v-row> 
         <v-row class="pa-2 bold no-gutters" v-if="is_options_open">
             <v-col class="mb-1 col-4 px-1">
-              <div class="tomato white--text rounded elevation-1 pointer"  @click="filterModel(null)">
+              <div class="tomato white--text rounded elevation-1 pointer"  @click="filterModel('pending')">
                   <div class="d-flex justify-center bold"
                   :class="{
-                  'yellow--text': !filter_model
+                  'yellow--text': filter_model == 'pending'
                 }">
-                    all posted
+                    pending
                   </div>
                   <v-divider inset/>
                   <div class="d-flex justify-end align-center px-1 ">
-                    <span> {{ getDashboadDetails.accounts.total }}  </span>
+                    <span> {{ getDashboadDetails.managed_accounts.pending }}  </span>
                   </div>
               </div>
             </v-col>
             <v-col class="mb-1 col-4 px-1">
-              <div class="tomato white--text rounded elevation-1 pointer"  @click="filterModel('on')">
+              <div class="tomato white--text rounded elevation-1 pointer"  @click="filterModel('active')">
                   <div class="d-flex justify-center bold"
                   :class="{
-                  'yellow--text': filter_model == 'on'
+                  'yellow--text': filter_model == 'active'
                 }">
-                    on display
+                    active
                   </div>
                   <v-divider inset/>
                   <div class="d-flex justify-end align-center px-1 ">
-                    <span> {{ getDashboadDetails.accounts.on_display }}  </span>
+                    <span> {{ getDashboadDetails.managed_accounts.active }}  </span>
                   </div>
               </div>
             </v-col>
             <v-col class="mb-1 col-4 px-1">
-              <div class="tomato white--text rounded elevation-1 pointer"  @click="filterModel('off')">
+              <div class="tomato white--text rounded elevation-1 pointer"  @click="filterModel('closed')">
                   <div class="d-flex justify-center bold"
                   :class="{
-                  'yellow--text': filter_model === 'off'
+                  'yellow--text': filter_model === 'closed'
                 }">
-                    off display
+                    closed
                   </div>
                   <v-divider inset/>
                   <div class="d-flex justify-end align-center px-1 ">
-                    <span> {{ getDashboadDetails.accounts.off_display }}  </span>
+                    <span> {{ getDashboadDetails.managed_accounts.closed }}  </span>
                   </div>
               </div>
             </v-col>
         </v-row>  
 
         <section v-if="accounts_fetched">
-            <div class="limiting_wrapper" v-if="getMyAccounts.accounts.data[0] && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
-                <accounts-strip :account="account" v-for="account in getMyAccounts.accounts.data" :key="account.id" />
+            <div class="limiting_wrapper" v-if="getMyManagedAccounts.accounts.data[0] && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+                <accounts-strip :account="account" v-for="account in getMyManagedAccounts.accounts.data" :key="account.id" />
             </div>
-            <div v-if="getMyAccounts.accounts.data[0] && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
-                <d-accounts-card :accounts="getMyAccounts.accounts.data"/>
+            <div v-if="getMyManagedAccounts.accounts.data[0] && ($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
+                <d-accounts-card :accounts="getMyManagedAccounts.accounts.data"/>
             </div>
 
-            <v-row class="padder"  v-if="!getMyAccounts.accounts.data[0]">
+            <v-row class="padder"  v-if="!getMyManagedAccounts.accounts.data[0]">
               <div class="padded mb-4 d-flex justify-center">
                 <v-row class="no-gutters d-flex align-center">
                   <v-col class="col-12 col-md-6">
@@ -88,13 +89,13 @@
         </section>
 
         <section>
-          <v-row class="d-flex justify-center mt-4" v-if="pagination_links_set && getMyAccounts.accounts.data[0]">
+          <v-row class="d-flex justify-center mt-4" v-if="pagination_links_set && getMyManagedAccounts.accounts.data[0]">
             <v-col class="col-1 white--text mt-4 primary-color text-center pointer" v-for="(link, i) in pagination_links" 
             :key="i" 
             :class="{
                 'red': link.active,
-                'grey': ((getMyAccounts.accounts.current_page === getMyAccounts.accounts.last_page) && link.next) ||
-                        (getMyAccounts.accounts.current_page === 1) && link.previous
+                'grey': ((getMyManagedAccounts.accounts.current_page === getMyManagedAccounts.accounts.last_page) && link.next) ||
+                        (getMyManagedAccounts.accounts.current_page === 1) && link.previous
                 }" 
             @click="goToPage(link.url)">
                 <span>
@@ -116,8 +117,8 @@
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import DAccountsCard from '../../components/dashboard/desktop/DAccountsCard.vue';
-import AccountsStrip from '../../components/dashboard/AccountsStrip.vue';
+import DAccountsCard from '../../components/dashboard/desktop/DManagedAccountsCard.vue';
+import AccountsStrip from '../../components/dashboard/ManagedAccountsStrip.vue';
 import FetchingItems from '../../components/widgets/FetchingItems.vue';
 import emptyHere from '../../components/svg/emptyHere.vue';
 
@@ -133,7 +134,7 @@ export default {
 
     data() {
         return {
-            is_options_open: false,
+            is_options_open: true,
             filter_model: null,
             accounts_fetched: false,
             pagination_links_set: false
@@ -141,11 +142,14 @@ export default {
     },
 
     computed: {
-        ...mapGetters(['getMyAccounts', 'getDashboadDetails']),
+        ...mapGetters({
+            getMyManagedAccounts: 'Managed/getMyManagedAccounts',
+            getDashboadDetails: 'getDashboadDetails'
+        }),
 
         pagination_links(){
             let links = []
-            this.getMyAccounts.accounts.links.forEach(link => {
+            this.getMyManagedAccounts.accounts.links.forEach(link => {
               link.previous = link.label == "&laquo; Previous"
               link.next = link.label == "Next &raquo;"
               links.push(link)
@@ -155,26 +159,14 @@ export default {
     },
 
     methods: {
-        ...mapActions(['fetchMyAccounts']),
+        ...mapActions('Managed', ['fetchAccounts']),
 
         filterModel(filter){
+            console.log(filter)
             this.filter_model = filter
 
-            switch (filter) {
-              case 'on':
-                this.filter_code = true
-                this.fetchFilered()
-                break;
-
-              case 'off':
-                this.filter_code = false
-                this.fetchFilered()
-                break;
-            
-              default:
-                this.boot()
-                break;
-            }
+            this.filter_code = filter
+            this.fetchFiltered()    
         },
         
         goToPage(link) {
@@ -187,7 +179,7 @@ export default {
             if(this.filter_model){
               data.filter_code = this.filter_code
             }
-            this.fetchMyAccounts(data).then((pagination_details) => {
+            this.fetchAccounts(data).then((pagination_details) => {
                 if(pagination_details.accounts.last_page > 1){
                     this.pagination_links_set = true
                 }
@@ -195,7 +187,7 @@ export default {
             })
         },
 
-        fetchFilered() {
+        fetchFiltered() {
           this.accounts_fetched = false
           this.pagination_links_set = false
 
@@ -203,7 +195,7 @@ export default {
             filter_code: this.filter_code,
             is_filtered: true
           }
-          this.fetchMyAccounts(data).then((pagination_details) => {
+          this.fetchAccounts(data).then((pagination_details) => {
             if(pagination_details.accounts.last_page > 1){
                   this.pagination_links_set = true
             } 
@@ -211,12 +203,19 @@ export default {
           })
         },
 
+        go(code){
+          this.$router.push('/' + code)
+        },
+
         boot() {
-            this.fetchMyAccounts({}).then((pagination_details) => {
+            this.fetchAccounts({}).then((pagination_details) => {
               if(pagination_details.accounts.last_page > 1){
                     this.pagination_links_set = true
               } 
               this.accounts_fetched = true
+              setTimeout(() => {
+                console.log(this.getMyManagedAccounts)
+              }, 0)
             })
         }
     },

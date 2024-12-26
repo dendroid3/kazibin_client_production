@@ -163,12 +163,12 @@ export default {
             switch (filter) {
               case 'on':
                 this.filter_code = true
-                this.fetchFilered()
+                this.fetchFiltered()
                 break;
 
               case 'off':
                 this.filter_code = false
-                this.fetchFilered()
+                this.fetchFiltered()
                 break;
             
               default:
@@ -195,7 +195,7 @@ export default {
             })
         },
 
-        fetchFilered() {
+        fetchFiltered() {
           this.accounts_fetched = false
           this.pagination_links_set = false
 
@@ -214,6 +214,7 @@ export default {
         go(code){
           this.$router.push('/' + code)
         },
+
         boot() {
             this.fetchMyAccounts({}).then((pagination_details) => {
               if(pagination_details.accounts.last_page > 1){

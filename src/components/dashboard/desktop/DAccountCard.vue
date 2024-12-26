@@ -34,7 +34,7 @@
             </div>
         </td>
         <td class="text-center">
-            <div class="d-flex">
+            <div class="d-flex justify-center">
                 <v-icon class="blue--text" @click="goView">
                     mdi-eye
                 </v-icon>
