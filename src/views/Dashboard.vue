@@ -28,7 +28,6 @@
         getRequestsToAndFromWWriters &&
         getLogMessages
         ">
-
       <section v-if="getAllTasksPostedByMe">
         <title-strip :title="`tasks posted`" :page="`Tasks/Posted`" :add_url="`/Task/Add`" v-if="getAllTasksPostedByMe[0]"/>
         <div class="limiting_wrapper" v-if="getAllTasksPostedByMe[0] && !($vuetify.breakpoint.lg || $vuetify.breakpoint.md)">
