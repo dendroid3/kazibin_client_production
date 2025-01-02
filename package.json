@@ -1,6 +1,6 @@
 {
   "name": "jobaraq",
-  "version": "2024.12.27.00",
+  "version": "2025.01.02.01",
   "private": true,
   "scripts": {
   "serve": "set NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
